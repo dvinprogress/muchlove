@@ -1,10 +1,10 @@
 # MuchLove - Progress Tracker
 
-> Derniere MAJ: 2026-02-06 | Version: 0.1.0
+> Derniere MAJ: 2026-02-07 | Version: 0.1.0
 
 ## Statut Global
 - **Phase**: mvp
-- **Derniere action**: i18n complet EN/FR/ES avec next-intl, routing [locale], traductions, LanguageSwitcher, SEO multilingue. Build OK.
+- **Derniere action**: Integration Stripe validee — Checkout, Portal, Webhook, Credits, Paywall, i18n billing complet. Fix 'use server' sur route handlers + TypeScript errors webhook. Build OK.
 
 ## Infrastructure
 | Element | Statut | Date | Notes |
@@ -39,7 +39,7 @@
 | 11 | Gestion contacts | DONE | 2026-02-06 | src/components/contacts/, app/dashboard/contacts/, actions.ts, CopyLinkButton.tsx, DeleteContactButton.tsx | Pagination 20/page, stats SQL optimisees, toast sonner, composants Client extraits |
 | 12 | Workflow partage (social) | TODO | | Trustpilot, Google, LinkedIn | |
 | 13 | Gamification (ambassadeur) | DONE | 2026-02-06 | src/components/gamification/, lib/utils/confetti.ts | ProgressBar, StatusBadge, CelebrationModal |
-| 14 | Integration Stripe | TODO | | Checkout, Portal, Credits | |
+| 14 | Integration Stripe | DONE | 2026-02-07 | api/stripe/{checkout,portal,webhook}/, lib/stripe/{client,plans}.ts, components/billing/{BillingSection,UsageCard,Paywall,UpgradeModal}.tsx, hooks/{useSubscription,useCredits}.ts, dashboard/settings/ | Checkout Session, Customer Portal, Webhook (5 events + idempotence), Credits RPC atomiques, Paywall component, UpgradeModal Framer Motion, i18n billing EN/FR/ES |
 | 15 | Systeme emails | TODO | | Invitations, notifications | Bloquant pour feature #11 (invitations) |
 | 16 | Landing page marketing | DONE | 2026-02-06 | src/components/landing/, app/page.tsx, app/terms/, app/privacy/ | SEO 8+/10, metadata complete, pages legales, liens footer OK, bouton demo scroll |
 | 17 | Internationalisation (i18n) | DONE | 2026-02-06 | src/i18n/, messages/{en,fr,es}.json, src/app/[locale]/, src/middleware.ts, src/components/ui/LanguageSwitcher.tsx | next-intl complet : routing [locale] as-needed (EN sans prefixe, /fr/, /es/), middleware i18n+Supabase, ~280 cles x 3 langues, LanguageSwitcher Framer Motion, SEO hreflang+alternates, generateMetadata multilingue, build OK |
@@ -51,7 +51,7 @@
 - [x] Validation Zod sur inputs API (contactId, companyId) — DONE 2026-02-06
 - [x] Remplacer `as any` par types generiques SupabaseClient<Database> — DONE 2026-02-06
 - [x] Corriger state machine (phases uploading/complete mortes) — DONE 2026-02-06
-- [ ] Implementer vraie transcription (OpenAI Whisper API ou HF Inference)
+- [x] Implementer vraie transcription — DONE 2026-02-07 — Whisper client-side via @huggingface/transformers, zero API
 
 ### Contacts (#11) — UX critique
 - [x] Systeme de toast (remplacer alert/confirm par sonner ou shadcn/toast) — DONE 2026-02-06
@@ -75,7 +75,7 @@
 | Service | Statut | Notes |
 |---------|--------|-------|
 | Supabase | CONFIGURED | Auth (Google + LinkedIn + Email), DB, Storage |
-| Stripe | NOT_CONFIGURED | |
+| Stripe | CODE_READY | Code complet, necessite: STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET, STRIPE_PRO/ENTERPRISE_PRICE_IDs dans Vercel env vars + produits Stripe Dashboard |
 | Vercel | DEPLOYED | muchlove.app live, env vars configurees, NEXT_PUBLIC_APP_URL=https://muchlove.app |
 | Cloudflare | CONFIGURED | muchlove.app enregistre, DNS A+CNAME → Vercel, WHOIS redacte |
 
@@ -89,9 +89,8 @@
 | Knowledge base | DONE | decisions-log, ux-guidelines, video-patterns, supabase-schema |
 
 ## Prochaines Etapes (priorite)
-1. Systeme emails (#15) — debloquer invitations contacts
-2. Workflow partage social (#12)
-3. Integration Stripe (#14)
-4. Vraie transcription Whisper (OpenAI API ou HF Inference)
-5. Tests unitaires et e2e pour features critiques
-6. Images/assets optimises (hero, illustrations)
+1. **Configurer Stripe Dashboard** — Creer produits/prix, ajouter env vars dans Vercel, configurer webhook endpoint
+2. Systeme emails (#15) — debloquer invitations contacts
+3. Workflow partage social (#12)
+4. Tests unitaires et e2e pour features critiques
+5. Images/assets optimises (hero, illustrations)

@@ -83,6 +83,21 @@
             "integrations": "Intégrations Google & Trustpilot",
             "support": "Support prioritaire"
           }
+        },
+        "enterprise": {
+          "name": "Enterprise",
+          "description": "Pour les grandes équipes",
+          "cta": "Nous contacter",
+          "features": {
+            "videos": "500 vidéos par mois",
+            "linkedin": "Publication auto sur LinkedIn",
+            "storage": "Stockage illimité",
+            "branding": "Personnalisation de marque",
+            "integrations": "Toutes les intégrations incluses",
+            "api": "Accès API",
+            "dedicated": "Gestionnaire de compte dédié",
+            "support": "Support prioritaire 24/7"
+          }
         }
       }
     },
@@ -393,5 +408,62 @@
   "settings": {
     "title": "Paramètres",
     "description": "Gérez votre compte et vos préférences"
+  },
+  "billing": {
+    "currentPlan": "Votre plan",
+    "status": {
+      "active": "Actif",
+      "trialing": "Essai",
+      "past_due": "Paiement en retard",
+      "canceled": "Annulé",
+      "unpaid": "Impayé",
+      "incomplete": "Incomplet",
+      "paused": "En pause"
+    },
+    "renewsOn": "Renouvellement le {date}",
+    "cancelsOn": "Annulation le {date}",
+    "cancelingNotice": "Votre plan passera à Gratuit à la fin de la période de facturation",
+    "manageSubscription": "Gérer la facturation",
+    "upgradeToPro": "Passer au Pro",
+    "upgradeToEnterprise": "Passer à Enterprise",
+    "loading": "Chargement...",
+    "usage": {
+      "title": "Crédits vidéo",
+      "description": "Plan {plan}",
+      "videosUsed": "vidéos utilisées",
+      "remaining": "restantes",
+      "limitReached": "Vous avez utilisé toutes vos vidéos ce mois-ci. Passez au niveau supérieur !",
+      "limitWarning": "Vous approchez de votre limite de vidéos ce mois-ci."
+    },
+    "upgrade": {
+      "title": "Passez au niveau supérieur !",
+      "subtitle": "Vous avez utilisé toutes vos vidéos gratuites. Débloquez-en plus avec Pro.",
+      "whatsIncluded": "Ce qui est inclus",
+      "features": {
+        "videos": "100 vidéos par mois",
+        "linkedin": "Publication auto sur LinkedIn",
+        "storage": "Stockage illimité",
+        "branding": "Personnalisation de marque",
+        "integrations": "Intégrations Google & Trustpilot",
+        "support": "Support prioritaire"
+      },
+      "perMonth": "/mois",
+      "cta": "Passer au Pro",
+      "loading": "Redirection...",
+      "later": "Peut-être plus tard"
+    },
+    "transactions": {
+      "title": "Activité récente",
+      "credits": "crédits",
+      "balance": "Solde",
+      "types": {
+        "subscriptionGrant": "Crédit d'abonnement",
+        "subscriptionRenewal": "Renouvellement mensuel",
+        "oneTimePurchase": "Achat de crédits",
+        "usageDeduction": "Vidéo enregistrée",
+        "adminAdjustment": "Ajustement",
+        "refund": "Remboursement"
+      }
+    }
   }
 }

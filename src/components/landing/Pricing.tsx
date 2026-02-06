@@ -20,11 +20,17 @@ export function Pricing() {
       features: ["videos", "linkedin", "storage", "branding", "integrations", "support"],
       highlighted: true,
     },
+    {
+      planKey: "enterprise",
+      price: "99",
+      features: ["videos", "linkedin", "storage", "branding", "integrations", "api", "dedicated", "support"],
+      highlighted: false,
+    },
   ];
 
   return (
     <section className="bg-slate-50 py-20 sm:py-32">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
             {t("title")}
@@ -33,7 +39,7 @@ export function Pricing() {
             {t("subtitle")}
           </p>
         </div>
-        <div className="mt-16 grid gap-8 lg:grid-cols-2">
+        <div className="mt-16 grid gap-8 lg:grid-cols-3">
           {plans.map((plan) => (
             <div
               key={plan.planKey}
@@ -52,14 +58,14 @@ export function Pricing() {
               )}
               <div className="text-center">
                 <h3 className="text-2xl font-bold text-slate-900">
-                  {t(`plans.${plan.planKey}.name` as any)}
+                  {t(`plans.${plan.planKey}.name` as Parameters<typeof t>[0])}
                 </h3>
                 <p className="mt-2 text-sm text-slate-600">
-                  {t(`plans.${plan.planKey}.description` as any)}
+                  {t(`plans.${plan.planKey}.description` as Parameters<typeof t>[0])}
                 </p>
                 <div className="mt-4 flex items-baseline justify-center gap-x-2">
                   <span className="text-5xl font-bold tracking-tight text-slate-900">
-                    {plan.price}
+                    ${plan.price}
                   </span>
                   <span className="text-lg font-semibold text-slate-600">
                     {t("perMonth")}
@@ -71,7 +77,7 @@ export function Pricing() {
                   <li key={feature} className="flex items-start gap-x-3">
                     <Check className="h-5 w-5 flex-shrink-0 text-rose-500" />
                     <span className="text-slate-600">
-                      {t(`plans.${plan.planKey}.features.${feature}` as any)}
+                      {t(`plans.${plan.planKey}.features.${feature}` as Parameters<typeof t>[0])}
                     </span>
                   </li>
                 ))}
@@ -85,7 +91,7 @@ export function Pricing() {
                       : "bg-slate-100 text-slate-900 hover:bg-slate-200"
                   }`}
                 >
-                  {t(`plans.${plan.planKey}.cta` as any)}
+                  {t(`plans.${plan.planKey}.cta` as Parameters<typeof t>[0])}
                 </Link>
               </div>
             </div>

@@ -1,51 +1,51 @@
 import { Header } from '@/components/dashboard'
-import { Card, CardContent } from '@/components/ui'
-import { Settings } from 'lucide-react'
+import { getBillingData } from './actions'
+import { BillingSection, UsageCard } from '@/components/billing'
+import { CreditTransactionsList } from './CreditTransactionsList'
+import { getTranslations } from 'next-intl/server'
 
-export default function SettingsPage() {
+export default async function SettingsPage() {
+  const t = await getTranslations('settings')
+  const result = await getBillingData()
+
+  const billing = result.success
+    ? result.data
+    : {
+        company: null,
+        subscription: null,
+        recentTransactions: [],
+        creditsRemaining: 0,
+        creditsTotal: 5,
+        usagePercentage: 0,
+      }
+
   return (
     <div>
-      <Header
-        title="Paramètres"
-        description="Gérez vos paramètres et préférences"
-      />
+      <Header title={t('title')} description={t('description')} />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <Card>
-          <CardContent className="p-6">
-            <div className="flex items-start gap-4">
-              <div className="bg-rose-50 p-3 rounded-xl">
-                <Settings className="w-6 h-6 text-rose-500" />
-              </div>
-              <div className="flex-1">
-                <h3 className="text-lg font-semibold text-slate-900 mb-2">
-                  Configuration du compte
-                </h3>
-                <p className="text-sm text-slate-500">
-                  Gérez vos informations de compte et vos préférences
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+      <div className="space-y-6">
+        {/* Usage Card */}
+        <UsageCard
+          videosUsed={billing.company?.videos_used ?? 0}
+          videosLimit={billing.company?.videos_limit ?? 5}
+          plan={billing.company?.plan ?? 'free'}
+        />
 
-        <Card>
-          <CardContent className="p-6">
-            <div className="flex items-start gap-4">
-              <div className="bg-rose-50 p-3 rounded-xl">
-                <Settings className="w-6 h-6 text-rose-500" />
-              </div>
-              <div className="flex-1">
-                <h3 className="text-lg font-semibold text-slate-900 mb-2">
-                  Plan et facturation
-                </h3>
-                <p className="text-sm text-slate-500">
-                  Gérez votre abonnement et vos méthodes de paiement
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        {/* Billing Management */}
+        <BillingSection
+          billing={{
+            plan: billing.company?.plan ?? 'free',
+            status: billing.subscription?.status ?? null,
+            currentPeriodEnd: billing.subscription?.current_period_end ?? null,
+            cancelAtPeriodEnd: billing.subscription?.cancel_at_period_end ?? false,
+            stripeCustomerId: billing.company?.stripe_customer_id ?? null,
+          }}
+        />
+
+        {/* Credit Transactions */}
+        {billing.recentTransactions.length > 0 && (
+          <CreditTransactionsList transactions={billing.recentTransactions} />
+        )}
       </div>
     </div>
   )

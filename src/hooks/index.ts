@@ -1,3 +1,5 @@
 export { useConfetti } from './useConfetti'
+export { useCredits } from './useCredits'
 export { useMediaPermissions } from './useMediaPermissions'
 export { useMediaRecorder } from './useMediaRecorder'
+export { useSubscription } from './useSubscription'

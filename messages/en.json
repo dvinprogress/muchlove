@@ -83,6 +83,21 @@
             "integrations": "Google & Trustpilot integrations",
             "support": "Priority support"
           }
+        },
+        "enterprise": {
+          "name": "Enterprise",
+          "description": "For large teams",
+          "cta": "Contact us",
+          "features": {
+            "videos": "500 videos per month",
+            "linkedin": "Auto-share to LinkedIn",
+            "storage": "Unlimited storage",
+            "branding": "Custom branding",
+            "integrations": "All integrations included",
+            "api": "API access",
+            "dedicated": "Dedicated account manager",
+            "support": "24/7 priority support"
+          }
         }
       }
     },
@@ -393,5 +408,62 @@
   "settings": {
     "title": "Settings",
     "description": "Manage your account and preferences"
+  },
+  "billing": {
+    "currentPlan": "Your plan",
+    "status": {
+      "active": "Active",
+      "trialing": "Trial",
+      "past_due": "Past due",
+      "canceled": "Canceled",
+      "unpaid": "Unpaid",
+      "incomplete": "Incomplete",
+      "paused": "Paused"
+    },
+    "renewsOn": "Renews on {date}",
+    "cancelsOn": "Cancels on {date}",
+    "cancelingNotice": "Your plan will downgrade to Free at the end of the billing period",
+    "manageSubscription": "Manage billing",
+    "upgradeToPro": "Upgrade to Pro",
+    "upgradeToEnterprise": "Upgrade to Enterprise",
+    "loading": "Loading...",
+    "usage": {
+      "title": "Video credits",
+      "description": "{plan} plan",
+      "videosUsed": "videos used",
+      "remaining": "remaining",
+      "limitReached": "You've used all your videos this month. Time to upgrade!",
+      "limitWarning": "You're running low on videos this month."
+    },
+    "upgrade": {
+      "title": "Time to level up!",
+      "subtitle": "You've used all your free videos. Unlock more with Pro.",
+      "whatsIncluded": "What's included",
+      "features": {
+        "videos": "100 videos per month",
+        "linkedin": "Auto-share to LinkedIn",
+        "storage": "Unlimited storage",
+        "branding": "Custom branding",
+        "integrations": "Google & Trustpilot integrations",
+        "support": "Priority support"
+      },
+      "perMonth": "/month",
+      "cta": "Upgrade to Pro",
+      "loading": "Redirecting...",
+      "later": "Maybe later"
+    },
+    "transactions": {
+      "title": "Recent activity",
+      "credits": "credits",
+      "balance": "Balance",
+      "types": {
+        "subscriptionGrant": "Subscription credit",
+        "subscriptionRenewal": "Monthly renewal",
+        "oneTimePurchase": "Credit purchase",
+        "usageDeduction": "Video recorded",
+        "adminAdjustment": "Adjustment",
+        "refund": "Refund"
+      }
+    }
   }
 }
