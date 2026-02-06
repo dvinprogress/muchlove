@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run *)",
+      "Bash(npm install *)",
+      "Bash(npm test *)",
+      "Bash(npx supabase *)",
+      "Bash(npx playwright *)",
+      "Bash(npx vitest *)",
+      "Bash(git status)",
+      "Bash(git log *)",
+      "Bash(git diff *)",
+      "Bash(git add *)",
+      "Bash(git commit *)"
+    ]
+  }
+}
