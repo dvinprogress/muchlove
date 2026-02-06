@@ -4,7 +4,7 @@
 
 ## Statut Global
 - **Phase**: mvp
-- **Derniere action**: Setup auth Supabase + dashboard + schema DB
+- **Derniere action**: Commit initial + preparation deploiement Vercel/Cloudflare
 
 ## Infrastructure
 | Element | Statut | Date | Notes |
@@ -17,9 +17,10 @@
 | Auth trigger (auto company) | DONE | 2026-02-02 | 002_auth_trigger.sql |
 | Vitest + Playwright | DONE | 2026-02-02 | Config prete, tests basiques |
 | ESLint | DONE | 2026-02-02 | Next.js core-web-vitals |
-| GitHub repo | TODO | | Pas de commit initial |
-| Vercel deploy | TODO | | |
-| CI/CD | TODO | | |
+| GitHub repo | DONE | 2026-02-06 | 2 commits, master branch, pushed |
+| Vercel deploy | IN_PROGRESS | 2026-02-06 | Compte en creation, build OK |
+| Cloudflare DNS | IN_PROGRESS | 2026-02-06 | Compte en creation, domaine a acheter |
+| CI/CD | TODO | | Auto-deploy via Vercel + GitHub |
 
 ## Features
 | # | Feature | Statut | Date | Fichiers cles |
@@ -46,8 +47,8 @@
 |---------|--------|-------|
 | Supabase | CONFIGURED | Auth (Google + LinkedIn + Email), DB, Storage |
 | Stripe | NOT_CONFIGURED | |
-| Vercel | NOT_CONFIGURED | |
-| Cloudflare | NOT_CONFIGURED | |
+| Vercel | IN_PROGRESS | Compte en creation, build production OK |
+| Cloudflare | IN_PROGRESS | Compte en creation, domaine a acheter |
 
 ## Agents & Skills Projet
 | Element | Statut | Notes |
@@ -59,8 +60,9 @@
 | Knowledge base | DONE | decisions-log, ux-guidelines, video-patterns, supabase-schema |
 
 ## Prochaines Etapes (priorite)
-1. Commit initial (45+ fichiers stages)
-2. Interface enregistrement video (feature #9 - coeur du produit)
-3. Gestion contacts + invitations (feature #11)
-4. Workflow partage social (feature #12)
-5. Landing page marketing (feature #16)
+1. Finaliser deploy Vercel + Cloudflare (comptes + config)
+2. Configurer redirect URLs Supabase pour le domaine prod
+3. Interface enregistrement video (feature #9 - coeur du produit)
+4. Gestion contacts + invitations (feature #11)
+5. Workflow partage social (feature #12)
+6. Landing page marketing (feature #16)
