@@ -7,7 +7,7 @@ type Contact = Database['public']['Tables']['contacts']['Row']
 type Company = Database['public']['Tables']['companies']['Row']
 
 interface ContactWithCompany extends Contact {
-  companies: Company
+  companies: Company | null
 }
 
 interface PageProps {
@@ -41,6 +41,7 @@ export default async function TestimonialPage({ params }: PageProps) {
   }
 
   const company = contact.companies
+  const companyName = company?.name ?? contact.company_name
 
   return (
     <div className="min-h-screen bg-white flex items-center justify-center p-4">
@@ -48,17 +49,17 @@ export default async function TestimonialPage({ params }: PageProps) {
         <Card className="border-0 shadow-xl">
           <CardContent className="p-8 text-center space-y-6">
             {/* Logo ou nom de l'entreprise */}
-            {company.logo_url ? (
+            {company?.logo_url ? (
               <div className="flex justify-center">
                 <img
                   src={company.logo_url}
-                  alt={company.name}
+                  alt={companyName}
                   className="h-16 w-auto object-contain"
                 />
               </div>
             ) : (
               <h1 className="text-3xl font-bold text-slate-900">
-                {company.name}
+                {companyName}
               </h1>
             )}
 
@@ -68,7 +69,7 @@ export default async function TestimonialPage({ params }: PageProps) {
                 Bonjour {contact.first_name} !
               </h2>
               <p className="text-lg text-slate-700">
-                {company.name} aimerait recevoir votre témoignage vidéo
+                {companyName} aimerait recevoir votre témoignage vidéo
               </p>
             </div>
 
