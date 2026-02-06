@@ -50,7 +50,8 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    if (!VIDEO_VALIDATION.ALLOWED_MIME_TYPES.includes(video.type as 'video/webm' | 'video/mp4')) {
+    const baseType = (video.type.split(';')[0]?.trim() || video.type) as string
+    if (!VIDEO_VALIDATION.ALLOWED_MIME_TYPES.includes(baseType as 'video/webm' | 'video/mp4')) {
       return NextResponse.json(
         { success: false, error: 'Format vidéo non supporté (accepté: webm, mp4)' },
         { status: 400 }

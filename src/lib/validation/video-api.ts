@@ -31,6 +31,6 @@ export const transcribeSchema = z.object({
 export const VIDEO_VALIDATION = {
   MAX_FILE_SIZE: 50 * 1024 * 1024, // 50MB
   ALLOWED_MIME_TYPES: ['video/webm', 'video/mp4'],
-  MIN_DURATION: 1, // 1 seconde minimum
-  MAX_DURATION: 180, // 3 minutes maximum
+  MIN_DURATION: 15, // 15 secondes minimum (aligné sur RECORDING_LIMITS)
+  MAX_DURATION: 120, // 2 minutes maximum (aligné sur RECORDING_LIMITS)
 } as const
