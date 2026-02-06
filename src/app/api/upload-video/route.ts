@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import type { Database } from '@/types/database'
-import { createClient as createServerClient } from '@/lib/supabase/server'
 import { uploadVideoSchema, VIDEO_VALIDATION } from '@/lib/validation/video-api'
 
 function getSupabaseAdmin() {
@@ -18,17 +17,6 @@ function getSupabaseAdmin() {
 
 export async function POST(request: NextRequest) {
   try {
-    // 1. Authentification - Vérifier que l'utilisateur est connecté
-    const supabase = await createServerClient()
-    const { data: { user }, error: authError } = await supabase.auth.getUser()
-
-    if (authError || !user) {
-      return NextResponse.json(
-        { success: false, error: 'Non authentifié' },
-        { status: 401 }
-      )
-    }
-
     const supabaseAdmin = getSupabaseAdmin()
 
     // 2. Parser le FormData
@@ -83,12 +71,12 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // 5. Fetch le contact pour obtenir company_id
+    // 5. Fetch le contact et vérifier qu'il est autorisé à uploader
     const { data: contact, error: contactError } = await supabaseAdmin
       .from('contacts')
-      .select('id, company_id')
+      .select('id, company_id, status, unique_link')
       .eq('id', contactId)
-      .single<{ id: string; company_id: string }>()
+      .single<{ id: string; company_id: string; status: string; unique_link: string }>()
 
     if (contactError || !contact) {
       return NextResponse.json(
@@ -97,22 +85,16 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // 6. Autorisation - Vérifier que l'utilisateur a accès à cette company
-    const { data: userCompany, error: companyError } = await supabaseAdmin
-      .from('companies')
-      .select('id')
-      .eq('id', contact.company_id)
-      .eq('email', user.email!)
-      .single<{ id: string }>()
-
-    if (companyError || !userCompany) {
+    // Vérifier que le contact est dans un état qui permet l'upload
+    const allowedStatuses = ['created', 'invited', 'link_opened', 'video_completed']
+    if (!allowedStatuses.includes(contact.status)) {
       return NextResponse.json(
-        { success: false, error: 'Accès non autorisé à ce contact' },
+        { success: false, error: 'Ce lien n\'est plus valide' },
         { status: 403 }
       )
     }
 
-    // 7. Compter les tentatives existantes pour ce contact
+    // 6. Compter les tentatives existantes pour ce contact
     const { count, error: countError } = await supabaseAdmin
       .from('testimonials')
       .select('id', { count: 'exact', head: true })
@@ -128,7 +110,7 @@ export async function POST(request: NextRequest) {
 
     const attemptNumber = (count || 0) + 1
 
-    // 8. Upload vers Supabase Storage (bucket: raw-videos)
+    // 7. Upload vers Supabase Storage (bucket: raw-videos)
     const timestamp = Date.now()
     const fileName = `${contact.company_id}/${contactId}/raw_${timestamp}.webm`
 
@@ -149,7 +131,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // 9. Obtenir l'URL publique
+    // 8. Obtenir l'URL publique
     const { data: urlData } = supabaseAdmin
       .storage
       .from('raw-videos')
@@ -157,7 +139,7 @@ export async function POST(request: NextRequest) {
 
     const rawVideoUrl = urlData.publicUrl
 
-    // 10. Insert dans la table testimonials
+    // 9. Insert dans la table testimonials
     const hasTranscription = !!transcription
     const { data: testimonial, error: testimonialError } = await supabaseAdmin
       .from('testimonials')
@@ -185,7 +167,7 @@ export async function POST(request: NextRequest) {
 
     const testimonialId = (testimonial as { id: string }).id
 
-    // 11. Update le contact status
+    // 10. Update le contact status
     const { error: updateContactError } = await supabaseAdmin
       .from('contacts')
       // @ts-ignore - Supabase admin client type inference issue with service role
@@ -200,7 +182,7 @@ export async function POST(request: NextRequest) {
       // Ne pas faire planter la requete, juste logger
     }
 
-    // 12. Retourner le succes (plus de fire-and-forget vers /api/transcribe)
+    // 11. Retourner le succes (plus de fire-and-forget vers /api/transcribe)
     return NextResponse.json({
       success: true,
       testimonialId
