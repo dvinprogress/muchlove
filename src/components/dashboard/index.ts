@@ -1,0 +1,6 @@
+export { Sidebar } from './Sidebar'
+export { Header } from './Header'
+export { MobileNav } from './MobileNav'
+export { StatsCard } from './StatsCard'
+export { QuickActions } from './QuickActions'
+export { DashboardShell } from './DashboardShell'

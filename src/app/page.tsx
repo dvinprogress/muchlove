@@ -1,8 +1,21 @@
+import { LandingNavbar } from "@/components/landing/LandingNavbar";
+import { HeroSection } from "@/components/landing/HeroSection";
+import { HowItWorks } from "@/components/landing/HowItWorks";
+import { SocialProof } from "@/components/landing/SocialProof";
+import { Pricing } from "@/components/landing/Pricing";
+import { Footer } from "@/components/landing/Footer";
+
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
-      <h1 className="text-4xl font-bold">MuchLove</h1>
-      <p className="mt-4 text-lg text-gray-600">Bienvenue sur MuchLove</p>
-    </main>
+    <div className="min-h-screen bg-white">
+      <LandingNavbar />
+      <main>
+        <HeroSection />
+        <HowItWorks />
+        <SocialProof />
+        <Pricing />
+      </main>
+      <Footer />
+    </div>
   );
 }

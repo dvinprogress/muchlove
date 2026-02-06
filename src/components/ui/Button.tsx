@@ -6,7 +6,10 @@ import { motion } from 'framer-motion';
 type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger';
 type ButtonSize = 'sm' | 'md' | 'lg';
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface ButtonProps extends Omit<
+  ButtonHTMLAttributes<HTMLButtonElement>,
+  'onAnimationStart' | 'onDrag' | 'onDragEnd' | 'onDragStart'
+> {
   variant?: ButtonVariant;
   size?: ButtonSize;
   loading?: boolean;
