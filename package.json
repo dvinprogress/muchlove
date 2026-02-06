@@ -16,9 +16,12 @@
     "e2e:ui": "playwright test --ui"
   },
   "dependencies": {
+    "@huggingface/transformers": "^3.8.1",
     "@supabase/ssr": "^0.8.0",
     "@supabase/supabase-js": "^2.93.3",
     "@tailwindcss/postcss": "^4.1.18",
+    "@types/canvas-confetti": "^1.9.0",
+    "canvas-confetti": "^1.9.4",
     "framer-motion": "^12.30.0",
     "lucide-react": "^0.563.0",
     "nanoid": "^5.1.6",
