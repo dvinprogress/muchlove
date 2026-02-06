@@ -204,7 +204,7 @@ export function VideoRecorder({
       case 'countdown':
       case 'recording':
         return (
-          <>
+          <div className="w-full max-w-lg mx-auto">
             <VideoPreview
               stream={stream}
               isRecording={phase === 'recording'}
@@ -221,12 +221,12 @@ export function VideoRecorder({
               onRetry={retryRecording}
               onValidate={handleValidate}
             />
-          </>
+          </div>
         )
 
       case 'recorded':
         return (
-          <>
+          <div className="w-full max-w-lg mx-auto">
             <VideoPreview videoUrl={videoUrl} />
             <RecordingControls
               phase={phase}
@@ -240,7 +240,7 @@ export function VideoRecorder({
               onRetry={retryRecording}
               onValidate={handleValidate}
             />
-          </>
+          </div>
         )
 
       case 'error':
