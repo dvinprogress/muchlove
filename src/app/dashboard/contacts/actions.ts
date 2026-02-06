@@ -38,7 +38,7 @@ export async function createContact(
   // 2. Validate avec Zod
   const validation = createContactSchema.safeParse(data)
   if (!validation.success) {
-    return { success: false, error: validation.error.issues[0].message }
+    return { success: false, error: validation.error.issues[0]?.message ?? 'Donnees invalides' }
   }
 
   const validatedData = validation.data

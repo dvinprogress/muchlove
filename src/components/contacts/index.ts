@@ -1,2 +1,6 @@
 export { ContactCard } from './ContactCard'
 export { ContactForm } from './ContactForm'
+export { ContactStatusBadge } from './ContactStatusBadge'
+export { ContactsList } from './ContactsList'
+export { AddContactForm } from './AddContactForm'
+export { ContactsEmptyState } from './ContactsEmptyState'

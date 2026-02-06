@@ -1,6 +1,13 @@
 import { createClient } from '@/lib/supabase/server'
 import { Video, Users, TrendingUp } from 'lucide-react'
-import { Header, StatsCard, QuickActions } from '@/components/dashboard'
+import {
+  Header,
+  StatsCard,
+  QuickActions,
+  RecentActivity,
+  ConversionFunnel,
+} from '@/components/dashboard'
+import { getDashboardStats } from './actions'
 import type { Database } from '@/types/database'
 
 type Company = Database['public']['Tables']['companies']['Row']
@@ -33,9 +40,28 @@ export default async function DashboardPage() {
   const videosLimit = company?.videos_limit || planLimits[currentPlan] || 5
   const usagePercentage = videosLimit > 0 ? (videosUsed / videosLimit) * 100 : 0
 
-  // Stats fictives pour la démo (TODO: calculer depuis la base)
-  const totalContacts = 0
-  const totalTestimonials = 0
+  // Récupérer les stats du dashboard
+  const statsResult = await getDashboardStats()
+  const stats = statsResult.success
+    ? statsResult.data
+    : {
+        totalContacts: 0,
+        totalTestimonials: 0,
+        recentActivity: [],
+        funnelData: {
+          created: 0,
+          invited: 0,
+          link_opened: 0,
+          video_started: 0,
+          video_completed: 0,
+          shared_1: 0,
+          shared_2: 0,
+          shared_3: 0,
+        },
+      }
+
+  const totalContacts = stats.totalContacts
+  const totalTestimonials = stats.totalTestimonials
 
   return (
     <div>
@@ -73,6 +99,12 @@ export default async function DashboardPage() {
 
       {/* Quick Actions */}
       <QuickActions />
+
+      {/* Recent Activity & Conversion Funnel */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+        <RecentActivity activities={stats.recentActivity} />
+        <ConversionFunnel funnelData={stats.funnelData} />
+      </div>
 
       {/* Alerts */}
       {usagePercentage >= 100 && (

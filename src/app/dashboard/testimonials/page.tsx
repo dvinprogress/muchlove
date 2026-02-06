@@ -3,7 +3,7 @@ import { Video } from 'lucide-react'
 import { createClient } from '@/lib/supabase/server'
 import { Header } from '@/components/dashboard'
 import { EmptyState } from '@/components/ui'
-import { TestimonialCard } from '@/components/testimonials'
+import { TestimonialsList } from '@/components/testimonials'
 
 export default async function TestimonialsPage() {
   const supabase = await createClient()
@@ -45,11 +45,7 @@ export default async function TestimonialsPage() {
           description="Vos témoignages vidéo apparaîtront ici une fois que vos contacts auront enregistré leurs vidéos."
         />
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {testimonials.map((testimonial) => (
-            <TestimonialCard key={testimonial.id} testimonial={testimonial} />
-          ))}
-        </div>
+        <TestimonialsList testimonials={testimonials} />
       )}
     </div>
   )
