@@ -281,7 +281,12 @@
       "uploadErrorDescription": "Algo salió mal al subir tu video. Inténtalo de nuevo.",
       "retryUpload": "Reintentar subida",
       "genericError": "Algo salió mal",
-      "retry": "Intentar de nuevo"
+      "retry": "Intentar de nuevo",
+      "transcribing": "Transcribiendo...",
+      "transcribingDescription": "Analizando tu grabacion",
+      "modelLoading": "Cargando modelo IA...",
+      "transcriptionComplete": "¡Transcripcion completa!",
+      "transcriptionFailed": "Transcripcion no disponible, continuando con la subida"
     },
     "permission": {
       "title": "Necesitamos acceso a la cámara 📷",

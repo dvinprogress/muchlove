@@ -36,6 +36,10 @@ export function useMediaRecorder(): UseMediaRecorderReturn {
   const timerRef = useRef<NodeJS.Timeout | null>(null)
   const countdownTimerRef = useRef<NodeJS.Timeout | null>(null)
 
+  // Refs pour cleanup au unmount
+  const streamRef = useRef<MediaStream | null>(null)
+  const videoUrlRef = useRef<string | null>(null)
+
   const startCamera = useCallback(async () => {
     setError(null)
     setPhase('requesting')
@@ -224,8 +228,8 @@ export function useMediaRecorder(): UseMediaRecorderReturn {
 
   const cleanup = useCallback(() => {
     // Stop stream tracks
-    if (stream) {
-      stream.getTracks().forEach(track => track.stop())
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach(track => track.stop())
     }
 
     // Stop timers
@@ -245,8 +249,8 @@ export function useMediaRecorder(): UseMediaRecorderReturn {
     }
 
     // Revoke URLs
-    if (videoUrl) {
-      URL.revokeObjectURL(videoUrl)
+    if (videoUrlRef.current) {
+      URL.revokeObjectURL(videoUrlRef.current)
     }
 
     // Reset states
@@ -258,13 +262,17 @@ export function useMediaRecorder(): UseMediaRecorderReturn {
     setPhase('idle')
     chunksRef.current = []
     mediaRecorderRef.current = null
-  }, [stream, videoUrl])
+  }, [])
 
-  // Cleanup au unmount
+  // Garder les refs a jour
+  useEffect(() => { streamRef.current = stream }, [stream])
+  useEffect(() => { videoUrlRef.current = videoUrl }, [videoUrl])
+
+  // Cleanup au unmount uniquement
   useEffect(() => {
     return () => {
-      if (stream) {
-        stream.getTracks().forEach(track => track.stop())
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach(track => track.stop())
       }
       if (timerRef.current) {
         clearInterval(timerRef.current)
@@ -272,11 +280,11 @@ export function useMediaRecorder(): UseMediaRecorderReturn {
       if (countdownTimerRef.current) {
         clearInterval(countdownTimerRef.current)
       }
-      if (videoUrl) {
-        URL.revokeObjectURL(videoUrl)
+      if (videoUrlRef.current) {
+        URL.revokeObjectURL(videoUrlRef.current)
       }
     }
-  }, [stream, videoUrl])
+  }, [])
 
   return {
     phase,

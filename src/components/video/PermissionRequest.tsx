@@ -6,24 +6,12 @@ import { useTranslations } from 'next-intl'
 import type { RecordingError } from '@/types/video'
 
 interface PermissionRequestProps {
-  onPermissionGranted: (stream: MediaStream) => void
+  onRequestPermission: () => void
   error?: RecordingError | null
 }
 
-export function PermissionRequest({ onPermissionGranted, error }: PermissionRequestProps) {
+export function PermissionRequest({ onRequestPermission, error }: PermissionRequestProps) {
   const t = useTranslations('video.permission')
-  const handleRequestPermission = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: { width: { ideal: 720, max: 720 }, height: { ideal: 720, max: 720 }, frameRate: { ideal: 30, max: 30 }, facingMode: 'user' },
-        audio: { echoCancellation: true, noiseSuppression: true, sampleRate: 44100 }
-      })
-      onPermissionGranted(stream)
-    } catch (err) {
-      // L'erreur sera gérée par le composant parent
-      console.error('Permission denied:', err)
-    }
-  }
 
   return (
     <motion.div
@@ -84,7 +72,7 @@ export function PermissionRequest({ onPermissionGranted, error }: PermissionRequ
       )}
 
       <button
-        onClick={handleRequestPermission}
+        onClick={onRequestPermission}
         className="px-8 py-4 bg-rose-500 text-white font-semibold rounded-lg hover:bg-rose-600 transition-colors focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2"
       >
         {t('buttonAllow')}

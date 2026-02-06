@@ -36,11 +36,13 @@ export async function POST(request: NextRequest) {
     const video = formData.get('video') as File | null
     const contactIdRaw = formData.get('contactId') as string | null
     const durationRaw = formData.get('duration') as string | null
+    const transcriptionRaw = formData.get('transcription') as string | null
 
     // 3. Validation Zod des inputs
     const validationResult = uploadVideoSchema.safeParse({
       contactId: contactIdRaw,
       duration: durationRaw,
+      transcription: transcriptionRaw,
     })
 
     if (!validationResult.success) {
@@ -50,7 +52,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const { contactId, duration: durationSeconds } = validationResult.data
+    const { contactId, duration: durationSeconds, transcription } = validationResult.data
 
     // 4. Validation du fichier vidéo
     if (!video) {
@@ -156,6 +158,7 @@ export async function POST(request: NextRequest) {
     const rawVideoUrl = urlData.publicUrl
 
     // 10. Insert dans la table testimonials
+    const hasTranscription = !!transcription
     const { data: testimonial, error: testimonialError } = await supabaseAdmin
       .from('testimonials')
       // @ts-ignore - Supabase admin client type inference issue with service role
@@ -165,7 +168,9 @@ export async function POST(request: NextRequest) {
         raw_video_url: rawVideoUrl,
         duration_seconds: durationSeconds,
         attempt_number: attemptNumber,
-        processing_status: 'pending'
+        transcription: transcription || null,
+        processing_status: hasTranscription ? 'completed' : 'pending',
+        completed_at: hasTranscription ? new Date().toISOString() : null
       })
       .select('id')
       .single()
@@ -195,17 +200,7 @@ export async function POST(request: NextRequest) {
       // Ne pas faire planter la requete, juste logger
     }
 
-    // 12. Fire and forget : lancer la transcription
-    const transcribeUrl = new URL('/api/transcribe', request.url)
-    fetch(transcribeUrl.toString(), {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ testimonialId })
-    }).catch(err => {
-      console.error('Failed to trigger transcription:', err)
-    })
-
-    // 13. Retourner le succes
+    // 12. Retourner le succes (plus de fire-and-forget vers /api/transcribe)
     return NextResponse.json({
       success: true,
       testimonialId

@@ -11,6 +11,7 @@ import { z } from 'zod'
 export const uploadVideoSchema = z.object({
   contactId: z.string().uuid('ID du contact invalide'),
   duration: z.coerce.number().positive('La durée doit être positive'),
+  transcription: z.string().max(10000, 'Transcription trop longue').optional(),
   // Le File sera validé manuellement (pas de z.instanceof(File) car serveur)
 })
 

@@ -281,7 +281,12 @@
       "uploadErrorDescription": "Something went wrong while uploading your video. Give it another try.",
       "retryUpload": "Retry upload",
       "genericError": "Something went wrong",
-      "retry": "Try again"
+      "retry": "Try again",
+      "transcribing": "Transcribing...",
+      "transcribingDescription": "Analyzing your recording",
+      "modelLoading": "Loading AI model...",
+      "transcriptionComplete": "Transcription complete!",
+      "transcriptionFailed": "Transcription unavailable, continuing with upload"
     },
     "permission": {
       "title": "We need camera access 📷",

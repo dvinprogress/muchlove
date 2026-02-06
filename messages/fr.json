@@ -281,7 +281,12 @@
       "uploadErrorDescription": "Un problème est survenu lors de l'envoi de votre vidéo. Réessayez.",
       "retryUpload": "Réessayer l'envoi",
       "genericError": "Quelque chose n'a pas marché",
-      "retry": "Réessayer"
+      "retry": "Réessayer",
+      "transcribing": "Transcription en cours...",
+      "transcribingDescription": "Analyse de votre enregistrement",
+      "modelLoading": "Chargement du modele IA...",
+      "transcriptionComplete": "Transcription terminee !",
+      "transcriptionFailed": "Transcription indisponible, envoi en cours"
     },
     "permission": {
       "title": "On a besoin d'accéder à votre caméra 📷",

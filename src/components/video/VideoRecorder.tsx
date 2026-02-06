@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Loader2, CheckCircle, AlertCircle } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { useMediaRecorder } from '@/hooks/useMediaRecorder'
+import { useWhisperTranscription } from '@/hooks/useWhisperTranscription'
 import { PermissionRequest } from './PermissionRequest'
 import { VideoPreview } from './VideoPreview'
 import { RecordingControls } from './RecordingControls'
@@ -41,6 +42,9 @@ export function VideoRecorder({
     cleanup
   } = useMediaRecorder()
 
+  const { transcribe, isTranscribing, isModelLoading, progress } = useWhisperTranscription()
+  const [uploadPhase, setUploadPhase] = useState<'idle' | 'uploading' | 'complete' | 'error'>('idle')
+
   // Cleanup au unmount
   useEffect(() => {
     return () => {
@@ -48,27 +52,22 @@ export function VideoRecorder({
     }
   }, [cleanup])
 
-  // Auto-démarrer la caméra au mount
-  useEffect(() => {
-    if (phase === 'idle') {
-      startCamera()
-    }
-  }, [phase, startCamera])
-
-  const [uploadPhase, setUploadPhase] = useState<'idle' | 'uploading' | 'complete' | 'error'>('idle')
-
   const handleValidate = async () => {
     if (!videoBlob) return
 
-    // Set phase uploading
-    setUploadPhase('uploading')
-
     try {
+      // Phase 1: Transcription client-side
+      const transcription = await transcribe(videoBlob)
+
+      // Phase 2: Upload avec transcription
+      setUploadPhase('uploading')
+
       const formData = new FormData()
       formData.append('video', videoBlob, 'recording.webm')
       formData.append('contactId', contactId)
       formData.append('companyId', companyId)
       formData.append('duration', duration.toString())
+      formData.append('transcription', transcription || '')
 
       const response = await fetch('/api/upload-video', {
         method: 'POST',
@@ -94,6 +93,38 @@ export function VideoRecorder({
   }
 
   const renderPhase = () => {
+    // Phase de transcription
+    if (isTranscribing) {
+      return (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="flex flex-col items-center justify-center space-y-4 p-8"
+        >
+          <Loader2 className="w-16 h-16 text-rose-500 animate-spin" />
+          <p className="text-lg font-semibold text-gray-900">
+            {isModelLoading ? t('modelLoading') : t('transcribing')}
+          </p>
+          <p className="text-sm text-gray-600">
+            {t('transcribingDescription')}
+          </p>
+          <div className="w-full max-w-md">
+            <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+              <motion.div
+                className="h-full bg-gradient-to-r from-rose-400 to-rose-500"
+                initial={{ width: 0 }}
+                animate={{ width: `${progress}%` }}
+                transition={{ duration: 0.3 }}
+              />
+            </div>
+            <p className="text-xs text-gray-500 text-center mt-2">
+              {Math.round(progress)}%
+            </p>
+          </div>
+        </motion.div>
+      )
+    }
+
     // Priorité à uploadPhase si l'upload est en cours ou terminé
     if (uploadPhase === 'uploading') {
       return (
@@ -164,9 +195,7 @@ export function VideoRecorder({
       case 'requesting':
         return (
           <PermissionRequest
-            onPermissionGranted={() => {
-              // Le stream est déjà géré par startCamera
-            }}
+            onRequestPermission={startCamera}
             error={error}
           />
         )
