@@ -3,18 +3,22 @@
 import { useState, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
-import { Plus, Link as LinkIcon, Trash2 } from 'lucide-react'
+import { Plus, ChevronLeft, ChevronRight } from 'lucide-react'
 import type { Contact, ContactStatus } from '@/types/database'
 import { SearchInput } from '@/components/ui/SearchInput'
 import { Button } from '@/components/ui/Button'
 import { ContactStatusBadge } from './ContactStatusBadge'
 import { AddContactForm } from './AddContactForm'
-import { deleteContact } from '@/app/dashboard/contacts/actions'
+import { CopyLinkButton } from './CopyLinkButton'
+import { DeleteContactButton } from './DeleteContactButton'
 import { formatDate } from '@/lib/utils/format'
 import { CONTACT_STATUS_ORDER } from '@/lib/utils/contact-status'
 
 interface ContactsListProps {
   contacts: Contact[]
+  currentPage: number
+  totalContacts: number
+  pageSize: number
 }
 
 // Variants Framer Motion pour stagger animation
@@ -31,13 +35,18 @@ const itemVariants = {
   animate: { opacity: 1, y: 0 },
 }
 
-export function ContactsList({ contacts }: ContactsListProps) {
+export function ContactsList({ contacts, currentPage, totalContacts, pageSize }: ContactsListProps) {
   const router = useRouter()
   const [showAddModal, setShowAddModal] = useState(false)
   const [search, setSearch] = useState('')
   const [statusFilter, setStatusFilter] = useState<ContactStatus | 'all'>('all')
 
-  // Filtre les contacts selon la recherche et le statut
+  // Calcul pagination
+  const totalPages = Math.ceil(totalContacts / pageSize)
+  const hasNextPage = currentPage < totalPages
+  const hasPrevPage = currentPage > 1
+
+  // Filtre les contacts selon la recherche et le statut (cote client pour la page courante)
   const filteredContacts = useMemo(() => {
     return contacts.filter((contact) => {
       // Filtre recherche
@@ -54,30 +63,11 @@ export function ContactsList({ contacts }: ContactsListProps) {
     })
   }, [contacts, search, statusFilter])
 
-  // Copier le lien unique
-  const handleCopyLink = async (uniqueLink: string) => {
-    const link = `${window.location.origin}/t/${uniqueLink}`
-    try {
-      await navigator.clipboard.writeText(link)
-      // TODO: afficher toast success
-      alert('Lien copié dans le presse-papiers')
-    } catch (error) {
-      alert('Erreur lors de la copie du lien')
-    }
-  }
-
-  // Supprimer un contact
-  const handleDelete = async (contactId: string, contactName: string) => {
-    if (!window.confirm(`Voulez-vous vraiment supprimer le contact ${contactName} ?`)) {
-      return
-    }
-
-    const result = await deleteContact(contactId)
-    if (result.success) {
-      router.refresh()
-    } else {
-      alert(`Erreur: ${result.error}`)
-    }
+  // Navigation pagination
+  const handlePageChange = (newPage: number) => {
+    const url = new URL(window.location.href)
+    url.searchParams.set('page', newPage.toString())
+    router.push(url.pathname + url.search)
   }
 
   // Initiale pour l'avatar
@@ -94,7 +84,7 @@ export function ContactsList({ contacts }: ContactsListProps) {
           <SearchInput
             value={search}
             onChange={setSearch}
-            placeholder="Rechercher par nom, email ou entreprise..."
+            placeholder="Search by name, email or company..."
           />
         </div>
 
@@ -111,7 +101,7 @@ export function ContactsList({ contacts }: ContactsListProps) {
               focus:border-rose-500
             "
           >
-            <option value="all">Tous les statuts</option>
+            <option value="all">All statuses</option>
             {CONTACT_STATUS_ORDER.map((status) => (
               <option key={status} value={status}>
                 {status.replace('_', ' ')}
@@ -122,14 +112,14 @@ export function ContactsList({ contacts }: ContactsListProps) {
 
         {/* Bouton ajouter */}
         <Button variant="primary" icon={<Plus className="w-4 h-4" />} onClick={() => setShowAddModal(true)}>
-          Ajouter un contact
+          Add contact
         </Button>
       </div>
 
       {/* Liste vide */}
       {filteredContacts.length === 0 && (
         <div className="text-center py-12 text-slate-500">
-          {search || statusFilter !== 'all' ? 'Aucun contact ne correspond aux filtres' : 'Aucun contact'}
+          {search || statusFilter !== 'all' ? 'No contacts match the filters' : 'No contacts yet'}
         </div>
       )}
 
@@ -146,8 +136,8 @@ export function ContactsList({ contacts }: ContactsListProps) {
               <tr className="border-b border-slate-200">
                 <th className="text-left py-3 px-4 text-sm font-medium text-slate-700">Contact</th>
                 <th className="text-left py-3 px-4 text-sm font-medium text-slate-700">Email</th>
-                <th className="text-left py-3 px-4 text-sm font-medium text-slate-700">Entreprise</th>
-                <th className="text-left py-3 px-4 text-sm font-medium text-slate-700">Statut</th>
+                <th className="text-left py-3 px-4 text-sm font-medium text-slate-700">Company</th>
+                <th className="text-left py-3 px-4 text-sm font-medium text-slate-700">Status</th>
                 <th className="text-left py-3 px-4 text-sm font-medium text-slate-700">Date</th>
                 <th className="text-right py-3 px-4 text-sm font-medium text-slate-700">Actions</th>
               </tr>
@@ -175,20 +165,12 @@ export function ContactsList({ contacts }: ContactsListProps) {
                   <td className="py-3 px-4 text-slate-500 text-sm">{formatDate(contact.created_at)}</td>
                   <td className="py-3 px-4">
                     <div className="flex items-center justify-end gap-2">
-                      <button
-                        onClick={() => handleCopyLink(contact.unique_link)}
-                        className="p-2 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors"
-                        title="Copier le lien"
-                      >
-                        <LinkIcon className="w-4 h-4" />
-                      </button>
-                      <button
-                        onClick={() => handleDelete(contact.id, contact.first_name)}
-                        className="p-2 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors"
-                        title="Supprimer"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
+                      <CopyLinkButton uniqueLink={contact.unique_link} variant="icon" />
+                      <DeleteContactButton
+                        contactId={contact.id}
+                        contactName={contact.first_name}
+                        variant="icon"
+                      />
                     </div>
                   </td>
                 </motion.tr>
@@ -227,7 +209,7 @@ export function ContactsList({ contacts }: ContactsListProps) {
 
             {/* Entreprise */}
             <div className="text-sm">
-              <span className="text-slate-500">Entreprise: </span>
+              <span className="text-slate-500">Company: </span>
               <span className="text-slate-900 font-medium">{contact.company_name}</span>
             </div>
 
@@ -236,27 +218,42 @@ export function ContactsList({ contacts }: ContactsListProps) {
 
             {/* Actions */}
             <div className="flex gap-2 pt-2 border-t border-slate-100">
-              <Button
-                variant="secondary"
-                size="sm"
-                icon={<LinkIcon className="w-4 h-4" />}
-                onClick={() => handleCopyLink(contact.unique_link)}
-                className="flex-1"
-              >
-                Copier le lien
-              </Button>
-              <Button
-                variant="danger"
-                size="sm"
-                icon={<Trash2 className="w-4 h-4" />}
-                onClick={() => handleDelete(contact.id, contact.first_name)}
-              >
-                Supprimer
-              </Button>
+              <CopyLinkButton uniqueLink={contact.unique_link} variant="button" className="flex-1" />
+              <DeleteContactButton contactId={contact.id} contactName={contact.first_name} variant="button" />
             </div>
           </motion.div>
         ))}
       </motion.div>
+
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <div className="flex items-center justify-between mt-6 pt-6 border-t border-slate-200">
+          <div className="text-sm text-slate-500">
+            Page {currentPage} of {totalPages} ({totalContacts} contacts)
+          </div>
+
+          <div className="flex items-center gap-2">
+            <Button
+              variant="secondary"
+              size="sm"
+              icon={<ChevronLeft className="w-4 h-4" />}
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={!hasPrevPage}
+            >
+              Previous
+            </Button>
+            <Button
+              variant="secondary"
+              size="sm"
+              icon={<ChevronRight className="w-4 h-4" />}
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={!hasNextPage}
+            >
+              Next
+            </Button>
+          </div>
+        </div>
+      )}
 
       {/* Modal d'ajout */}
       <AddContactForm isOpen={showAddModal} onClose={() => setShowAddModal(false)} />

@@ -24,10 +24,10 @@ export default function Error({
 
           <div className="space-y-2">
             <h1 className="text-2xl font-bold text-slate-900">
-              Oups, quelque chose s'est mal passé
+              Oops! Something didn't work 😊
             </h1>
             <p className="text-slate-600">
-              Une erreur inattendue est survenue. Veuillez réessayer.
+              An unexpected error occurred. Give it another try?
             </p>
           </div>
 
@@ -36,11 +36,11 @@ export default function Error({
               onClick={reset}
               className="bg-rose-500 hover:bg-rose-600 text-white font-semibold"
             >
-              Réessayer
+              Try again
             </Button>
             <Link href="/dashboard">
               <Button variant="secondary" className="w-full sm:w-auto">
-                Retour au dashboard
+                Back to dashboard
               </Button>
             </Link>
           </div>

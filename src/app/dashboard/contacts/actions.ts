@@ -73,10 +73,13 @@ export async function createContact(
 }
 
 /**
- * Récupère tous les contacts de la company
+ * Récupère les contacts de la company avec pagination
  * RLS applique automatiquement le filtre company_id = auth.uid()
  */
-export async function getContacts(): Promise<ActionResult<Contact[]>> {
+export async function getContacts(options?: {
+  page?: number
+  pageSize?: number
+}): Promise<ActionResult<{ contacts: Contact[]; total: number }>> {
   // 1. Get user from session
   const supabase = await createClient()
   const { data: { user }, error: authError } = await supabase.auth.getUser()
@@ -85,17 +88,24 @@ export async function getContacts(): Promise<ActionResult<Contact[]>> {
     return { success: false, error: 'Non authentifié' }
   }
 
-  // 2. Select * from contacts where company_id = user.id order by created_at desc
-  const { data: contacts, error: selectError } = await supabase
+  // 2. Pagination params
+  const page = options?.page ?? 1
+  const pageSize = options?.pageSize ?? 20
+  const from = (page - 1) * pageSize
+  const to = from + pageSize - 1
+
+  // 3. Select with pagination and count
+  const { data: contacts, error: selectError, count } = await supabase
     .from('contacts')
-    .select('*')
+    .select('*', { count: 'exact' })
     .order('created_at', { ascending: false })
+    .range(from, to)
 
   if (selectError) {
     return { success: false, error: selectError.message }
   }
 
-  return { success: true, data: contacts }
+  return { success: true, data: { contacts: contacts ?? [], total: count ?? 0 } }
 }
 
 /**
@@ -138,6 +148,7 @@ export async function deleteContact(contactId: string): Promise<ActionResult> {
 /**
  * Stats pour le funnel
  * Retourne le nombre de contacts par status
+ * Utilise des COUNT SQL en parallèle pour performance optimale
  */
 export async function getContactStats(): Promise<ActionResult<Record<ContactStatus, number>>> {
   // 1. Get user from session
@@ -148,32 +159,40 @@ export async function getContactStats(): Promise<ActionResult<Record<ContactStat
     return { success: false, error: 'Non authentifié' }
   }
 
-  // 2. Select count(*) group by status
-  const { data: contacts, error: selectError } = await supabase
-    .from('contacts')
-    .select('status')
+  // 2. Tous les statuts possibles
+  const statuses: ContactStatus[] = [
+    'created',
+    'invited',
+    'link_opened',
+    'video_started',
+    'video_completed',
+    'shared_1',
+    'shared_2',
+    'shared_3',
+  ]
 
-  if (selectError) {
-    return { success: false, error: selectError.message }
-  }
+  // 3. Count SQL en parallèle pour chaque status
+  const countPromises = statuses.map(async (status) => {
+    const { count, error } = await supabase
+      .from('contacts')
+      .select('*', { count: 'exact', head: true })
+      .eq('status', status)
 
-  // 3. Aggregate counts par status
-  const stats: Record<ContactStatus, number> = {
-    created: 0,
-    invited: 0,
-    link_opened: 0,
-    video_started: 0,
-    video_completed: 0,
-    shared_1: 0,
-    shared_2: 0,
-    shared_3: 0,
-  }
-
-  contacts.forEach((contact) => {
-    if (contact.status in stats) {
-      stats[contact.status as ContactStatus]++
-    }
+    if (error) throw error
+    return { status, count: count ?? 0 }
   })
 
-  return { success: true, data: stats }
+  try {
+    const results = await Promise.all(countPromises)
+
+    // 4. Transform en Record<ContactStatus, number>
+    const stats = results.reduce((acc, { status, count }) => {
+      acc[status] = count
+      return acc
+    }, {} as Record<ContactStatus, number>)
+
+    return { success: true, data: stats }
+  } catch (error) {
+    return { success: false, error: error instanceof Error ? error.message : 'Erreur lors du calcul des stats' }
+  }
 }

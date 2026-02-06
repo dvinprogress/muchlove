@@ -4,7 +4,7 @@
 
 ## Statut Global
 - **Phase**: mvp
-- **Derniere action**: Deploiement Vercel OK — https://muchlove.vercel.app live
+- **Derniere action**: Module Contacts optimise — pagination, stats SQL, composants Client extraits, toast sonner
 
 ## Infrastructure
 | Element | Statut | Date | Notes |
@@ -18,9 +18,9 @@
 | Vitest + Playwright | DONE | 2026-02-02 | Config prete, tests basiques |
 | ESLint | DONE | 2026-02-02 | Next.js core-web-vitals |
 | GitHub repo | DONE | 2026-02-06 | 2 commits, master branch, pushed |
-| Vercel deploy | DONE | 2026-02-06 | Live: muchlove.vercel.app, 4 env vars, region cdg1, headers securite |
-| Domaine custom | DONE | 2026-02-06 | app.muchlove.fr ajoute sur Vercel, DNS CNAME: app → 86a8ec8f8d3539fa.vercel-dns-017.com |
-| Cloudflare DNS | IN_PROGRESS | 2026-02-06 | Domaine a acheter, puis CNAME app → Vercel |
+| Vercel deploy | DONE | 2026-02-06 | Live: muchlove.app + muchlove.vercel.app, 4 env vars, region cdg1, headers securite |
+| Domaine muchlove.app | DONE | 2026-02-06 | Achete sur Cloudflare ($14.20/an), expire Feb 2027 |
+| Cloudflare DNS | DONE | 2026-02-06 | A: @ → 76.76.21.21, CNAME: www → cname.vercel-dns.com (DNS only) |
 | CI/CD | DONE | 2026-02-06 | Auto-deploy via GitHub push → Vercel |
 
 ## Features
@@ -36,34 +36,34 @@
 | 8 | Button component (Framer) | DONE | 2026-02-02 | src/components/ui/Button.tsx | |
 | 9 | Interface enregistrement video | DONE* | 2026-02-06 | src/components/video/, hooks/useMediaRecorder.ts, app/t/[link]/, api/upload-video/ | *Securite: auth manquante sur API. Transcription non-fonctionnelle. State machine incomplete |
 | 10 | Pipeline traitement video | DONE* | 2026-02-06 | src/app/api/transcribe/route.ts, api/upload-video/route.ts | *Transcription Whisper fallback only, pas de queue/retry |
-| 11 | Gestion contacts | DONE* | 2026-02-06 | src/components/contacts/, app/dashboard/contacts/, actions.ts | *Pas d'envoi email reel, alert() primitifs, pas de pagination |
+| 11 | Gestion contacts | DONE | 2026-02-06 | src/components/contacts/, app/dashboard/contacts/, actions.ts, CopyLinkButton.tsx, DeleteContactButton.tsx | Pagination 20/page, stats SQL optimisees, toast sonner, composants Client extraits |
 | 12 | Workflow partage (social) | TODO | | Trustpilot, Google, LinkedIn | |
 | 13 | Gamification (ambassadeur) | DONE | 2026-02-06 | src/components/gamification/, lib/utils/confetti.ts | ProgressBar, StatusBadge, CelebrationModal |
 | 14 | Integration Stripe | TODO | | Checkout, Portal, Credits | |
 | 15 | Systeme emails | TODO | | Invitations, notifications | Bloquant pour feature #11 (invitations) |
-| 16 | Landing page marketing | DONE* | 2026-02-06 | src/components/landing/, app/page.tsx | *SEO 3/10, mock data, liens morts, pas de Terms/Privacy |
+| 16 | Landing page marketing | DONE | 2026-02-06 | src/components/landing/, app/page.tsx, app/terms/, app/privacy/ | SEO 8+/10, metadata complete, pages legales, liens footer OK, bouton demo scroll |
 
 ## Bloquants qualite a corriger (issus de l'audit 2026-02-06)
 
 ### Video (#9) — Securite critique
-- [ ] Ajouter auth/authz sur /api/upload-video (n'importe qui peut uploader)
-- [ ] Validation Zod sur inputs API (contactId, companyId)
-- [ ] Remplacer `as any` par types generiques SupabaseClient<Database>
-- [ ] Corriger state machine (phases uploading/complete mortes)
+- [x] Ajouter auth/authz sur /api/upload-video (n'importe qui peut uploader) — DONE 2026-02-06
+- [x] Validation Zod sur inputs API (contactId, companyId) — DONE 2026-02-06
+- [x] Remplacer `as any` par types generiques SupabaseClient<Database> — DONE 2026-02-06
+- [x] Corriger state machine (phases uploading/complete mortes) — DONE 2026-02-06
 - [ ] Implementer vraie transcription (OpenAI Whisper API ou HF Inference)
 
 ### Contacts (#11) — UX critique
-- [ ] Systeme de toast (remplacer alert/confirm par sonner ou shadcn/toast)
-- [ ] Pagination (getContacts charge tout en memoire)
-- [ ] Stats SQL GROUP BY au lieu d'agregation JS
-- [ ] Extraire CopyLinkButton/DeleteButton en Client Components separes
+- [x] Systeme de toast (remplacer alert/confirm par sonner ou shadcn/toast) — DONE 2026-02-06
+- [x] Pagination (getContacts charge tout en memoire) — DONE 2026-02-06
+- [x] Stats SQL GROUP BY au lieu d'agregation JS — DONE 2026-02-06
+- [x] Extraire CopyLinkButton/DeleteButton en Client Components separes — DONE 2026-02-06
 
 ### Landing (#16) — SEO/Legal critique
-- [ ] Metadata SEO complete (OpenGraph, Twitter, robots, canonical)
-- [ ] Remplacer mock data SocialProof par donnees reelles ou disclaimer
-- [ ] Handler pour "Voir une demo" (modal video)
-- [ ] Pages /terms et /privacy (obligation legale RGPD)
-- [ ] Corriger liens morts footer
+- [x] Metadata SEO complete (OpenGraph, Twitter, robots, canonical) — layout.tsx
+- [x] Remplacer mock data SocialProof par formulation conservatrice — SocialProof.tsx
+- [x] Handler pour "Voir une demo" — scroll-to-section vers #how-it-works
+- [x] Pages /terms et /privacy (obligation legale RGPD) — pages creees
+- [x] Corriger liens morts footer — /terms et /privacy links OK
 
 ### Transversal
 - [ ] Systeme emails (Resend/SendGrid) — requis pour invitations contacts (#15)
@@ -75,8 +75,8 @@
 |---------|--------|-------|
 | Supabase | CONFIGURED | Auth (Google + LinkedIn + Email), DB, Storage |
 | Stripe | NOT_CONFIGURED | |
-| Vercel | DEPLOYED | muchlove.vercel.app live, env vars configurees, domaine app.muchlove.fr ajoute |
-| Cloudflare | IN_PROGRESS | Compte en creation, domaine a acheter |
+| Vercel | DEPLOYED | muchlove.app live, env vars configurees, NEXT_PUBLIC_APP_URL=https://muchlove.app |
+| Cloudflare | CONFIGURED | muchlove.app enregistre, DNS A+CNAME → Vercel, WHOIS redacte |
 
 ## Agents & Skills Projet
 | Element | Statut | Notes |
@@ -90,8 +90,7 @@
 ## Prochaines Etapes (priorite)
 1. Corriger bloquants securite video (#9) — auth API routes
 2. Systeme emails (#15) — debloquer invitations contacts
-3. Toast system — remplacer alert/confirm partout
-4. SEO + pages legales landing (#16)
-5. Workflow partage social (#12)
-6. Integration Stripe (#14)
-7. Finaliser Cloudflare DNS + CI/CD
+3. Workflow partage social (#12)
+4. Integration Stripe (#14)
+5. Supprimer ancien domaine app.muchlove.fr de Vercel (obsolete)
+6. Corriger erreurs TypeScript API routes (transcribe, upload-video) — bloquant build production

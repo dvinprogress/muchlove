@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Loader2, CheckCircle, AlertCircle } from 'lucide-react'
 import { useMediaRecorder } from '@/hooks/useMediaRecorder'
@@ -53,10 +53,14 @@ export function VideoRecorder({
     }
   }, [phase, startCamera])
 
+  const [uploadPhase, setUploadPhase] = useState<'idle' | 'uploading' | 'complete' | 'error'>('idle')
+
   const handleValidate = async () => {
     if (!videoBlob) return
 
     // Set phase uploading
+    setUploadPhase('uploading')
+
     try {
       const formData = new FormData()
       formData.append('video', videoBlob, 'recording.webm')
@@ -75,17 +79,84 @@ export function VideoRecorder({
 
       await response.json()
 
+      // Upload réussi - passer en phase complete
+      setUploadPhase('complete')
+
       // Appeler onComplete avec le blob et la durée
       onComplete(videoBlob, duration)
     } catch (err) {
       console.error('Upload error:', err)
-      // En cas d'erreur, on peut toujours appeler onComplete
-      // car le blob est disponible localement
-      onComplete(videoBlob, duration)
+      // En cas d'erreur, passer en phase error
+      setUploadPhase('error')
     }
   }
 
   const renderPhase = () => {
+    // Priorité à uploadPhase si l'upload est en cours ou terminé
+    if (uploadPhase === 'uploading') {
+      return (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="flex flex-col items-center justify-center space-y-4 p-8"
+        >
+          <Loader2 className="w-16 h-16 text-rose-500 animate-spin" />
+          <p className="text-lg font-semibold text-gray-900">
+            Envoi en cours...
+          </p>
+          <p className="text-sm text-gray-600">
+            Veuillez patienter pendant que nous traitons votre vidéo
+          </p>
+        </motion.div>
+      )
+    }
+
+    if (uploadPhase === 'complete') {
+      return (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="flex flex-col items-center justify-center space-y-4 p-8"
+        >
+          <div className="w-20 h-20 rounded-full bg-green-100 flex items-center justify-center">
+            <CheckCircle className="w-12 h-12 text-green-500" />
+          </div>
+          <p className="text-lg font-semibold text-gray-900">
+            Vidéo envoyée avec succès !
+          </p>
+          <p className="text-sm text-gray-600">
+            Merci pour votre enregistrement
+          </p>
+        </motion.div>
+      )
+    }
+
+    if (uploadPhase === 'error') {
+      return (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="flex flex-col items-center justify-center space-y-4 p-8"
+        >
+          <div className="w-20 h-20 rounded-full bg-rose-100 flex items-center justify-center">
+            <AlertCircle className="w-12 h-12 text-rose-500" />
+          </div>
+          <p className="text-lg font-semibold text-gray-900">
+            Erreur lors de l'envoi
+          </p>
+          <p className="text-sm text-gray-600 text-center max-w-md">
+            Une erreur est survenue lors de l'envoi de votre vidéo. Veuillez réessayer.
+          </p>
+          <button
+            onClick={() => setUploadPhase('idle')}
+            className="px-6 py-3 bg-rose-500 text-white font-semibold rounded-lg hover:bg-rose-600 transition-colors focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2"
+          >
+            Réessayer l'envoi
+          </button>
+        </motion.div>
+      )
+    }
+
     switch (phase) {
       case 'idle':
       case 'requesting':
@@ -139,42 +210,6 @@ export function VideoRecorder({
               onValidate={handleValidate}
             />
           </>
-        )
-
-      case 'uploading':
-        return (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="flex flex-col items-center justify-center space-y-4 p-8"
-          >
-            <Loader2 className="w-16 h-16 text-rose-500 animate-spin" />
-            <p className="text-lg font-semibold text-gray-900">
-              Envoi en cours...
-            </p>
-            <p className="text-sm text-gray-600">
-              Veuillez patienter pendant que nous traitons votre vidéo
-            </p>
-          </motion.div>
-        )
-
-      case 'complete':
-        return (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="flex flex-col items-center justify-center space-y-4 p-8"
-          >
-            <div className="w-20 h-20 rounded-full bg-green-100 flex items-center justify-center">
-              <CheckCircle className="w-12 h-12 text-green-500" />
-            </div>
-            <p className="text-lg font-semibold text-gray-900">
-              Vidéo envoyée avec succès !
-            </p>
-            <p className="text-sm text-gray-600">
-              Merci pour votre enregistrement
-            </p>
-          </motion.div>
         )
 
       case 'error':

@@ -15,10 +15,10 @@ export function ContactsEmptyState() {
     <>
       <EmptyState
         icon={<Users className="w-12 h-12 text-slate-400" />}
-        title="Aucun contact"
-        description="Commencez par ajouter vos premiers contacts pour leur demander des témoignages."
+        title="Your testimonial collection starts here 💛"
+        description="Ready to hear from your happy customers? Add your first contact and watch the love roll in."
         action={{
-          label: 'Ajouter un contact',
+          label: 'Add your first contact',
           onClick: () => setShowAddModal(true),
         }}
       />

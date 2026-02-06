@@ -3,31 +3,31 @@ import { UserPlus, Video, Share2 } from "lucide-react";
 const steps = [
   {
     icon: UserPlus,
-    title: "Invitez vos clients",
-    description: "Envoyez un lien unique à vos clients satisfaits",
+    title: "Invite your happy customers",
+    description: "Send a unique link to someone you've delighted",
   },
   {
     icon: Video,
-    title: "Ils témoignent",
-    description: "Vos clients enregistrent une vidéo de 30s à 2min",
+    title: "They record their story 🎥",
+    description: "In 1 minute. We guide them through it.",
   },
   {
     icon: Share2,
-    title: "Partagez partout",
-    description: "Publiez sur LinkedIn, Google, Trustpilot automatiquement",
+    title: "Share everywhere ✨",
+    description: "Publish on Trustpilot, Google, and LinkedIn automatically",
   },
 ];
 
 export function HowItWorks() {
   return (
-    <section className="py-20 sm:py-32">
+    <section id="how-it-works" className="py-20 sm:py-32">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-            Comment ça marche
+            How it works
           </h2>
           <p className="mt-4 text-lg text-slate-600">
-            Trois étapes simples pour collecter des témoignages authentiques
+            Three simple steps to collect genuine video testimonials
           </p>
         </div>
         <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">

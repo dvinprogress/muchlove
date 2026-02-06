@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import type { Database } from '@/types/database'
+import { createClient as createServerClient } from '@/lib/supabase/server'
+import { transcribeSchema } from '@/lib/validation/video-api'
 
 // Config Vercel : augmenter le timeout pour la transcription
 export const maxDuration = 60 // 60 secondes max
@@ -8,36 +10,71 @@ export const maxDuration = 60 // 60 secondes max
 function getSupabaseAdmin() {
   return createClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!
+    process.env.SUPABASE_SERVICE_ROLE_KEY!,
+    {
+      db: {
+        schema: 'public'
+      }
+    }
   )
 }
 
 export async function POST(request: NextRequest) {
   try {
-    const supabaseAdmin = getSupabaseAdmin() as any
-    // 1. Parser le body JSON
-    const body = await request.json()
-    const { testimonialId } = body
+    // 1. Authentification - Vérifier que l'utilisateur est connecté
+    const supabase = await createServerClient()
+    const { data: { user }, error: authError } = await supabase.auth.getUser()
 
-    // 2. Validation
-    if (!testimonialId || typeof testimonialId !== 'string') {
+    if (authError || !user) {
       return NextResponse.json(
-        { success: false, error: 'ID du témoignage manquant ou invalide' },
+        { success: false, error: 'Non authentifié' },
+        { status: 401 }
+      )
+    }
+
+    const supabaseAdmin = getSupabaseAdmin()
+
+    // 2. Parser le body JSON
+    const body = await request.json()
+
+    // 3. Validation Zod
+    const validationResult = transcribeSchema.safeParse(body)
+
+    if (!validationResult.success) {
+      return NextResponse.json(
+        { success: false, error: validationResult.error.issues[0]?.message || 'Validation error' },
         { status: 400 }
       )
     }
 
-    // 3. Fetch le testimonial pour obtenir raw_video_url
+    const { testimonialId } = validationResult.data
+
+    // 4. Fetch le testimonial pour obtenir raw_video_url et company_id
     const { data: testimonial, error: fetchError } = await supabaseAdmin
       .from('testimonials')
-      .select('id, raw_video_url, processing_status')
+      .select('id, raw_video_url, processing_status, company_id')
       .eq('id', testimonialId)
-      .single() as { data: { id: string; raw_video_url: string | null; processing_status: string } | null; error: any }
+      .single<{ id: string; raw_video_url: string | null; processing_status: string; company_id: string }>()
 
     if (fetchError || !testimonial) {
       return NextResponse.json(
         { success: false, error: 'Témoignage introuvable' },
         { status: 404 }
+      )
+    }
+
+    // 5. Autorisation - Vérifier que l'utilisateur a accès à cette company
+    const { data: userCompany, error: companyError } = await supabaseAdmin
+      .from('companies')
+      .select('id')
+      .eq('id', testimonial.company_id)
+      .eq('email', user.email!)
+      .single<{ id: string }>()
+
+    if (companyError || !userCompany) {
+      return NextResponse.json(
+        { success: false, error: 'Accès non autorisé à ce témoignage' },
+        { status: 403 }
       )
     }
 
@@ -48,11 +85,12 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // 4. Update processing_status = 'processing'
+    // 6. Update processing_status = 'processing'
     const { error: updateProcessingError } = await supabaseAdmin
       .from('testimonials')
+      // @ts-ignore - Supabase admin client type inference issue with service role
       .update({
-        processing_status: 'processing' as const,
+        processing_status: 'processing',
         updated_at: new Date().toISOString()
       })
       .eq('id', testimonialId)
@@ -61,7 +99,7 @@ export async function POST(request: NextRequest) {
       console.error('Failed to update processing status:', updateProcessingError)
     }
 
-    // 5. Extraire le path depuis raw_video_url
+    // 7. Extraire le path depuis raw_video_url
     // Format attendu: https://{project}.supabase.co/storage/v1/object/public/raw-videos/{path}
     const urlObj = new URL(testimonial.raw_video_url!)
     const pathParts = urlObj.pathname.split('/raw-videos/')
@@ -69,10 +107,11 @@ export async function POST(request: NextRequest) {
 
     if (!videoPath) {
       console.error('Invalid raw_video_url format:', testimonial.raw_video_url)
-        await supabaseAdmin
+      await supabaseAdmin
         .from('testimonials')
+        // @ts-ignore - Supabase admin client type inference issue with service role
         .update({
-          processing_status: 'failed' as const,
+          processing_status: 'failed',
           updated_at: new Date().toISOString()
         })
         .eq('id', testimonialId)
@@ -83,7 +122,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // 6. Download la vidéo depuis Supabase Storage
+    // 8. Download la vidéo depuis Supabase Storage
     const pathToDownload = videoPath.startsWith('/') ? videoPath.slice(1) : videoPath
     const { data: videoBlob, error: downloadError } = await supabaseAdmin
       .storage
@@ -92,10 +131,11 @@ export async function POST(request: NextRequest) {
 
     if (downloadError || !videoBlob) {
       console.error('Failed to download video:', downloadError)
-        await supabaseAdmin
+      await supabaseAdmin
         .from('testimonials')
+        // @ts-ignore - Supabase admin client type inference issue with service role
         .update({
-          processing_status: 'failed' as const,
+          processing_status: 'failed',
           updated_at: new Date().toISOString()
         })
         .eq('id', testimonialId)
@@ -106,7 +146,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // 7. Transcription avec @huggingface/transformers (approche pragmatique avec fallback)
+    // 9. Transcription avec @huggingface/transformers (approche pragmatique avec fallback)
     try {
       // Tenter d'importer et de transcrire
       const { pipeline } = await import('@huggingface/transformers')
@@ -127,11 +167,12 @@ export async function POST(request: NextRequest) {
       // Si on arrive ici, la transcription a réussi
       const transcriptionText = Array.isArray(result) ? result[0]?.text : result.text
 
-        await supabaseAdmin
+      await supabaseAdmin
         .from('testimonials')
+        // @ts-ignore - Supabase admin client type inference issue with service role
         .update({
           transcription: transcriptionText || null,
-          processing_status: 'completed' as const,
+          processing_status: 'completed',
           completed_at: new Date().toISOString(),
           updated_at: new Date().toISOString()
         })
@@ -148,8 +189,9 @@ export async function POST(request: NextRequest) {
 
       await supabaseAdmin
         .from('testimonials')
+        // @ts-ignore - Supabase admin client type inference issue with service role
         .update({
-          processing_status: 'completed' as const,
+          processing_status: 'completed',
           completed_at: new Date().toISOString(),
           updated_at: new Date().toISOString()
         })

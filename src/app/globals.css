@@ -3,6 +3,13 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+
+  /* MuchLove Brand Colors */
+  --color-muchlove-yellow: #FFBF00;
+  --color-warm-coral: #FF6B6B;
+  --color-fresh-mint: #4ECDC4;
+  --color-charcoal: #2C3E50;
+  --color-cream: #FFF9E6;
 }
 
 @media (prefers-color-scheme: dark) {

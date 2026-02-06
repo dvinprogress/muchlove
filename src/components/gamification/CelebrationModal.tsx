@@ -22,28 +22,28 @@ const CELEBRATION_CONFIG: Record<
   }
 > = {
   video_complete: {
-    emoji: '🎬',
-    headline: 'Super !',
-    body: 'Votre témoignage vidéo a été enregistré avec succès !',
-    cta: 'Continuer'
+    emoji: '🙌',
+    headline: 'You did it!',
+    body: 'You just recorded something special. Ready for the fun part?',
+    cta: 'Let\'s keep going! 🎉'
   },
   share_1: {
     emoji: '⭐',
-    headline: 'Merci !',
-    body: 'Vous avez partagé votre avis ! Encore 2 partages pour devenir ambassadeur.',
-    cta: 'Continuer'
+    headline: 'Nice! 1 down, 2 to go',
+    body: 'You just helped them gain visibility. That\'s huge.',
+    cta: 'Keep the momentum 🚀'
   },
   share_2: {
-    emoji: '🌟',
-    headline: 'Presque !',
-    body: "Plus qu'un partage pour devenir ambassadeur !",
-    cta: 'Continuer'
+    emoji: '✨',
+    headline: 'You\'re on fire!',
+    body: 'One last step to become an ambassador.',
+    cta: 'Let\'s finish strong! 💛'
   },
   ambassador: {
-    emoji: '🏆',
-    headline: 'Ambassadeur !',
-    body: 'Vous êtes maintenant ambassadeur ! Merci pour votre soutien incroyable.',
-    cta: 'Terminer'
+    emoji: '🎉',
+    headline: 'You\'re officially an ambassador!',
+    body: 'You just helped in the biggest way possible. That\'s the power of spreading love 💛',
+    cta: 'Amazing! ✨'
   }
 }
 

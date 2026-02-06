@@ -37,7 +37,7 @@ function LoginContent() {
       setIsSuccess(true);
       setEmail('');
     } catch (err) {
-      setError('Une erreur est survenue. Veuillez réessayer.');
+      setError('Oops! Something didn\'t work. Give it another try 😊');
     } finally {
       setIsLoading(false);
     }
@@ -49,10 +49,10 @@ function LoginContent() {
         {/* Logo & Titre */}
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-gray-900 mb-2">
-            MuchLove <span className="text-rose-500">❤️</span>
+            MuchLove <span className="text-rose-500">💛</span>
           </h1>
           <p className="text-gray-600 text-sm">
-            Collectez des témoignages vidéo authentiques
+            Collect video testimonials that spread love
           </p>
         </div>
 
@@ -60,7 +60,7 @@ function LoginContent() {
         {hasAuthError && (
           <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl">
             <p className="text-sm text-red-600">
-              Erreur lors de la connexion. Veuillez réessayer.
+              Hmm, we lost you for a second 😊 Give it another try!
             </p>
           </div>
         )}
@@ -91,7 +91,7 @@ function LoginContent() {
                   fill="#EA4335"
                 />
               </svg>
-              Continuer avec Google
+              Sign in with Google
             </button>
           </form>
 
@@ -104,7 +104,7 @@ function LoginContent() {
               <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
                 <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
               </svg>
-              Continuer avec LinkedIn
+              Sign in with LinkedIn
             </button>
           </form>
         </div>
@@ -123,7 +123,7 @@ function LoginContent() {
         {isSuccess ? (
           <div className="p-4 bg-green-50 border border-green-200 rounded-xl">
             <p className="text-sm text-green-600 text-center">
-              Un lien de connexion a été envoyé à votre email
+              Check your inbox! 💛 We just sent you a magic link.
             </p>
           </div>
         ) : (
@@ -151,7 +151,7 @@ function LoginContent() {
               disabled={isLoading || !email}
               className="w-full py-3 px-4 rounded-xl font-medium transition-colors bg-rose-500 hover:bg-rose-600 text-white disabled:bg-gray-300 disabled:cursor-not-allowed"
             >
-              {isLoading ? 'Envoi en cours...' : 'Recevoir un lien de connexion'}
+              {isLoading ? 'Sending magic...' : 'Send me a magic link ✨'}
             </button>
           </form>
         )}

@@ -14,22 +14,28 @@ export function HeroSection() {
           className="text-center"
         >
           <h1 className="text-5xl font-bold tracking-tight text-slate-900 sm:text-6xl">
-            Transformez vos clients satisfaits en{" "}
-            <span className="text-rose-500">ambassadeurs</span>
+            Much love. Shared{" "}
+            <span className="text-rose-500">effortlessly.</span>
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-xl text-slate-600">
-            Collectez des témoignages vidéo authentiques en quelques clics.
-            Boostez votre crédibilité et convertissez plus de prospects.
+            Turn your happiest customers into video testimonials that publish automatically on Trustpilot, Google Reviews, and LinkedIn — in under 3 minutes.
           </p>
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Link
               href="/login"
               className="inline-flex items-center justify-center rounded-lg bg-rose-500 px-8 py-4 text-lg font-semibold text-white shadow-lg transition-all hover:bg-rose-600 hover:scale-105"
             >
-              Commencer gratuitement
+              Start spreading love (free) 💛
             </Link>
-            <button className="inline-flex items-center justify-center rounded-lg border-2 border-slate-300 px-8 py-4 text-lg font-semibold text-slate-700 transition-colors hover:border-slate-400 hover:bg-slate-50">
-              Voir une démo
+            <button
+              onClick={() => {
+                document
+                  .getElementById("how-it-works")
+                  ?.scrollIntoView({ behavior: "smooth" });
+              }}
+              className="inline-flex items-center justify-center rounded-lg border-2 border-slate-300 px-8 py-4 text-lg font-semibold text-slate-700 transition-colors hover:border-slate-400 hover:bg-slate-50"
+            >
+              See how it works
             </button>
           </div>
         </motion.div>

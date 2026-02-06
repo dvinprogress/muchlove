@@ -22,16 +22,16 @@ export default function NotFound() {
 
         <div className="space-y-2">
           <h1 className="text-3xl font-bold text-slate-900">
-            404 - Page non trouvée
+            Lost your way? 😊
           </h1>
           <p className="text-slate-600">
-            La page que vous cherchez n'existe pas.
+            This page doesn't exist. Let's get you back on track.
           </p>
         </div>
 
         <Link href="/">
           <Button className="bg-rose-500 hover:bg-rose-600 text-white font-semibold">
-            Retour à l'accueil
+            Back to home
           </Button>
         </Link>
       </div>

@@ -1,6 +1,7 @@
 'use client'
 
 import { useTransition } from 'react'
+import { toast } from 'sonner'
 import { Card, CardContent, Button } from '@/components/ui'
 import { createContact } from '@/app/dashboard/contacts/actions'
 
@@ -23,9 +24,10 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
       })
 
       if (result.success) {
+        toast.success('Contact created! Ready to share much love 💛')
         onSuccess?.()
       } else {
-        alert(result.error)
+        toast.error(`Oops! Couldn't create contact: ${result.error}`)
       }
     })
   }
@@ -39,7 +41,7 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
               htmlFor="first_name"
               className="block text-sm font-medium text-slate-700 mb-2"
             >
-              Prénom du contact <span className="text-rose-500">*</span>
+              First name <span className="text-rose-500">*</span>
             </label>
             <input
               type="text"
@@ -57,7 +59,7 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
               htmlFor="company_name"
               className="block text-sm font-medium text-slate-700 mb-2"
             >
-              Nom de l'entreprise <span className="text-rose-500">*</span>
+              Company <span className="text-rose-500">*</span>
             </label>
             <input
               type="text"
@@ -96,7 +98,7 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
               disabled={isPending}
               className="flex-1"
             >
-              {isPending ? 'Création...' : 'Créer le contact'}
+              {isPending ? 'Creating...' : 'Create contact'}
             </Button>
           </div>
         </form>

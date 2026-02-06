@@ -2,9 +2,17 @@ import { getContacts } from './actions'
 import { ContactsList } from '@/components/contacts/ContactsList'
 import { ContactsEmptyState } from '@/components/contacts/ContactsEmptyState'
 
-export default async function ContactsPage() {
-  // Fetch contacts via server action
-  const result = await getContacts()
+interface ContactsPageProps {
+  searchParams: Promise<{ page?: string }>
+}
+
+export default async function ContactsPage({ searchParams }: ContactsPageProps) {
+  // Parse page from searchParams
+  const params = await searchParams
+  const page = parseInt(params.page ?? '1', 10)
+
+  // Fetch contacts via server action avec pagination
+  const result = await getContacts({ page, pageSize: 20 })
 
   // Gestion erreur
   if (!result.success) {
@@ -23,8 +31,8 @@ export default async function ContactsPage() {
     )
   }
 
-  const contacts = result.data
-  const hasContacts = contacts.length > 0
+  const { contacts, total } = result.data
+  const hasContacts = total > 0
 
   return (
     <div>
@@ -38,7 +46,7 @@ export default async function ContactsPage() {
       {!hasContacts ? (
         <ContactsEmptyState />
       ) : (
-        <ContactsList contacts={contacts} />
+        <ContactsList contacts={contacts} currentPage={page} totalContacts={total} pageSize={20} />
       )}
     </div>
   )

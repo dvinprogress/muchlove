@@ -36,25 +36,25 @@ export function PermissionRequest({ onPermissionGranted, error }: PermissionRequ
 
       <div className="text-center space-y-2">
         <h2 className="text-2xl font-bold text-gray-900">
-          Accès à la caméra requis
+          We need camera access 📷
         </h2>
         <p className="text-gray-600">
-          Pour enregistrer votre vidéo, nous avons besoin d'accéder à votre caméra et votre microphone.
+          To record your video testimonial, please allow camera and microphone access in your browser.
         </p>
       </div>
 
       {error && error.code === 'CAMERA_PERMISSION_DENIED' && (
         <div className="w-full p-4 bg-rose-50 border border-rose-200 rounded-lg">
           <p className="text-sm text-rose-800 font-medium mb-2">
-            Permission refusée
+            We need your permission 😊
           </p>
           <p className="text-xs text-rose-700">
-            Veuillez autoriser l'accès à la caméra dans les paramètres de votre navigateur, puis rechargez la page.
+            Please allow camera access in your browser settings, then reload the page.
           </p>
           <ul className="mt-3 text-xs text-rose-600 space-y-1 list-disc list-inside">
-            <li>Chrome : Cliquez sur l'icône de cadenas dans la barre d'adresse</li>
-            <li>Firefox : Cliquez sur l'icône de caméra barrée</li>
-            <li>Safari : Préférences → Sites web → Caméra</li>
+            <li>Chrome: Click the lock icon in your address bar</li>
+            <li>Firefox: Click the crossed-out camera icon</li>
+            <li>Safari: Preferences → Websites → Camera</li>
           </ul>
         </div>
       )}
@@ -62,10 +62,10 @@ export function PermissionRequest({ onPermissionGranted, error }: PermissionRequ
       {error && error.code === 'CAMERA_NOT_SUPPORTED' && (
         <div className="w-full p-4 bg-rose-50 border border-rose-200 rounded-lg">
           <p className="text-sm text-rose-800 font-medium">
-            Caméra non disponible
+            Camera not available 📷
           </p>
           <p className="text-xs text-rose-700 mt-1">
-            Votre navigateur ne supporte pas l'accès à la caméra ou aucune caméra n'a été détectée.
+            Your browser doesn't support camera access, or no camera was detected.
           </p>
         </div>
       )}
@@ -73,10 +73,10 @@ export function PermissionRequest({ onPermissionGranted, error }: PermissionRequ
       {error && error.code === 'CAMERA_IN_USE' && (
         <div className="w-full p-4 bg-rose-50 border border-rose-200 rounded-lg">
           <p className="text-sm text-rose-800 font-medium">
-            Caméra déjà utilisée
+            Camera already in use 😊
           </p>
           <p className="text-xs text-rose-700 mt-1">
-            Votre caméra est déjà utilisée par une autre application. Veuillez la fermer et réessayer.
+            Your camera is being used by another app. Please close it and try again.
           </p>
         </div>
       )}
@@ -85,7 +85,7 @@ export function PermissionRequest({ onPermissionGranted, error }: PermissionRequ
         onClick={handleRequestPermission}
         className="px-8 py-4 bg-rose-500 text-white font-semibold rounded-lg hover:bg-rose-600 transition-colors focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2"
       >
-        Autoriser l'accès à la caméra
+        Allow camera access
       </button>
     </motion.div>
   )

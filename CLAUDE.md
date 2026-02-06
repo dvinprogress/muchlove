@@ -43,6 +43,21 @@ src/
 e2e/                     # Playwright e2e tests
 ```
 
+## Brand Voice & Copy Guidelines
+
+**OBLIGATOIRE** : Tout texte visible par l'utilisateur doit respecter les guidelines de marque MuchLove.
+
+- **Regles (auto-chargees)** : `.claude/rules/brand-voice.md` — 5 piliers, vocabulaire, blacklist, emojis
+- **Reference complete** : `.claude/knowledge/ux-guidelines.md` — templates, exemples, contextes
+- **Agent dedie** : `ux-copywriter` pour generation de copy
+
+Principes cles :
+- Voix = ami chaleureux et encourageant (jamais corporate)
+- Emojis strategiques (1-2 max, signature = 💛)
+- "You/your" toujours, "users" jamais
+- Simplicite et chiffres concrets ("in 3 minutes", pas "streamlined")
+- Couleurs : #FFBF00 (primary), #FF6B6B (secondary), #4ECDC4 (accent)
+
 ## Supabase Setup
 
 1. Copy `.env.example` to `.env.local`

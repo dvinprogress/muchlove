@@ -15,9 +15,9 @@ interface AddContactFormProps {
 
 // Schema de validation
 const contactSchema = z.object({
-  first_name: z.string().min(1, 'Le prénom est requis'),
-  email: z.string().email('Email invalide'),
-  company_name: z.string().min(1, "Le nom de l'entreprise est requis"),
+  first_name: z.string().min(1, 'First name is required'),
+  email: z.string().email('Invalid email'),
+  company_name: z.string().min(1, "Company name is required"),
 })
 
 type ContactFormData = z.infer<typeof contactSchema>
@@ -70,7 +70,7 @@ export function AddContactForm({ isOpen, onClose }: AddContactFormProps) {
         setGlobalError(result.error)
       }
     } catch (error) {
-      setGlobalError('Une erreur est survenue')
+      setGlobalError('Oops! Something didn\'t work 😊 Try again?')
     } finally {
       setLoading(false)
     }
@@ -83,7 +83,7 @@ export function AddContactForm({ isOpen, onClose }: AddContactFormProps) {
   }
 
   return (
-    <Modal isOpen={isOpen} onClose={handleClose} title="Ajouter un contact" size="md">
+    <Modal isOpen={isOpen} onClose={handleClose} title="Add contact" size="md">
       <form onSubmit={handleSubmit} className="space-y-4">
         {globalError && (
           <div className="p-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-sm">
@@ -92,7 +92,7 @@ export function AddContactForm({ isOpen, onClose }: AddContactFormProps) {
         )}
 
         <Input
-          label="Prénom"
+          label="First name"
           type="text"
           value={formData.first_name}
           onChange={handleChange('first_name')}
@@ -112,7 +112,7 @@ export function AddContactForm({ isOpen, onClose }: AddContactFormProps) {
         />
 
         <Input
-          label="Entreprise"
+          label="Company"
           type="text"
           value={formData.company_name}
           onChange={handleChange('company_name')}
@@ -129,7 +129,7 @@ export function AddContactForm({ isOpen, onClose }: AddContactFormProps) {
             disabled={loading}
             className="flex-1"
           >
-            Annuler
+            Cancel
           </Button>
           <Button
             type="submit"
@@ -138,7 +138,7 @@ export function AddContactForm({ isOpen, onClose }: AddContactFormProps) {
             disabled={loading}
             className="flex-1"
           >
-            Ajouter
+            Add
           </Button>
         </div>
       </form>

@@ -13,13 +13,13 @@ export function Footer() {
           </div>
           <div className="flex gap-6">
             <Link
-              href="#"
+              href="/terms"
               className="text-sm text-slate-600 transition-colors hover:text-rose-500"
             >
               Conditions
             </Link>
             <Link
-              href="#"
+              href="/privacy"
               className="text-sm text-slate-600 transition-colors hover:text-rose-500"
             >
               Confidentialité

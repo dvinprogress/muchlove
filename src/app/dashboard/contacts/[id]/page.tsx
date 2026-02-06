@@ -1,9 +1,10 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { ArrowLeft, Copy, Trash2, Video } from 'lucide-react'
+import { ArrowLeft, Video } from 'lucide-react'
 import { Card, CardContent, Badge, Button, EmptyState } from '@/components/ui'
 import { createClient } from '@/lib/supabase/server'
-import { deleteContact } from '../actions'
+import { CopyLinkButton } from '@/components/contacts/CopyLinkButton'
+import { DeleteContactButton } from '@/components/contacts/DeleteContactButton'
 import type { ContactStatus } from '@/types/database'
 
 interface ContactDetailPageProps {
@@ -24,69 +25,6 @@ const statusConfig: Record<
   shared_1: { label: 'Partagé x1', variant: 'success' },
   shared_2: { label: 'Partagé x2', variant: 'success' },
   shared_3: { label: 'Partagé x3', variant: 'success' },
-}
-
-function CopyLinkButton({ link }: { link: string }) {
-  'use client'
-
-  const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(
-        `${process.env.NEXT_PUBLIC_APP_URL || window.location.origin}/record/${link}`
-      )
-      alert('Lien copié dans le presse-papiers !')
-    } catch (error) {
-      console.error('Erreur lors de la copie:', error)
-      alert('Erreur lors de la copie du lien')
-    }
-  }
-
-  return (
-    <Button
-      variant="secondary"
-      icon={<Copy className="w-4 h-4" />}
-      onClick={handleCopy}
-    >
-      Copier le lien
-    </Button>
-  )
-}
-
-function DeleteContactButton({ contactId }: { contactId: string }) {
-  'use client'
-
-  const handleDelete = async () => {
-    if (
-      !confirm(
-        'Êtes-vous sûr de vouloir supprimer ce contact ? Cette action est irréversible.'
-      )
-    ) {
-      return
-    }
-
-    try {
-      const formData = new FormData()
-      formData.append('contactId', contactId)
-      await deleteContact(contactId)
-    } catch (error) {
-      console.error('Erreur lors de la suppression:', error)
-      alert(
-        error instanceof Error
-          ? error.message
-          : 'Erreur lors de la suppression du contact'
-      )
-    }
-  }
-
-  return (
-    <Button
-      variant="danger"
-      icon={<Trash2 className="w-4 h-4" />}
-      onClick={handleDelete}
-    >
-      Supprimer
-    </Button>
-  )
 }
 
 export default async function ContactDetailPage({
@@ -215,8 +153,8 @@ export default async function ContactDetailPage({
             )}
 
             <div className="flex gap-3 pt-4 border-t border-slate-100">
-              <CopyLinkButton link={contact.unique_link} />
-              <DeleteContactButton contactId={contact.id} />
+              <CopyLinkButton uniqueLink={contact.unique_link} variant="button" />
+              <DeleteContactButton contactId={contact.id} contactName={contact.first_name} variant="button" />
             </div>
           </CardContent>
         </Card>
