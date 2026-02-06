@@ -118,7 +118,7 @@ export async function POST(request: NextRequest) {
     const videoBuffer = await video.arrayBuffer()
     const { data: uploadData, error: uploadError } = await supabaseAdmin
       .storage
-      .from('raw-videos')
+      .from('videos')
       .upload(fileName, videoBuffer, {
         contentType: video.type || 'video/webm',
         upsert: false
@@ -135,7 +135,7 @@ export async function POST(request: NextRequest) {
     // 8. Obtenir l'URL publique
     const { data: urlData } = supabaseAdmin
       .storage
-      .from('raw-videos')
+      .from('videos')
       .getPublicUrl(fileName)
 
     const rawVideoUrl = urlData.publicUrl
