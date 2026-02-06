@@ -3,6 +3,7 @@
 import { LinkIcon } from 'lucide-react'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/Button'
+import { useTranslations } from 'next-intl'
 
 interface CopyLinkButtonProps {
   uniqueLink: string
@@ -11,13 +12,15 @@ interface CopyLinkButtonProps {
 }
 
 export function CopyLinkButton({ uniqueLink, variant = 'icon', className }: CopyLinkButtonProps) {
+  const t = useTranslations('contacts.actions')
+
   const handleCopy = async () => {
     const link = `${window.location.origin}/t/${uniqueLink}`
     try {
       await navigator.clipboard.writeText(link)
-      toast.success('Link copied! Ready to share 💛')
+      toast.success(t('linkCopied'))
     } catch (error) {
-      toast.error('Oops! Could not copy the link. Try again?')
+      toast.error(t('linkCopyError'))
     }
   }
 
@@ -26,7 +29,7 @@ export function CopyLinkButton({ uniqueLink, variant = 'icon', className }: Copy
       <button
         onClick={handleCopy}
         className={className || 'p-2 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors'}
-        title="Copier le lien"
+        title={t('copyLink')}
       >
         <LinkIcon className="w-4 h-4" />
       </button>
@@ -41,7 +44,7 @@ export function CopyLinkButton({ uniqueLink, variant = 'icon', className }: Copy
       onClick={handleCopy}
       className={className}
     >
-      Copier le lien
+      {t('copyLink')}
     </Button>
   )
 }

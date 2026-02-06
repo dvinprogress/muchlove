@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
+import { useTranslations } from 'next-intl'
 import type { ProcessingStatus } from '@/types/database'
 import { TestimonialCard } from './TestimonialCard'
 
@@ -40,16 +41,17 @@ const itemVariants = {
   animate: { opacity: 1, y: 0 },
 }
 
-const STATUS_FILTERS: Array<{ value: ProcessingStatus | 'all'; label: string }> = [
-  { value: 'all', label: 'Tous' },
-  { value: 'pending', label: 'En attente' },
-  { value: 'processing', label: 'En traitement' },
-  { value: 'completed', label: 'Terminé' },
-  { value: 'failed', label: 'Échoué' },
-]
-
 export function TestimonialsList({ testimonials }: TestimonialsListProps) {
+  const t = useTranslations('testimonials.list')
   const [statusFilter, setStatusFilter] = useState<ProcessingStatus | 'all'>('all')
+
+  const STATUS_FILTERS: Array<{ value: ProcessingStatus | 'all'; labelKey: string }> = [
+    { value: 'all', labelKey: 'filterAll' },
+    { value: 'pending', labelKey: 'filterPending' },
+    { value: 'processing', labelKey: 'filterProcessing' },
+    { value: 'completed', labelKey: 'filterCompleted' },
+    { value: 'failed', labelKey: 'filterFailed' },
+  ]
 
   const filteredTestimonials = testimonials.filter((testimonial) => {
     if (statusFilter === 'all') return true
@@ -67,7 +69,7 @@ export function TestimonialsList({ testimonials }: TestimonialsListProps) {
         >
           {STATUS_FILTERS.map((filter) => (
             <option key={filter.value} value={filter.value}>
-              {filter.label}
+              {t(filter.labelKey)}
             </option>
           ))}
         </select>
@@ -76,7 +78,7 @@ export function TestimonialsList({ testimonials }: TestimonialsListProps) {
       {/* Grid */}
       {filteredTestimonials.length === 0 ? (
         <div className="text-center py-12">
-          <p className="text-slate-500">Aucun témoignage avec ce statut</p>
+          <p className="text-slate-500">{t('emptyState')}</p>
         </div>
       ) : (
         <motion.div

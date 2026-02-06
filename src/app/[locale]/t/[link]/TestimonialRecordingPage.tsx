@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
+import { useTranslations } from 'next-intl'
 import { VideoRecorder } from '@/components/video/VideoRecorder'
 import { ProgressBar } from '@/components/gamification/ProgressBar'
 import { CelebrationModal } from '@/components/gamification/CelebrationModal'
@@ -24,6 +25,7 @@ export function TestimonialRecordingPage({
   companyLogoUrl,
   contactStatus
 }: TestimonialRecordingPageProps) {
+  const t = useTranslations('recording.page')
   const [currentStatus, setCurrentStatus] = useState<ContactStatus>(contactStatus)
   const [showCelebration, setShowCelebration] = useState(false)
 
@@ -64,10 +66,10 @@ export function TestimonialRecordingPage({
             <h1 className="text-3xl font-bold text-slate-900">{companyName}</h1>
           )}
           <h2 className="text-2xl font-semibold text-slate-900">
-            Bonjour {contactFirstName} !
+            {t('greeting', { firstName: contactFirstName })}
           </h2>
           <p className="text-lg text-slate-700">
-            {companyName} aimerait recevoir votre témoignage vidéo
+            {t('description', { companyName })}
           </p>
         </motion.div>
 
@@ -95,10 +97,10 @@ export function TestimonialRecordingPage({
                 </svg>
               </div>
               <h3 className="text-xl font-semibold text-slate-900">
-                Merci !
+                {t('alreadyCompletedTitle')}
               </h3>
               <p className="text-slate-700">
-                Votre témoignage a déjà été enregistré.
+                {t('alreadyCompletedDescription')}
               </p>
             </div>
           ) : (
@@ -129,8 +131,7 @@ export function TestimonialRecordingPage({
           className="text-center pt-4 border-t border-slate-100"
         >
           <p className="text-xs text-slate-400">
-            Powered by{' '}
-            <span className="text-rose-500 font-semibold">MuchLove</span>
+            {t('poweredBy', { brandName: 'MuchLove' })}
           </p>
         </motion.div>
 

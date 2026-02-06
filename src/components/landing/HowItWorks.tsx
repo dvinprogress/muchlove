@@ -1,33 +1,38 @@
-import { UserPlus, Video, Share2 } from "lucide-react";
+"use client";
 
-const steps = [
-  {
-    icon: UserPlus,
-    title: "Invite your happy customers",
-    description: "Send a unique link to someone you've delighted",
-  },
-  {
-    icon: Video,
-    title: "They record their story 🎥",
-    description: "In 1 minute. We guide them through it.",
-  },
-  {
-    icon: Share2,
-    title: "Share everywhere ✨",
-    description: "Publish on Trustpilot, Google, and LinkedIn automatically",
-  },
-];
+import { UserPlus, Video, Share2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 export function HowItWorks() {
+  const t = useTranslations("landing.howItWorks");
+
+  const steps = [
+    {
+      icon: UserPlus,
+      titleKey: "steps.invite.title",
+      descriptionKey: "steps.invite.description",
+    },
+    {
+      icon: Video,
+      titleKey: "steps.record.title",
+      descriptionKey: "steps.record.description",
+    },
+    {
+      icon: Share2,
+      titleKey: "steps.share.title",
+      descriptionKey: "steps.share.description",
+    },
+  ];
+
   return (
     <section id="how-it-works" className="py-20 sm:py-32">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-            How it works
+            {t("title")}
           </h2>
           <p className="mt-4 text-lg text-slate-600">
-            Three simple steps to collect genuine video testimonials
+            {t("subtitle")}
           </p>
         </div>
         <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
@@ -42,9 +47,9 @@ export function HowItWorks() {
                   <Icon className="h-6 w-6 text-rose-500" />
                 </div>
                 <h3 className="mt-6 text-xl font-semibold text-slate-900">
-                  {step.title}
+                  {t(step.titleKey as any)}
                 </h3>
-                <p className="mt-2 text-slate-600">{step.description}</p>
+                <p className="mt-2 text-slate-600">{t(step.descriptionKey as any)}</p>
               </div>
             );
           })}

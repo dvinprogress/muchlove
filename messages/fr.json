@@ -1,0 +1,392 @@
+{
+  "common": {
+    "loading": "Chargement..."
+  },
+  "metadata": {
+    "title": "MuchLove — Beaucoup d'amour. Partagé sans effort.",
+    "description": "Transformez vos clients les plus heureux en témoignages vidéo qui se publient automatiquement sur Trustpilot, Google Reviews et LinkedIn — en moins de 3 minutes."
+  },
+  "landing": {
+    "navbar": {
+      "logo": "MuchLove",
+      "login": "Connexion",
+      "getStarted": "Commencer gratuitement"
+    },
+    "hero": {
+      "titlePart1": "Much love. Partagé",
+      "titlePart2": "sans effort.",
+      "subtitle": "Transformez vos clients les plus heureux en témoignages vidéo qui se publient automatiquement sur Trustpilot, Google Reviews et LinkedIn — en moins de 3 minutes.",
+      "ctaPrimary": "Partagez l'amour (gratuit) 💛",
+      "ctaSecondary": "Voir comment ça marche"
+    },
+    "howItWorks": {
+      "title": "Comment ça marche",
+      "subtitle": "Trois étapes simples pour collecter de vrais témoignages vidéo",
+      "steps": {
+        "invite": {
+          "title": "Invitez vos clients ravis",
+          "description": "Envoyez un lien unique à quelqu'un que vous avez enchanté"
+        },
+        "record": {
+          "title": "Ils racontent leur histoire 🎥",
+          "description": "En 1 minute. On les guide à chaque étape."
+        },
+        "share": {
+          "title": "Partagez partout ✨",
+          "description": "Publiez sur Trustpilot, Google et LinkedIn automatiquement"
+        }
+      }
+    },
+    "socialProof": {
+      "title": "Simple, rapide, authentique",
+      "stats": {
+        "time": {
+          "value": "3 minutes",
+          "label": "pour créer votre première campagne"
+        },
+        "duration": {
+          "value": "30s - 2min",
+          "label": "la durée idéale d'un témoignage"
+        },
+        "authentic": {
+          "value": "100% authentique",
+          "label": "de vrais témoignages vidéo"
+        }
+      }
+    },
+    "pricing": {
+      "title": "Tarifs simples et transparents",
+      "subtitle": "Choisissez le plan qui vous convient",
+      "popular": "Populaire",
+      "perMonth": "/mois",
+      "plans": {
+        "free": {
+          "name": "Gratuit",
+          "description": "Pour démarrer",
+          "cta": "Commencer",
+          "features": {
+            "videos": "5 vidéos par mois",
+            "link": "Lien de partage unique",
+            "storage": "Stockage 30 jours",
+            "support": "Support par email"
+          }
+        },
+        "pro": {
+          "name": "Pro",
+          "description": "Pour les entreprises en croissance",
+          "cta": "Essai gratuit",
+          "features": {
+            "videos": "100 vidéos par mois",
+            "linkedin": "Publication auto sur LinkedIn",
+            "storage": "Stockage illimité",
+            "branding": "Personnalisation de marque",
+            "integrations": "Intégrations Google & Trustpilot",
+            "support": "Support prioritaire"
+          }
+        }
+      }
+    },
+    "footer": {
+      "logo": "MuchLove",
+      "copyright": "© 2026 MuchLove. Tous droits réservés.",
+      "terms": "CGU",
+      "privacy": "Confidentialité"
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "MuchLove 💛",
+      "subtitle": "Collectez des témoignages vidéo qui partagent l'amour",
+      "authError": "Oups, on vous a perdu une seconde 😊 Réessayez !",
+      "googleButton": "Se connecter avec Google",
+      "linkedinButton": "Se connecter avec LinkedIn",
+      "separator": "ou",
+      "emailPlaceholder": "vous@exemple.com",
+      "magicLinkButton": "Envoyez-moi un lien magique ✨",
+      "magicLinkButtonLoading": "Envoi en cours...",
+      "magicLinkSuccess": "Consultez votre boîte mail ! 💛 On vient de vous envoyer un lien magique.",
+      "errorGeneric": "Oups ! Quelque chose n'a pas marché. Réessayez 😊"
+    }
+  },
+  "notFound": {
+    "title": "Vous vous êtes perdu ? 😊",
+    "subtitle": "Cette page n'existe pas. On vous remet sur la bonne voie.",
+    "backButton": "Retour à l'accueil"
+  },
+  "legal": {
+    "terms": {
+      "metaTitle": "Conditions d'utilisation — MuchLove",
+      "metaDescription": "Conditions d'utilisation de la plateforme de collecte de témoignages vidéo MuchLove.",
+      "title": "Conditions d'utilisation",
+      "lastUpdated": "Dernière mise à jour : 6 février 2026",
+      "privacyLink": "Politique de confidentialité",
+      "contactEmail": "contact@muchlove.app"
+    },
+    "privacy": {
+      "metaTitle": "Politique de confidentialité — MuchLove",
+      "metaDescription": "Politique de confidentialité et protection des données personnelles de MuchLove.",
+      "title": "Politique de confidentialité",
+      "lastUpdated": "Dernière mise à jour : 6 février 2026"
+    },
+    "footer": {
+      "copyright": "© 2026 MuchLove. Tous droits réservés.",
+      "terms": "CGU",
+      "privacy": "Confidentialité"
+    }
+  },
+  "dashboard": {
+    "title": "Tableau de bord",
+    "description": "Bienvenue sur votre tableau de bord MuchLove",
+    "sidebar": {
+      "dashboard": "Tableau de bord",
+      "contacts": "Contacts",
+      "testimonials": "Témoignages",
+      "settings": "Paramètres",
+      "signOut": "Déconnexion",
+      "myCompany": "Mon entreprise"
+    },
+    "stats": {
+      "videosUsed": "Vidéos utilisées",
+      "contacts": "Contacts",
+      "testimonials": "Témoignages"
+    },
+    "quickActions": {
+      "newContact": "Nouveau contact",
+      "copyLink": "Copier mon lien",
+      "linkCopied": "Lien copié !"
+    },
+    "activity": {
+      "title": "Activité récente",
+      "empty": "Aucune activité récente"
+    },
+    "funnel": {
+      "title": "Tunnel de conversion",
+      "empty": "Ajoutez des contacts pour voir votre tunnel",
+      "created": "Créé",
+      "invited": "Invité",
+      "opened": "Lien ouvert",
+      "video": "Vidéo",
+      "shared": "Partagé"
+    },
+    "alerts": {
+      "limitReached": {
+        "title": "Limite de vidéos atteinte",
+        "description": "Vous avez utilisé toutes vos vidéos pour ce mois. Passez à un plan supérieur pour continuer."
+      },
+      "limitWarning": {
+        "title": "Attention",
+        "description": "Vous approchez de votre limite mensuelle de vidéos."
+      }
+    },
+    "error": {
+      "title": "Oups ! Quelque chose n'a pas marché 😊",
+      "description": "Une erreur inattendue s'est produite. Vous voulez réessayer ?",
+      "tryAgain": "Réessayer",
+      "backToDashboard": "Retour au tableau de bord"
+    },
+    "notFound": {
+      "title": "Page introuvable",
+      "description": "La page que vous cherchez n'existe pas ou a été déplacée.",
+      "backToDashboard": "Retour au tableau de bord"
+    }
+  },
+  "contacts": {
+    "title": "Contacts",
+    "description": "Gérez vos contacts et envoyez des demandes de témoignages",
+    "list": {
+      "searchPlaceholder": "Rechercher par nom, email ou entreprise...",
+      "allStatuses": "Tous les statuts",
+      "addContact": "Ajouter un contact",
+      "noContacts": "Aucun contact pour le moment",
+      "noMatch": "Aucun contact ne correspond aux filtres",
+      "table": {
+        "contact": "Contact",
+        "email": "Email",
+        "company": "Entreprise",
+        "status": "Statut",
+        "date": "Date",
+        "actions": "Actions"
+      },
+      "mobileCard": {
+        "company": "Entreprise :"
+      },
+      "pagination": {
+        "pageOf": "Page {current} sur {total} ({count} contacts)",
+        "previous": "Précédent",
+        "next": "Suivant"
+      }
+    },
+    "form": {
+      "title": "Ajouter un contact",
+      "firstName": {
+        "label": "Prénom",
+        "placeholder": "Jean",
+        "required": "Le prénom est obligatoire"
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "jean@exemple.com",
+        "invalid": "Email invalide"
+      },
+      "company": {
+        "label": "Entreprise",
+        "placeholder": "Acme Inc.",
+        "required": "Le nom de l'entreprise est obligatoire"
+      },
+      "submit": "Ajouter",
+      "submitting": "Création...",
+      "submitAlt": "Créer le contact",
+      "cancel": "Annuler",
+      "success": "Contact créé ! Prêt à partager l'amour 💛",
+      "error": "Oups ! Impossible de créer le contact : {error}",
+      "errorGeneric": "Oups ! Quelque chose n'a pas marché 😊 Réessayez ?"
+    },
+    "emptyState": {
+      "title": "Votre collection de témoignages commence ici 💛",
+      "description": "Prêt à entendre vos clients ravis ? Ajoutez votre premier contact et regardez l'amour se répandre.",
+      "action": "Ajoutez votre premier contact"
+    },
+    "status": {
+      "created": "Créé",
+      "invited": "Invité",
+      "link_opened": "Lien ouvert",
+      "video_started": "En cours",
+      "video_completed": "Vidéo prête",
+      "shared_1": "Partagé 1/3",
+      "shared_2": "Partagé 2/3",
+      "shared_3": "Ambassadeur"
+    },
+    "actions": {
+      "copyLink": "Copier le lien",
+      "linkCopied": "Lien copié ! Prêt à partager 💛",
+      "linkCopyError": "Oups ! Impossible de copier le lien. Réessayez ?",
+      "delete": "Supprimer",
+      "deleteConfirm": "Supprimer {name} ? Cette action est irréversible.",
+      "deleteSuccess": "{name} a été supprimé 💛",
+      "deleteError": "Impossible de supprimer : {error}"
+    },
+    "card": {
+      "createdOn": "Créé le {date}",
+      "viewDetail": "Voir les détails →"
+    },
+    "error": "Erreur : {error}"
+  },
+  "video": {
+    "recorder": {
+      "uploading": "Envoi en cours...",
+      "uploadingDescription": "Patientez pendant qu'on traite votre vidéo",
+      "uploadSuccess": "Vidéo envoyée avec succès !",
+      "uploadSuccessDescription": "Merci pour votre témoignage",
+      "uploadError": "Échec de l'envoi",
+      "uploadErrorDescription": "Un problème est survenu lors de l'envoi de votre vidéo. Réessayez.",
+      "retryUpload": "Réessayer l'envoi",
+      "genericError": "Quelque chose n'a pas marché",
+      "retry": "Réessayer"
+    },
+    "permission": {
+      "title": "On a besoin d'accéder à votre caméra 📷",
+      "description": "Pour enregistrer votre témoignage vidéo, autorisez l'accès à la caméra et au micro dans votre navigateur.",
+      "buttonAllow": "Autoriser la caméra",
+      "deniedTitle": "On a besoin de votre autorisation 😊",
+      "deniedDescription": "Autorisez l'accès à la caméra dans les paramètres de votre navigateur, puis rechargez la page.",
+      "deniedInstructionsChrome": "Chrome : Cliquez sur l'icône de cadenas dans la barre d'adresse",
+      "deniedInstructionsFirefox": "Firefox : Cliquez sur l'icône de caméra barrée",
+      "deniedInstructionsSafari": "Safari : Préférences → Sites web → Caméra",
+      "notSupportedTitle": "Caméra non disponible 📷",
+      "notSupportedDescription": "Votre navigateur ne prend pas en charge la caméra, ou aucune caméra n'a été détectée.",
+      "inUseTitle": "Caméra déjà utilisée 😊",
+      "inUseDescription": "Votre caméra est utilisée par une autre application. Fermez-la et réessayez."
+    },
+    "controls": {
+      "recording": "REC",
+      "attemptLabel": "Essai {current}/{max}",
+      "retake": "Réessayer",
+      "validate": "Parfait !"
+    },
+    "preview": {
+      "recordingBadge": "REC"
+    }
+  },
+  "gamification": {
+    "celebration": {
+      "videoComplete": {
+        "emoji": "🙌",
+        "headline": "Bravo, c'est fait !",
+        "body": "Vous venez de créer quelque chose de spécial. Prêt pour la suite ?",
+        "cta": "On continue ! 🎉"
+      },
+      "share1": {
+        "emoji": "⭐",
+        "headline": "Super ! 1 de fait, encore 2",
+        "body": "Vous venez de les aider à gagner en visibilité. C'est énorme.",
+        "cta": "Gardez l'élan 🚀"
+      },
+      "share2": {
+        "emoji": "✨",
+        "headline": "Vous êtes en feu !",
+        "body": "Une dernière étape pour devenir ambassadeur.",
+        "cta": "Finissons en beauté ! 💛"
+      },
+      "ambassador": {
+        "emoji": "🎉",
+        "headline": "Vous êtes officiellement ambassadeur !",
+        "body": "Vous venez d'aider de la plus belle façon possible. C'est ça, le pouvoir de partager l'amour 💛",
+        "cta": "Incroyable ! ✨"
+      }
+    },
+    "progress": {
+      "stepStart": "Départ",
+      "stepVideo": "Vidéo",
+      "stepTrustpilot": "Trustpilot",
+      "stepGoogle": "Google",
+      "stepAmbassador": "Ambassadeur"
+    }
+  },
+  "testimonials": {
+    "title": "Témoignages",
+    "description": "Consultez et gérez vos témoignages vidéo",
+    "card": {
+      "altThumbnail": "Témoignage de {name}",
+      "companyFallback": "Entreprise",
+      "contactFallback": "Contact"
+    },
+    "list": {
+      "filterAll": "Tous",
+      "filterPending": "En attente",
+      "filterProcessing": "En traitement",
+      "filterCompleted": "Terminés",
+      "filterFailed": "Échoués",
+      "emptyState": "Aucun témoignage avec ce statut"
+    }
+  },
+  "recording": {
+    "page": {
+      "greeting": "Salut {firstName} !",
+      "description": "{companyName} aimerait recevoir votre témoignage vidéo",
+      "alreadyCompletedTitle": "Merci !",
+      "alreadyCompletedDescription": "Votre témoignage a déjà été enregistré.",
+      "poweredBy": "Propulsé par {brandName}"
+    },
+    "error": {
+      "title": "Oups ! Quelque chose n'a pas marché",
+      "description": "Impossible de charger cette page. Réessayez.",
+      "retry": "Réessayer"
+    },
+    "loading": {
+      "message": "Chargement..."
+    }
+  },
+  "ui": {
+    "searchInput": {
+      "placeholder": "Rechercher...",
+      "clear": "Effacer"
+    },
+    "modal": {
+      "close": "Fermer"
+    }
+  },
+  "settings": {
+    "title": "Paramètres",
+    "description": "Gérez votre compte et vos préférences"
+  }
+}

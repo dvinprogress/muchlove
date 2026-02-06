@@ -1,16 +1,23 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 
-export const metadata: Metadata = {
-  title: "Conditions Générales d'Utilisation — MuchLove",
-  description: "Conditions générales d'utilisation du service MuchLove de collecte de témoignages vidéo.",
-  robots: {
-    index: true,
-    follow: true,
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations('legal.terms');
 
-export default function TermsPage() {
+  return {
+    title: t('metaTitle'),
+    description: t('metaDescription'),
+    robots: {
+      index: true,
+      follow: true,
+    },
+  };
+}
+
+export default async function TermsPage() {
+  const t = await getTranslations('legal.terms');
+  const tFooter = await getTranslations('legal.footer');
   return (
     <div className="min-h-screen bg-white">
       <header className="border-b border-slate-200 bg-white">
@@ -26,10 +33,10 @@ export default function TermsPage() {
 
       <main className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
         <h1 className="text-4xl font-bold text-slate-900">
-          Conditions Générales d'Utilisation
+          {t('title')}
         </h1>
         <p className="mt-4 text-sm text-slate-600">
-          Dernière mise à jour : 6 février 2026
+          {t('lastUpdated')}
         </p>
 
         <div className="prose prose-slate mt-8 max-w-none">
@@ -133,7 +140,7 @@ export default function TermsPage() {
                 href="/privacy"
                 className="text-rose-500 underline hover:text-rose-600"
               >
-                Politique de Confidentialité
+                {t('privacyLink')}
               </Link>
               .
             </p>
@@ -219,10 +226,10 @@ export default function TermsPage() {
               Pour toute question concernant ces CGU, vous pouvez nous contacter
               à l'adresse :{" "}
               <a
-                href="mailto:contact@muchlove.fr"
+                href={`mailto:${t('contactEmail')}`}
                 className="text-rose-500 underline hover:text-rose-600"
               >
-                contact@muchlove.fr
+                {t('contactEmail')}
               </a>
             </p>
           </section>
@@ -233,20 +240,20 @@ export default function TermsPage() {
         <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
           <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
             <p className="text-sm text-slate-600">
-              © 2026 MuchLove. Tous droits réservés.
+              {tFooter('copyright')}
             </p>
             <div className="flex gap-6">
               <Link
                 href="/terms"
                 className="text-sm text-slate-600 transition-colors hover:text-rose-500"
               >
-                Conditions
+                {tFooter('terms')}
               </Link>
               <Link
                 href="/privacy"
                 className="text-sm text-slate-600 transition-colors hover:text-rose-500"
               >
-                Confidentialité
+                {tFooter('privacy')}
               </Link>
             </div>
           </div>

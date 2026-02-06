@@ -1,53 +1,42 @@
+"use client";
+
 import Link from "next/link";
 import { Check } from "lucide-react";
-
-const plans = [
-  {
-    name: "Free",
-    price: "0",
-    description: "Pour commencer",
-    features: [
-      "5 vidéos par mois",
-      "Lien de partage unique",
-      "Stockage 30 jours",
-      "Support email",
-    ],
-    cta: "Commencer",
-    highlighted: false,
-  },
-  {
-    name: "Pro",
-    price: "29",
-    description: "Pour les entreprises",
-    features: [
-      "100 vidéos par mois",
-      "Partage automatique LinkedIn",
-      "Stockage illimité",
-      "Branding personnalisé",
-      "Intégrations Google & Trustpilot",
-      "Support prioritaire",
-    ],
-    cta: "Essai gratuit",
-    highlighted: true,
-  },
-];
+import { useTranslations } from "next-intl";
 
 export function Pricing() {
+  const t = useTranslations("landing.pricing");
+
+  const plans = [
+    {
+      planKey: "free",
+      price: "0",
+      features: ["videos", "link", "storage", "support"],
+      highlighted: false,
+    },
+    {
+      planKey: "pro",
+      price: "29",
+      features: ["videos", "linkedin", "storage", "branding", "integrations", "support"],
+      highlighted: true,
+    },
+  ];
+
   return (
     <section className="bg-slate-50 py-20 sm:py-32">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-            Des tarifs simples et transparents
+            {t("title")}
           </h2>
           <p className="mt-4 text-lg text-slate-600">
-            Choisissez le plan qui correspond à vos besoins
+            {t("subtitle")}
           </p>
         </div>
         <div className="mt-16 grid gap-8 lg:grid-cols-2">
           {plans.map((plan) => (
             <div
-              key={plan.name}
+              key={plan.planKey}
               className={`relative rounded-2xl bg-white p-8 shadow-sm ${
                 plan.highlighted
                   ? "border-2 border-rose-500 ring-2 ring-rose-100"
@@ -57,23 +46,23 @@ export function Pricing() {
               {plan.highlighted && (
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2">
                   <span className="inline-flex rounded-full bg-rose-500 px-4 py-1 text-sm font-semibold text-white">
-                    Populaire
+                    {t("popular")}
                   </span>
                 </div>
               )}
               <div className="text-center">
                 <h3 className="text-2xl font-bold text-slate-900">
-                  {plan.name}
+                  {t(`plans.${plan.planKey}.name` as any)}
                 </h3>
                 <p className="mt-2 text-sm text-slate-600">
-                  {plan.description}
+                  {t(`plans.${plan.planKey}.description` as any)}
                 </p>
                 <div className="mt-4 flex items-baseline justify-center gap-x-2">
                   <span className="text-5xl font-bold tracking-tight text-slate-900">
                     {plan.price}
                   </span>
                   <span className="text-lg font-semibold text-slate-600">
-                    EUR/mois
+                    {t("perMonth")}
                   </span>
                 </div>
               </div>
@@ -81,7 +70,9 @@ export function Pricing() {
                 {plan.features.map((feature) => (
                   <li key={feature} className="flex items-start gap-x-3">
                     <Check className="h-5 w-5 flex-shrink-0 text-rose-500" />
-                    <span className="text-slate-600">{feature}</span>
+                    <span className="text-slate-600">
+                      {t(`plans.${plan.planKey}.features.${feature}` as any)}
+                    </span>
                   </li>
                 ))}
               </ul>
@@ -94,7 +85,7 @@ export function Pricing() {
                       : "bg-slate-100 text-slate-900 hover:bg-slate-200"
                   }`}
                 >
-                  {plan.cta}
+                  {t(`plans.${plan.planKey}.cta` as any)}
                 </Link>
               </div>
             </div>

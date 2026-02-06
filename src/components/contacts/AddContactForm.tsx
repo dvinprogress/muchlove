@@ -6,24 +6,31 @@ import { z } from 'zod'
 import { Modal } from '@/components/ui/Modal'
 import { Input } from '@/components/ui/Input'
 import { Button } from '@/components/ui/Button'
-import { createContact } from '@/app/dashboard/contacts/actions'
+import { createContact } from '@/app/[locale]/dashboard/contacts/actions'
+import { useTranslations } from 'next-intl'
 
 interface AddContactFormProps {
   isOpen: boolean
   onClose: () => void
 }
 
-// Schema de validation
-const contactSchema = z.object({
-  first_name: z.string().min(1, 'First name is required'),
-  email: z.string().email('Invalid email'),
-  company_name: z.string().min(1, "Company name is required"),
-})
-
-type ContactFormData = z.infer<typeof contactSchema>
+type ContactFormData = {
+  first_name: string
+  email: string
+  company_name: string
+}
 
 export function AddContactForm({ isOpen, onClose }: AddContactFormProps) {
   const router = useRouter()
+  const t = useTranslations('contacts.form')
+
+  // Schema de validation avec messages traduits
+  const contactSchema = z.object({
+    first_name: z.string().min(1, t('firstName.required')),
+    email: z.string().email(t('email.invalid')),
+    company_name: z.string().min(1, t('company.required')),
+  })
+
   const [loading, setLoading] = useState(false)
   const [formData, setFormData] = useState<ContactFormData>({
     first_name: '',
@@ -70,7 +77,7 @@ export function AddContactForm({ isOpen, onClose }: AddContactFormProps) {
         setGlobalError(result.error)
       }
     } catch (error) {
-      setGlobalError('Oops! Something didn\'t work 😊 Try again?')
+      setGlobalError(t('errorGeneric'))
     } finally {
       setLoading(false)
     }
@@ -83,7 +90,7 @@ export function AddContactForm({ isOpen, onClose }: AddContactFormProps) {
   }
 
   return (
-    <Modal isOpen={isOpen} onClose={handleClose} title="Add contact" size="md">
+    <Modal isOpen={isOpen} onClose={handleClose} title={t('title')} size="md">
       <form onSubmit={handleSubmit} className="space-y-4">
         {globalError && (
           <div className="p-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-sm">
@@ -92,32 +99,32 @@ export function AddContactForm({ isOpen, onClose }: AddContactFormProps) {
         )}
 
         <Input
-          label="First name"
+          label={t('firstName.label')}
           type="text"
           value={formData.first_name}
           onChange={handleChange('first_name')}
           error={errors.first_name}
-          placeholder="Jean"
+          placeholder={t('firstName.placeholder')}
           disabled={loading}
         />
 
         <Input
-          label="Email"
+          label={t('email.label')}
           type="email"
           value={formData.email}
           onChange={handleChange('email')}
           error={errors.email}
-          placeholder="jean@example.com"
+          placeholder={t('email.placeholder')}
           disabled={loading}
         />
 
         <Input
-          label="Company"
+          label={t('company.label')}
           type="text"
           value={formData.company_name}
           onChange={handleChange('company_name')}
           error={errors.company_name}
-          placeholder="Acme Inc."
+          placeholder={t('company.placeholder')}
           disabled={loading}
         />
 
@@ -129,7 +136,7 @@ export function AddContactForm({ isOpen, onClose }: AddContactFormProps) {
             disabled={loading}
             className="flex-1"
           >
-            Cancel
+            {t('cancel')}
           </Button>
           <Button
             type="submit"
@@ -138,7 +145,7 @@ export function AddContactForm({ isOpen, onClose }: AddContactFormProps) {
             disabled={loading}
             className="flex-1"
           >
-            Add
+            {t('submit')}
           </Button>
         </div>
       </form>

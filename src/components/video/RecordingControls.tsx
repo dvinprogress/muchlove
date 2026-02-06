@@ -83,7 +83,7 @@ export function RecordingControls({
             <div className="flex items-center justify-between px-4">
               <div className="flex items-center space-x-2">
                 <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse" />
-                <span className="text-sm font-semibold text-red-500">REC</span>
+                <span className="text-sm font-semibold text-red-500">Recording</span>
               </div>
               <div className="text-xl font-mono font-bold text-gray-900">
                 {formatDuration(duration)}
@@ -125,7 +125,7 @@ export function RecordingControls({
                 {formatDuration(duration)}
               </div>
               <div className="text-sm text-gray-600">
-                Tentative {attempts + 1}/{maxAttempts}
+                Attempt {attempts + 1} of {maxAttempts}
               </div>
             </div>
 
@@ -136,7 +136,7 @@ export function RecordingControls({
                 className="flex items-center space-x-2 px-6 py-3 border-2 border-rose-500 text-rose-500 font-semibold rounded-lg hover:bg-rose-50 transition-colors focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <RotateCcw className="w-5 h-5" />
-                <span>Recommencer</span>
+                <span>Retake</span>
               </button>
 
               <button
@@ -144,7 +144,7 @@ export function RecordingControls({
                 className="flex items-center space-x-2 px-6 py-3 bg-rose-500 text-white font-semibold rounded-lg hover:bg-rose-600 transition-colors focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2"
               >
                 <Check className="w-5 h-5" />
-                <span>Valider</span>
+                <span>Validate</span>
               </button>
             </div>
           </motion.div>

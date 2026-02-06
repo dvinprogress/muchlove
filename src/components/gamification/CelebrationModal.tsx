@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useTranslations } from 'next-intl'
 import { mediumCelebration, ambassadorCelebration } from '@/lib/utils/confetti'
 
 type CelebrationType = 'video_complete' | 'share_1' | 'share_2' | 'ambassador'
@@ -12,43 +13,17 @@ interface CelebrationModalProps {
   onClose: () => void
 }
 
-const CELEBRATION_CONFIG: Record<
-  CelebrationType,
-  {
-    emoji: string
-    headline: string
-    body: string
-    cta: string
-  }
-> = {
-  video_complete: {
-    emoji: '🙌',
-    headline: 'You did it!',
-    body: 'You just recorded something special. Ready for the fun part?',
-    cta: 'Let\'s keep going! 🎉'
-  },
-  share_1: {
-    emoji: '⭐',
-    headline: 'Nice! 1 down, 2 to go',
-    body: 'You just helped them gain visibility. That\'s huge.',
-    cta: 'Keep the momentum 🚀'
-  },
-  share_2: {
-    emoji: '✨',
-    headline: 'You\'re on fire!',
-    body: 'One last step to become an ambassador.',
-    cta: 'Let\'s finish strong! 💛'
-  },
-  ambassador: {
-    emoji: '🎉',
-    headline: 'You\'re officially an ambassador!',
-    body: 'You just helped in the biggest way possible. That\'s the power of spreading love 💛',
-    cta: 'Amazing! ✨'
-  }
-}
-
 export function CelebrationModal({ type, isOpen, onClose }: CelebrationModalProps) {
-  const config = CELEBRATION_CONFIG[type]
+  const t = useTranslations('gamification.celebration')
+
+  const celebrationTypes = {
+    video_complete: 'videoComplete',
+    share_1: 'share1',
+    share_2: 'share2',
+    ambassador: 'ambassador'
+  } as const
+
+  const configKey = celebrationTypes[type]
 
   useEffect(() => {
     if (isOpen) {
@@ -86,22 +61,22 @@ export function CelebrationModal({ type, isOpen, onClose }: CelebrationModalProp
                 transition={{ delay: 0.2, duration: 0.5 }}
                 className="text-6xl mb-4"
               >
-                {config.emoji}
+                {t(`${configKey}.emoji`)}
               </motion.div>
 
               <h2 className="text-3xl font-bold text-gray-900 mb-3">
-                {config.headline}
+                {t(`${configKey}.headline`)}
               </h2>
 
               <p className="text-gray-600 mb-6 text-lg leading-relaxed">
-                {config.body}
+                {t(`${configKey}.body`)}
               </p>
 
               <button
                 onClick={onClose}
                 className="w-full bg-rose-500 hover:bg-rose-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200"
               >
-                {config.cta}
+                {t(`${configKey}.cta`)}
               </button>
             </motion.div>
           </div>

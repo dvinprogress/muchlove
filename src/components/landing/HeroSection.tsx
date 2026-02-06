@@ -2,8 +2,11 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 
 export function HeroSection() {
+  const t = useTranslations("landing.hero");
+
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-rose-50/50 via-white to-white">
       <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-32 lg:px-8">
@@ -14,18 +17,18 @@ export function HeroSection() {
           className="text-center"
         >
           <h1 className="text-5xl font-bold tracking-tight text-slate-900 sm:text-6xl">
-            Much love. Shared{" "}
-            <span className="text-rose-500">effortlessly.</span>
+            {t("titlePart1")}{" "}
+            <span className="text-rose-500">{t("titlePart2")}</span>
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-xl text-slate-600">
-            Turn your happiest customers into video testimonials that publish automatically on Trustpilot, Google Reviews, and LinkedIn — in under 3 minutes.
+            {t("subtitle")}
           </p>
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Link
               href="/login"
               className="inline-flex items-center justify-center rounded-lg bg-rose-500 px-8 py-4 text-lg font-semibold text-white shadow-lg transition-all hover:bg-rose-600 hover:scale-105"
             >
-              Start spreading love (free) 💛
+              {t("ctaPrimary")}
             </Link>
             <button
               onClick={() => {
@@ -35,7 +38,7 @@ export function HeroSection() {
               }}
               className="inline-flex items-center justify-center rounded-lg border-2 border-slate-300 px-8 py-4 text-lg font-semibold text-slate-700 transition-colors hover:border-slate-400 hover:bg-slate-50"
             >
-              See how it works
+              {t("ctaSecondary")}
             </button>
           </div>
         </motion.div>

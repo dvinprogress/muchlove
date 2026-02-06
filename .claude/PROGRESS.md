@@ -4,7 +4,7 @@
 
 ## Statut Global
 - **Phase**: mvp
-- **Derniere action**: Module Contacts optimise — pagination, stats SQL, composants Client extraits, toast sonner
+- **Derniere action**: i18n complet EN/FR/ES avec next-intl, routing [locale], traductions, LanguageSwitcher, SEO multilingue. Build OK.
 
 ## Infrastructure
 | Element | Statut | Date | Notes |
@@ -34,14 +34,15 @@
 | 6 | Dashboard (plan + quota) | DONE | 2026-02-06 | src/app/dashboard/page.tsx, actions.ts, components/dashboard/ | Enrichi avec stats, funnel, activity |
 | 7 | Types DB auto-generes | DONE | 2026-02-02 | src/types/database.ts | |
 | 8 | Button component (Framer) | DONE | 2026-02-02 | src/components/ui/Button.tsx | |
-| 9 | Interface enregistrement video | DONE* | 2026-02-06 | src/components/video/, hooks/useMediaRecorder.ts, app/t/[link]/, api/upload-video/ | *Securite: auth manquante sur API. Transcription non-fonctionnelle. State machine incomplete |
-| 10 | Pipeline traitement video | DONE* | 2026-02-06 | src/app/api/transcribe/route.ts, api/upload-video/route.ts | *Transcription Whisper fallback only, pas de queue/retry |
+| 9 | Interface enregistrement video | DONE | 2026-02-06 | src/components/video/, hooks/useMediaRecorder.ts, app/t/[link]/, api/upload-video/, lib/validation/ | Auth+Zod sur API, state machine corrigee, types generiques. Transcription: fallback only |
+| 10 | Pipeline traitement video | DONE | 2026-02-06 | src/app/api/transcribe/route.ts, api/upload-video/route.ts, lib/validation/ | Auth+Zod, transcription Whisper fallback only, pas de queue/retry |
 | 11 | Gestion contacts | DONE | 2026-02-06 | src/components/contacts/, app/dashboard/contacts/, actions.ts, CopyLinkButton.tsx, DeleteContactButton.tsx | Pagination 20/page, stats SQL optimisees, toast sonner, composants Client extraits |
 | 12 | Workflow partage (social) | TODO | | Trustpilot, Google, LinkedIn | |
 | 13 | Gamification (ambassadeur) | DONE | 2026-02-06 | src/components/gamification/, lib/utils/confetti.ts | ProgressBar, StatusBadge, CelebrationModal |
 | 14 | Integration Stripe | TODO | | Checkout, Portal, Credits | |
 | 15 | Systeme emails | TODO | | Invitations, notifications | Bloquant pour feature #11 (invitations) |
 | 16 | Landing page marketing | DONE | 2026-02-06 | src/components/landing/, app/page.tsx, app/terms/, app/privacy/ | SEO 8+/10, metadata complete, pages legales, liens footer OK, bouton demo scroll |
+| 17 | Internationalisation (i18n) | DONE | 2026-02-06 | src/i18n/, messages/{en,fr,es}.json, src/app/[locale]/, src/middleware.ts, src/components/ui/LanguageSwitcher.tsx | next-intl complet : routing [locale] as-needed (EN sans prefixe, /fr/, /es/), middleware i18n+Supabase, ~280 cles x 3 langues, LanguageSwitcher Framer Motion, SEO hreflang+alternates, generateMetadata multilingue, build OK |
 
 ## Bloquants qualite a corriger (issus de l'audit 2026-02-06)
 
@@ -88,9 +89,9 @@
 | Knowledge base | DONE | decisions-log, ux-guidelines, video-patterns, supabase-schema |
 
 ## Prochaines Etapes (priorite)
-1. Corriger bloquants securite video (#9) — auth API routes
-2. Systeme emails (#15) — debloquer invitations contacts
-3. Workflow partage social (#12)
-4. Integration Stripe (#14)
-5. Supprimer ancien domaine app.muchlove.fr de Vercel (obsolete)
-6. Corriger erreurs TypeScript API routes (transcribe, upload-video) — bloquant build production
+1. Systeme emails (#15) — debloquer invitations contacts
+2. Workflow partage social (#12)
+3. Integration Stripe (#14)
+4. Vraie transcription Whisper (OpenAI API ou HF Inference)
+5. Tests unitaires et e2e pour features critiques
+6. Images/assets optimises (hero, illustrations)

@@ -2,23 +2,27 @@
 
 import Link from 'next/link'
 import { LayoutDashboard, Users, Video, Settings } from 'lucide-react'
+import { LanguageSwitcher } from '@/components/ui/LanguageSwitcher'
+import { useTranslations } from 'next-intl'
 
 interface MobileNavProps {
   currentPath: string
 }
 
-const navItems = [
-  { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
-  { name: 'Contacts', href: '/dashboard/contacts', icon: Users },
-  { name: 'Témoignages', href: '/dashboard/testimonials', icon: Video },
-  { name: 'Paramètres', href: '/dashboard/settings', icon: Settings },
+const navItemKeys = [
+  { key: 'dashboard' as const, href: '/dashboard', icon: LayoutDashboard },
+  { key: 'contacts' as const, href: '/dashboard/contacts', icon: Users },
+  { key: 'testimonials' as const, href: '/dashboard/testimonials', icon: Video },
+  { key: 'settings' as const, href: '/dashboard/settings', icon: Settings },
 ]
 
 export function MobileNav({ currentPath }: MobileNavProps) {
+  const t = useTranslations('dashboard.sidebar')
+
   return (
     <nav className="fixed bottom-0 left-0 right-0 md:hidden bg-white border-t border-slate-200 z-50">
       <div className="flex items-center justify-around py-3">
-        {navItems.map((item) => {
+        {navItemKeys.map((item) => {
           const Icon = item.icon
           const isActive = currentPath === item.href
 
@@ -32,10 +36,13 @@ export function MobileNav({ currentPath }: MobileNavProps) {
               `}
             >
               <Icon className="w-5 h-5" />
-              <span className="text-xs font-medium">{item.name}</span>
+              <span className="text-xs font-medium">{t(item.key)}</span>
             </Link>
           )
         })}
+        <div className="flex flex-col items-center gap-1 px-2 py-1">
+          <LanguageSwitcher variant="compact" />
+        </div>
       </div>
     </nav>
   )

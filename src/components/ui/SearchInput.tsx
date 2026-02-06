@@ -13,7 +13,7 @@ interface SearchInputProps {
 export function SearchInput({
   value,
   onChange,
-  placeholder = 'Rechercher...',
+  placeholder = 'Search...',
   className = '',
 }: SearchInputProps) {
   const [internalValue, setInternalValue] = useState(value);
@@ -63,7 +63,7 @@ export function SearchInput({
             transition-colors duration-200
             focus:outline-none
           "
-          aria-label="Effacer"
+          aria-label="Clear search"
         >
           <X className="w-4 h-4" />
         </button>

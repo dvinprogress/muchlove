@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { Camera } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import type { RecordingError } from '@/types/video'
 
 interface PermissionRequestProps {
@@ -10,6 +11,7 @@ interface PermissionRequestProps {
 }
 
 export function PermissionRequest({ onPermissionGranted, error }: PermissionRequestProps) {
+  const t = useTranslations('video.permission')
   const handleRequestPermission = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
@@ -36,25 +38,25 @@ export function PermissionRequest({ onPermissionGranted, error }: PermissionRequ
 
       <div className="text-center space-y-2">
         <h2 className="text-2xl font-bold text-gray-900">
-          We need camera access 📷
+          {t('title')}
         </h2>
         <p className="text-gray-600">
-          To record your video testimonial, please allow camera and microphone access in your browser.
+          {t('description')}
         </p>
       </div>
 
       {error && error.code === 'CAMERA_PERMISSION_DENIED' && (
         <div className="w-full p-4 bg-rose-50 border border-rose-200 rounded-lg">
           <p className="text-sm text-rose-800 font-medium mb-2">
-            We need your permission 😊
+            {t('deniedTitle')}
           </p>
           <p className="text-xs text-rose-700">
-            Please allow camera access in your browser settings, then reload the page.
+            {t('deniedDescription')}
           </p>
           <ul className="mt-3 text-xs text-rose-600 space-y-1 list-disc list-inside">
-            <li>Chrome: Click the lock icon in your address bar</li>
-            <li>Firefox: Click the crossed-out camera icon</li>
-            <li>Safari: Preferences → Websites → Camera</li>
+            <li>{t('deniedInstructionsChrome')}</li>
+            <li>{t('deniedInstructionsFirefox')}</li>
+            <li>{t('deniedInstructionsSafari')}</li>
           </ul>
         </div>
       )}
@@ -62,10 +64,10 @@ export function PermissionRequest({ onPermissionGranted, error }: PermissionRequ
       {error && error.code === 'CAMERA_NOT_SUPPORTED' && (
         <div className="w-full p-4 bg-rose-50 border border-rose-200 rounded-lg">
           <p className="text-sm text-rose-800 font-medium">
-            Camera not available 📷
+            {t('notSupportedTitle')}
           </p>
           <p className="text-xs text-rose-700 mt-1">
-            Your browser doesn't support camera access, or no camera was detected.
+            {t('notSupportedDescription')}
           </p>
         </div>
       )}
@@ -73,10 +75,10 @@ export function PermissionRequest({ onPermissionGranted, error }: PermissionRequ
       {error && error.code === 'CAMERA_IN_USE' && (
         <div className="w-full p-4 bg-rose-50 border border-rose-200 rounded-lg">
           <p className="text-sm text-rose-800 font-medium">
-            Camera already in use 😊
+            {t('inUseTitle')}
           </p>
           <p className="text-xs text-rose-700 mt-1">
-            Your camera is being used by another app. Please close it and try again.
+            {t('inUseDescription')}
           </p>
         </div>
       )}
@@ -85,7 +87,7 @@ export function PermissionRequest({ onPermissionGranted, error }: PermissionRequ
         onClick={handleRequestPermission}
         className="px-8 py-4 bg-rose-500 text-white font-semibold rounded-lg hover:bg-rose-600 transition-colors focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2"
       >
-        Allow camera access
+        {t('buttonAllow')}
       </button>
     </motion.div>
   )

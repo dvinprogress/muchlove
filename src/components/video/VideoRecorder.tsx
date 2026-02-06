@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Loader2, CheckCircle, AlertCircle } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { useMediaRecorder } from '@/hooks/useMediaRecorder'
 import { PermissionRequest } from './PermissionRequest'
 import { VideoPreview } from './VideoPreview'
@@ -22,6 +23,7 @@ export function VideoRecorder({
   maxAttempts: _maxAttempts = RECORDING_LIMITS.maxAttempts,
   onComplete
 }: VideoRecorderProps) {
+  const t = useTranslations('video.recorder')
   const {
     phase,
     duration,
@@ -102,10 +104,10 @@ export function VideoRecorder({
         >
           <Loader2 className="w-16 h-16 text-rose-500 animate-spin" />
           <p className="text-lg font-semibold text-gray-900">
-            Envoi en cours...
+            {t('uploading')}
           </p>
           <p className="text-sm text-gray-600">
-            Veuillez patienter pendant que nous traitons votre vidéo
+            {t('uploadingDescription')}
           </p>
         </motion.div>
       )
@@ -122,10 +124,10 @@ export function VideoRecorder({
             <CheckCircle className="w-12 h-12 text-green-500" />
           </div>
           <p className="text-lg font-semibold text-gray-900">
-            Vidéo envoyée avec succès !
+            {t('uploadSuccess')}
           </p>
           <p className="text-sm text-gray-600">
-            Merci pour votre enregistrement
+            {t('uploadSuccessDescription')}
           </p>
         </motion.div>
       )
@@ -142,16 +144,16 @@ export function VideoRecorder({
             <AlertCircle className="w-12 h-12 text-rose-500" />
           </div>
           <p className="text-lg font-semibold text-gray-900">
-            Erreur lors de l'envoi
+            {t('uploadError')}
           </p>
           <p className="text-sm text-gray-600 text-center max-w-md">
-            Une erreur est survenue lors de l'envoi de votre vidéo. Veuillez réessayer.
+            {t('uploadErrorDescription')}
           </p>
           <button
             onClick={() => setUploadPhase('idle')}
             className="px-6 py-3 bg-rose-500 text-white font-semibold rounded-lg hover:bg-rose-600 transition-colors focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2"
           >
-            Réessayer l'envoi
+            {t('retryUpload')}
           </button>
         </motion.div>
       )
@@ -223,7 +225,7 @@ export function VideoRecorder({
               <AlertCircle className="w-12 h-12 text-rose-500" />
             </div>
             <p className="text-lg font-semibold text-gray-900">
-              Une erreur est survenue
+              {t('genericError')}
             </p>
             {error && (
               <p className="text-sm text-gray-600 text-center max-w-md">
@@ -237,7 +239,7 @@ export function VideoRecorder({
               }}
               className="px-6 py-3 bg-rose-500 text-white font-semibold rounded-lg hover:bg-rose-600 transition-colors focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2"
             >
-              Réessayer
+              {t('retry')}
             </button>
           </motion.div>
         )

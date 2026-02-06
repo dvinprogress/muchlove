@@ -4,9 +4,11 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { UserPlus, Link as LinkIcon, Check } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 export function QuickActions() {
   const [copied, setCopied] = useState(false)
+  const t = useTranslations('dashboard.quickActions')
 
   const handleCopyLink = async () => {
     // TODO: Récupérer le vrai lien de la page publique depuis les settings
@@ -29,7 +31,7 @@ export function QuickActions() {
           className="flex items-center gap-3 p-4 bg-rose-500 text-white rounded-xl transition-shadow hover:shadow-lg"
         >
           <UserPlus className="w-5 h-5" />
-          <span className="font-medium">Nouveau contact</span>
+          <span className="font-medium">{t('newContact')}</span>
         </motion.div>
       </Link>
 
@@ -42,12 +44,12 @@ export function QuickActions() {
         {copied ? (
           <>
             <Check className="w-5 h-5 text-green-500" />
-            <span className="font-medium text-slate-900">Lien copié !</span>
+            <span className="font-medium text-slate-900">{t('linkCopied')}</span>
           </>
         ) : (
           <>
             <LinkIcon className="w-5 h-5 text-slate-600" />
-            <span className="font-medium text-slate-900">Copier mon lien</span>
+            <span className="font-medium text-slate-900">{t('copyLink')}</span>
           </>
         )}
       </motion.button>

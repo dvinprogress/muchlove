@@ -16,53 +16,55 @@ export interface StatusConfig {
 
 /**
  * Retourne la configuration d'affichage d'un statut de contact
+ * Note: Les labels sont maintenant gérés par i18n dans contacts.status.*
+ * Cette fonction retourne uniquement variant et color
  */
 export function getContactStatusConfig(status: ContactStatus): StatusConfig {
   const configs: Record<ContactStatus, StatusConfig> = {
     created: {
-      label: 'Cree',
+      label: 'created', // i18n key
       variant: 'default',
       color: 'bg-slate-400',
       order: 0,
     },
     invited: {
-      label: 'Invite',
+      label: 'invited',
       variant: 'info',
       color: 'bg-blue-500',
       order: 1,
     },
     link_opened: {
-      label: 'Lien ouvert',
+      label: 'link_opened',
       variant: 'info',
       color: 'bg-indigo-500',
       order: 2,
     },
     video_started: {
-      label: 'En cours',
+      label: 'video_started',
       variant: 'warning',
       color: 'bg-purple-500',
       order: 3,
     },
     video_completed: {
-      label: 'Video terminee',
+      label: 'video_completed',
       variant: 'success',
       color: 'bg-green-500',
       order: 4,
     },
     shared_1: {
-      label: 'Partage 1/3',
+      label: 'shared_1',
       variant: 'success',
       color: 'bg-emerald-500',
       order: 5,
     },
     shared_2: {
-      label: 'Partage 2/3',
+      label: 'shared_2',
       variant: 'success',
       color: 'bg-emerald-500',
       order: 6,
     },
     shared_3: {
-      label: 'Ambassadeur',
+      label: 'shared_3',
       variant: 'success',
       color: 'bg-amber-500',
       order: 7,

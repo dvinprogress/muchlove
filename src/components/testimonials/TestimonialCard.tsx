@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { Video, Calendar, Clock } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { Card, CardContent, Badge } from '@/components/ui'
 import { getProcessingStatusConfig } from '@/lib/utils/contact-status'
 import { formatDate, formatDuration } from '@/lib/utils/format'
@@ -25,9 +26,10 @@ interface TestimonialCardProps {
 }
 
 export function TestimonialCard({ testimonial }: TestimonialCardProps) {
+  const t = useTranslations('testimonials.card')
   const statusConfig = getProcessingStatusConfig(testimonial.processing_status)
-  const contactName = testimonial.contacts?.first_name || 'Contact'
-  const companyName = testimonial.contacts?.company_name || 'Entreprise'
+  const contactName = testimonial.contacts?.first_name || t('contactFallback')
+  const companyName = testimonial.contacts?.company_name || t('companyFallback')
 
   return (
     <motion.div
@@ -41,7 +43,7 @@ export function TestimonialCard({ testimonial }: TestimonialCardProps) {
             {testimonial.thumbnail_url ? (
               <img
                 src={testimonial.thumbnail_url}
-                alt={`Témoignage de ${contactName}`}
+                alt={t('altThumbnail', { name: contactName })}
                 className="w-full h-full object-cover"
               />
             ) : (

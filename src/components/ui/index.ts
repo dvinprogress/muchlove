@@ -9,3 +9,4 @@ export {
 } from './Card';
 export { Badge } from './Badge';
 export { EmptyState } from './EmptyState';
+export { LanguageSwitcher } from './LanguageSwitcher';

@@ -4,8 +4,9 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Trash2 } from 'lucide-react'
 import { toast } from 'sonner'
-import { deleteContact } from '@/app/dashboard/contacts/actions'
+import { deleteContact } from '@/app/[locale]/dashboard/contacts/actions'
 import { Button } from '@/components/ui/Button'
+import { useTranslations } from 'next-intl'
 
 interface DeleteContactButtonProps {
   contactId: string
@@ -21,21 +22,22 @@ export function DeleteContactButton({
   className,
 }: DeleteContactButtonProps) {
   const router = useRouter()
+  const t = useTranslations('contacts.actions')
   const [isDeleting, setIsDeleting] = useState(false)
 
   const handleDelete = async () => {
     // Confirmation
-    const confirmed = window.confirm(`Delete ${contactName}? This can't be undone.`)
+    const confirmed = window.confirm(t('deleteConfirm', { name: contactName }))
     if (!confirmed) return
 
     setIsDeleting(true)
     const result = await deleteContact(contactId)
 
     if (result.success) {
-      toast.success(`${contactName} has been removed 💛`)
+      toast.success(t('deleteSuccess', { name: contactName }))
       router.refresh()
     } else {
-      toast.error(`Could not delete: ${result.error}`)
+      toast.error(t('deleteError', { error: result.error }))
     }
     setIsDeleting(false)
   }
@@ -49,7 +51,7 @@ export function DeleteContactButton({
           className ||
           'p-2 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors disabled:opacity-50'
         }
-        title="Supprimer"
+        title={t('delete')}
       >
         <Trash2 className="w-4 h-4" />
       </button>
@@ -65,7 +67,7 @@ export function DeleteContactButton({
       disabled={isDeleting}
       className={className}
     >
-      Supprimer
+      {t('delete')}
     </Button>
   )
 }

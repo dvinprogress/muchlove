@@ -3,6 +3,7 @@
 import { Card, CardContent, Button } from '@/components/ui'
 import { AlertCircle } from 'lucide-react'
 import Link from 'next/link'
+import { useTranslations } from 'next-intl'
 
 export default function Error({
   error: _error,
@@ -12,6 +13,8 @@ export default function Error({
   reset: () => void
 }) {
   void _error
+  const t = useTranslations('dashboard.error')
+
   return (
     <div className="flex items-center justify-center min-h-[60vh]">
       <Card className="max-w-md w-full">
@@ -24,10 +27,10 @@ export default function Error({
 
           <div className="space-y-2">
             <h1 className="text-2xl font-bold text-slate-900">
-              Oops! Something didn't work 😊
+              {t('title')}
             </h1>
             <p className="text-slate-600">
-              An unexpected error occurred. Give it another try?
+              {t('description')}
             </p>
           </div>
 
@@ -36,11 +39,11 @@ export default function Error({
               onClick={reset}
               className="bg-rose-500 hover:bg-rose-600 text-white font-semibold"
             >
-              Try again
+              {t('tryAgain')}
             </Button>
             <Link href="/dashboard">
               <Button variant="secondary" className="w-full sm:w-auto">
-                Back to dashboard
+                {t('backToDashboard')}
               </Button>
             </Link>
           </div>

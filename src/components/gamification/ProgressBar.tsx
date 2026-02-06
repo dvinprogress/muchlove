@@ -8,11 +8,11 @@ interface ProgressBarProps {
 }
 
 const STEPS = [
-  { label: 'Début', percentage: 0 },
-  { label: 'Vidéo', percentage: 25 },
+  { label: 'Start', percentage: 0 },
+  { label: 'Video', percentage: 25 },
   { label: 'Trustpilot', percentage: 50 },
   { label: 'Google', percentage: 75 },
-  { label: 'Ambassadeur', percentage: 100 }
+  { label: 'Ambassador', percentage: 100 }
 ]
 
 const STATUS_TO_PERCENTAGE: Record<ContactStatus, number> = {

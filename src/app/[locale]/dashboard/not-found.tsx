@@ -1,8 +1,11 @@
 import { Card, CardContent, Button } from '@/components/ui'
 import { Search } from 'lucide-react'
 import Link from 'next/link'
+import { getTranslations } from 'next-intl/server'
 
-export default function NotFound() {
+export default async function NotFound() {
+  const t = await getTranslations('dashboard.notFound')
+
   return (
     <div className="flex items-center justify-center min-h-[60vh]">
       <Card className="max-w-md w-full">
@@ -15,16 +18,16 @@ export default function NotFound() {
 
           <div className="space-y-2">
             <h1 className="text-2xl font-bold text-slate-900">
-              Page non trouvée
+              {t('title')}
             </h1>
             <p className="text-slate-600">
-              La page que vous cherchez n'existe pas ou a été déplacée.
+              {t('description')}
             </p>
           </div>
 
           <Link href="/dashboard">
             <Button className="bg-rose-500 hover:bg-rose-600 text-white font-semibold">
-              Retour au dashboard
+              {t('backToDashboard')}
             </Button>
           </Link>
         </CardContent>

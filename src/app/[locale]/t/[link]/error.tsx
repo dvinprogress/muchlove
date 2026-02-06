@@ -2,6 +2,7 @@
 
 import { Button } from '@/components/ui'
 import { AlertCircle } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 export default function Error({
   error: _error,
@@ -10,6 +11,7 @@ export default function Error({
   error: Error & { digest?: string }
   reset: () => void
 }) {
+  const t = useTranslations('recording.error')
   void _error
   return (
     <div className="min-h-screen bg-white flex items-center justify-center p-4">
@@ -22,10 +24,10 @@ export default function Error({
 
         <div className="space-y-2">
           <h1 className="text-2xl font-bold text-slate-900">
-            Une erreur est survenue
+            {t('title')}
           </h1>
           <p className="text-slate-600">
-            Nous n'avons pas pu charger cette page. Veuillez réessayer.
+            {t('description')}
           </p>
         </div>
 
@@ -33,7 +35,7 @@ export default function Error({
           onClick={reset}
           className="bg-rose-500 hover:bg-rose-600 text-white font-semibold"
         >
-          Réessayer
+          {t('retry')}
         </Button>
       </div>
     </div>

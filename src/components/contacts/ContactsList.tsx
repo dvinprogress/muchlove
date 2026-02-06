@@ -13,6 +13,7 @@ import { CopyLinkButton } from './CopyLinkButton'
 import { DeleteContactButton } from './DeleteContactButton'
 import { formatDate } from '@/lib/utils/format'
 import { CONTACT_STATUS_ORDER } from '@/lib/utils/contact-status'
+import { useTranslations } from 'next-intl'
 
 interface ContactsListProps {
   contacts: Contact[]
@@ -37,6 +38,7 @@ const itemVariants = {
 
 export function ContactsList({ contacts, currentPage, totalContacts, pageSize }: ContactsListProps) {
   const router = useRouter()
+  const t = useTranslations('contacts.list')
   const [showAddModal, setShowAddModal] = useState(false)
   const [search, setSearch] = useState('')
   const [statusFilter, setStatusFilter] = useState<ContactStatus | 'all'>('all')
@@ -84,7 +86,7 @@ export function ContactsList({ contacts, currentPage, totalContacts, pageSize }:
           <SearchInput
             value={search}
             onChange={setSearch}
-            placeholder="Search by name, email or company..."
+            placeholder={t('searchPlaceholder')}
           />
         </div>
 
@@ -101,7 +103,7 @@ export function ContactsList({ contacts, currentPage, totalContacts, pageSize }:
               focus:border-rose-500
             "
           >
-            <option value="all">All statuses</option>
+            <option value="all">{t('allStatuses')}</option>
             {CONTACT_STATUS_ORDER.map((status) => (
               <option key={status} value={status}>
                 {status.replace('_', ' ')}
@@ -112,14 +114,14 @@ export function ContactsList({ contacts, currentPage, totalContacts, pageSize }:
 
         {/* Bouton ajouter */}
         <Button variant="primary" icon={<Plus className="w-4 h-4" />} onClick={() => setShowAddModal(true)}>
-          Add contact
+          {t('addContact')}
         </Button>
       </div>
 
       {/* Liste vide */}
       {filteredContacts.length === 0 && (
         <div className="text-center py-12 text-slate-500">
-          {search || statusFilter !== 'all' ? 'No contacts match the filters' : 'No contacts yet'}
+          {search || statusFilter !== 'all' ? t('noMatch') : t('noContacts')}
         </div>
       )}
 
@@ -134,12 +136,12 @@ export function ContactsList({ contacts, currentPage, totalContacts, pageSize }:
           >
             <thead>
               <tr className="border-b border-slate-200">
-                <th className="text-left py-3 px-4 text-sm font-medium text-slate-700">Contact</th>
-                <th className="text-left py-3 px-4 text-sm font-medium text-slate-700">Email</th>
-                <th className="text-left py-3 px-4 text-sm font-medium text-slate-700">Company</th>
-                <th className="text-left py-3 px-4 text-sm font-medium text-slate-700">Status</th>
-                <th className="text-left py-3 px-4 text-sm font-medium text-slate-700">Date</th>
-                <th className="text-right py-3 px-4 text-sm font-medium text-slate-700">Actions</th>
+                <th className="text-left py-3 px-4 text-sm font-medium text-slate-700">{t('table.contact')}</th>
+                <th className="text-left py-3 px-4 text-sm font-medium text-slate-700">{t('table.email')}</th>
+                <th className="text-left py-3 px-4 text-sm font-medium text-slate-700">{t('table.company')}</th>
+                <th className="text-left py-3 px-4 text-sm font-medium text-slate-700">{t('table.status')}</th>
+                <th className="text-left py-3 px-4 text-sm font-medium text-slate-700">{t('table.date')}</th>
+                <th className="text-right py-3 px-4 text-sm font-medium text-slate-700">{t('table.actions')}</th>
               </tr>
             </thead>
             <tbody>
@@ -209,7 +211,7 @@ export function ContactsList({ contacts, currentPage, totalContacts, pageSize }:
 
             {/* Entreprise */}
             <div className="text-sm">
-              <span className="text-slate-500">Company: </span>
+              <span className="text-slate-500">{t('mobileCard.company')} </span>
               <span className="text-slate-900 font-medium">{contact.company_name}</span>
             </div>
 
@@ -229,7 +231,7 @@ export function ContactsList({ contacts, currentPage, totalContacts, pageSize }:
       {totalPages > 1 && (
         <div className="flex items-center justify-between mt-6 pt-6 border-t border-slate-200">
           <div className="text-sm text-slate-500">
-            Page {currentPage} of {totalPages} ({totalContacts} contacts)
+            {t('pagination.pageOf', { current: currentPage, total: totalPages, count: totalContacts })}
           </div>
 
           <div className="flex items-center gap-2">
@@ -240,7 +242,7 @@ export function ContactsList({ contacts, currentPage, totalContacts, pageSize }:
               onClick={() => handlePageChange(currentPage - 1)}
               disabled={!hasPrevPage}
             >
-              Previous
+              {t('pagination.previous')}
             </Button>
             <Button
               variant="secondary"
@@ -249,7 +251,7 @@ export function ContactsList({ contacts, currentPage, totalContacts, pageSize }:
               onClick={() => handlePageChange(currentPage + 1)}
               disabled={!hasNextPage}
             >
-              Next
+              {t('pagination.next')}
             </Button>
           </div>
         </div>

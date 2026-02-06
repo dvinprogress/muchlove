@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 import { useEffect, type ReactNode } from 'react';
+import { useTranslations } from 'next-intl';
 
 type ModalSize = 'sm' | 'md' | 'lg';
 
@@ -27,6 +28,7 @@ export function Modal({
   size = 'md',
   children,
 }: ModalProps) {
+  const t = useTranslations('ui.modal');
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && isOpen) {
@@ -89,7 +91,7 @@ export function Modal({
                     transition-colors duration-200
                     focus:outline-none focus:ring-2 focus:ring-rose-500
                   "
-                  aria-label="Fermer"
+                  aria-label={t('close')}
                 >
                   <X className="w-5 h-5" />
                 </button>

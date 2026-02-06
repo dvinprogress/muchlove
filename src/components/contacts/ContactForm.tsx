@@ -3,7 +3,8 @@
 import { useTransition } from 'react'
 import { toast } from 'sonner'
 import { Card, CardContent, Button } from '@/components/ui'
-import { createContact } from '@/app/dashboard/contacts/actions'
+import { createContact } from '@/app/[locale]/dashboard/contacts/actions'
+import { useTranslations } from 'next-intl'
 
 interface ContactFormProps {
   onSuccess?: () => void
@@ -11,6 +12,7 @@ interface ContactFormProps {
 
 export function ContactForm({ onSuccess }: ContactFormProps) {
   const [isPending, startTransition] = useTransition()
+  const t = useTranslations('contacts.form')
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -24,10 +26,10 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
       })
 
       if (result.success) {
-        toast.success('Contact created! Ready to share much love 💛')
+        toast.success(t('success'))
         onSuccess?.()
       } else {
-        toast.error(`Oops! Couldn't create contact: ${result.error}`)
+        toast.error(t('error', { error: result.error }))
       }
     })
   }
@@ -41,7 +43,7 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
               htmlFor="first_name"
               className="block text-sm font-medium text-slate-700 mb-2"
             >
-              First name <span className="text-rose-500">*</span>
+              {t('firstName.label')} <span className="text-rose-500">*</span>
             </label>
             <input
               type="text"
@@ -50,7 +52,7 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
               required
               disabled={isPending}
               className="w-full px-4 py-2 rounded-xl border border-slate-300 focus:border-rose-500 focus:ring-2 focus:ring-rose-500 focus:ring-opacity-20 outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-              placeholder="Jean"
+              placeholder={t('firstName.placeholder')}
             />
           </div>
 
@@ -59,7 +61,7 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
               htmlFor="company_name"
               className="block text-sm font-medium text-slate-700 mb-2"
             >
-              Company <span className="text-rose-500">*</span>
+              {t('company.label')} <span className="text-rose-500">*</span>
             </label>
             <input
               type="text"
@@ -68,7 +70,7 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
               required
               disabled={isPending}
               className="w-full px-4 py-2 rounded-xl border border-slate-300 focus:border-rose-500 focus:ring-2 focus:ring-rose-500 focus:ring-opacity-20 outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-              placeholder="Acme Corp"
+              placeholder={t('company.placeholder')}
             />
           </div>
 
@@ -77,7 +79,7 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
               htmlFor="email"
               className="block text-sm font-medium text-slate-700 mb-2"
             >
-              Email <span className="text-rose-500">*</span>
+              {t('email.label')} <span className="text-rose-500">*</span>
             </label>
             <input
               type="email"
@@ -86,7 +88,7 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
               required
               disabled={isPending}
               className="w-full px-4 py-2 rounded-xl border border-slate-300 focus:border-rose-500 focus:ring-2 focus:ring-rose-500 focus:ring-opacity-20 outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-              placeholder="jean@acme.com"
+              placeholder={t('email.placeholder')}
             />
           </div>
 
@@ -98,7 +100,7 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
               disabled={isPending}
               className="flex-1"
             >
-              {isPending ? 'Creating...' : 'Create contact'}
+              {isPending ? t('submitting') : t('submitAlt')}
             </Button>
           </div>
         </form>

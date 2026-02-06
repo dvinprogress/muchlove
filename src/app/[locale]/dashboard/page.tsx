@@ -9,11 +9,15 @@ import {
 } from '@/components/dashboard'
 import { getDashboardStats } from './actions'
 import type { Database } from '@/types/database'
+import { getTranslations } from 'next-intl/server'
 
 type Company = Database['public']['Tables']['companies']['Row']
 
 export default async function DashboardPage() {
   const supabase = await createClient()
+  const t = await getTranslations('dashboard')
+  const tStats = await getTranslations('dashboard.stats')
+  const tAlerts = await getTranslations('dashboard.alerts')
 
   // Récupérer l'utilisateur (déjà vérifié dans le layout)
   const {
@@ -66,14 +70,14 @@ export default async function DashboardPage() {
   return (
     <div>
       <Header
-        title="Dashboard"
-        description="Bienvenue sur votre tableau de bord MuchLove"
+        title={t('title')}
+        description={t('description')}
       />
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
         <StatsCard
-          title="Vidéos utilisées"
+          title={tStats('videosUsed')}
           value={`${videosUsed} / ${videosLimit}`}
           icon={<Video className="w-6 h-6" />}
           trend={
@@ -86,12 +90,12 @@ export default async function DashboardPage() {
           }
         />
         <StatsCard
-          title="Contacts"
+          title={tStats('contacts')}
           value={totalContacts}
           icon={<Users className="w-6 h-6" />}
         />
         <StatsCard
-          title="Témoignages"
+          title={tStats('testimonials')}
           value={totalTestimonials}
           icon={<TrendingUp className="w-6 h-6" />}
         />
@@ -123,11 +127,10 @@ export default async function DashboardPage() {
             </svg>
             <div>
               <h3 className="font-semibold text-red-900 mb-1">
-                Limite de vidéos atteinte
+                {tAlerts('limitReached.title')}
               </h3>
               <p className="text-sm text-red-700">
-                Vous avez utilisé toutes vos vidéos pour ce mois. Passez à un
-                plan supérieur pour continuer.
+                {tAlerts('limitReached.description')}
               </p>
             </div>
           </div>
@@ -149,9 +152,9 @@ export default async function DashboardPage() {
               />
             </svg>
             <div>
-              <h3 className="font-semibold text-orange-900 mb-1">Attention</h3>
+              <h3 className="font-semibold text-orange-900 mb-1">{tAlerts('limitWarning.title')}</h3>
               <p className="text-sm text-orange-700">
-                Vous approchez de votre limite mensuelle de vidéos.
+                {tAlerts('limitWarning.description')}
               </p>
             </div>
           </div>

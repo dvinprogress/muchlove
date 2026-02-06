@@ -1,16 +1,23 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 
-export const metadata: Metadata = {
-  title: "Politique de Confidentialité — MuchLove",
-  description: "Politique de confidentialité et protection des données personnelles de MuchLove.",
-  robots: {
-    index: true,
-    follow: true,
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations('legal.privacy');
 
-export default function PrivacyPage() {
+  return {
+    title: t('metaTitle'),
+    description: t('metaDescription'),
+    robots: {
+      index: true,
+      follow: true,
+    },
+  };
+}
+
+export default async function PrivacyPage() {
+  const t = await getTranslations('legal.privacy');
+  const tFooter = await getTranslations('legal.footer');
   return (
     <div className="min-h-screen bg-white">
       <header className="border-b border-slate-200 bg-white">
@@ -26,10 +33,10 @@ export default function PrivacyPage() {
 
       <main className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
         <h1 className="text-4xl font-bold text-slate-900">
-          Politique de Confidentialité
+          {t('title')}
         </h1>
         <p className="mt-4 text-sm text-slate-600">
-          Dernière mise à jour : 6 février 2026
+          {t('lastUpdated')}
         </p>
 
         <div className="prose prose-slate mt-8 max-w-none">
@@ -384,20 +391,20 @@ export default function PrivacyPage() {
         <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
           <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
             <p className="text-sm text-slate-600">
-              © 2026 MuchLove. Tous droits réservés.
+              {tFooter('copyright')}
             </p>
             <div className="flex gap-6">
               <Link
                 href="/terms"
                 className="text-sm text-slate-600 transition-colors hover:text-rose-500"
               >
-                Conditions
+                {tFooter('terms')}
               </Link>
               <Link
                 href="/privacy"
                 className="text-sm text-slate-600 transition-colors hover:text-rose-500"
               >
-                Confidentialité
+                {tFooter('privacy')}
               </Link>
             </div>
           </div>

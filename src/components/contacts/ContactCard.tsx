@@ -1,28 +1,18 @@
+'use client'
+
 import Link from 'next/link'
-import { Card, CardContent, Badge } from '@/components/ui'
-import type { Contact, ContactStatus } from '@/types/database'
+import { Card, CardContent } from '@/components/ui'
+import type { Contact } from '@/types/database'
+import { ContactStatusBadge } from './ContactStatusBadge'
+import { useTranslations } from 'next-intl'
 
 interface ContactCardProps {
   contact: Contact
 }
 
-const statusConfig: Record<
-  ContactStatus,
-  { label: string; variant: 'default' | 'info' | 'warning' | 'success' }
-> = {
-  created: { label: 'Créé', variant: 'default' },
-  invited: { label: 'Invité', variant: 'info' },
-  link_opened: { label: 'Lien ouvert', variant: 'warning' },
-  video_started: { label: 'Vidéo en cours', variant: 'warning' },
-  video_completed: { label: 'Vidéo terminée', variant: 'success' },
-  shared_1: { label: 'Partagé x1', variant: 'success' },
-  shared_2: { label: 'Partagé x2', variant: 'success' },
-  shared_3: { label: 'Partagé x3', variant: 'success' },
-}
-
 export function ContactCard({ contact }: ContactCardProps) {
-  const statusInfo = statusConfig[contact.status]
-  const createdDate = new Date(contact.created_at).toLocaleDateString('fr-FR', {
+  const t = useTranslations('contacts.card')
+  const createdDate = new Date(contact.created_at).toLocaleDateString('en-US', {
     day: 'numeric',
     month: 'short',
     year: 'numeric',
@@ -41,16 +31,16 @@ export function ContactCard({ contact }: ContactCardProps) {
             </p>
             <p className="text-sm text-slate-500 mt-1">{contact.email}</p>
           </div>
-          <Badge variant={statusInfo.variant}>{statusInfo.label}</Badge>
+          <ContactStatusBadge status={contact.status} />
         </div>
 
         <div className="flex items-center justify-between pt-3 border-t border-slate-100">
-          <span className="text-xs text-slate-400">Créé le {createdDate}</span>
+          <span className="text-xs text-slate-400">{t('createdOn', { date: createdDate })}</span>
           <Link
             href={`/dashboard/contacts/${contact.id}`}
             className="text-sm font-medium text-rose-500 hover:text-rose-600 transition-colors"
           >
-            Voir détail →
+            {t('viewDetail')}
           </Link>
         </div>
       </CardContent>

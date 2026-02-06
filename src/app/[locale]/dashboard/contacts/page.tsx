@@ -1,12 +1,15 @@
 import { getContacts } from './actions'
 import { ContactsList } from '@/components/contacts/ContactsList'
 import { ContactsEmptyState } from '@/components/contacts/ContactsEmptyState'
+import { getTranslations } from 'next-intl/server'
 
 interface ContactsPageProps {
   searchParams: Promise<{ page?: string }>
 }
 
 export default async function ContactsPage({ searchParams }: ContactsPageProps) {
+  const t = await getTranslations('contacts')
+
   // Parse page from searchParams
   const params = await searchParams
   const page = parseInt(params.page ?? '1', 10)
@@ -19,13 +22,13 @@ export default async function ContactsPage({ searchParams }: ContactsPageProps) 
     return (
       <div>
         <div className="pb-6 border-b border-slate-200 mb-6">
-          <h1 className="text-2xl font-bold text-slate-900">Contacts</h1>
+          <h1 className="text-2xl font-bold text-slate-900">{t('title')}</h1>
           <p className="text-slate-500 mt-1">
-            Gérez vos contacts et envoyez des demandes de témoignages
+            {t('description')}
           </p>
         </div>
         <div className="text-center text-red-500 py-8">
-          Erreur: {result.error}
+          {t('error', { error: result.error })}
         </div>
       </div>
     )
@@ -37,9 +40,9 @@ export default async function ContactsPage({ searchParams }: ContactsPageProps) 
   return (
     <div>
       <div className="pb-6 border-b border-slate-200 mb-6">
-        <h1 className="text-2xl font-bold text-slate-900">Contacts</h1>
+        <h1 className="text-2xl font-bold text-slate-900">{t('title')}</h1>
         <p className="text-slate-500 mt-1">
-          Gérez vos contacts et envoyez des demandes de témoignages
+          {t('description')}
         </p>
       </div>
 

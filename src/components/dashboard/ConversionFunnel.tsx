@@ -4,12 +4,15 @@ import { motion } from 'framer-motion'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui'
 import { FUNNEL_STEPS, getContactStatusConfig } from '@/lib/utils/contact-status'
 import type { ContactStatus } from '@/types/database'
+import { useTranslations } from 'next-intl'
 
 interface ConversionFunnelProps {
   funnelData: Record<ContactStatus, number>
 }
 
 export function ConversionFunnel({ funnelData }: ConversionFunnelProps) {
+  const t = useTranslations('dashboard.funnel')
+
   // Calculer le total et le max pour les barres
   const counts = FUNNEL_STEPS.map((step) =>
     step.statuses.reduce((sum, status) => sum + (funnelData[status] || 0), 0)
@@ -22,12 +25,12 @@ export function ConversionFunnel({ funnelData }: ConversionFunnelProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Funnel de conversion</CardTitle>
+        <CardTitle>{t('title')}</CardTitle>
       </CardHeader>
       <CardContent>
         {totalCount === 0 ? (
           <p className="text-sm text-slate-500 text-center py-8">
-            Ajoutez des contacts pour voir votre funnel
+            {t('empty')}
           </p>
         ) : (
           <div className="space-y-4">
@@ -42,7 +45,7 @@ export function ConversionFunnel({ funnelData }: ConversionFunnelProps) {
                 <div key={step.key}>
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-sm font-medium text-slate-700">
-                      {step.label}
+                      {t(step.key)}
                     </span>
                     <span className="text-sm font-semibold text-slate-900">
                       {count}

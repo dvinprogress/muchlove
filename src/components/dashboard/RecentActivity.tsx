@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui'
 import { getContactStatusConfig } from '@/lib/utils/contact-status'
 import { formatRelativeTime } from '@/lib/utils/format'
 import type { Contact } from '@/types/database'
+import { useTranslations } from 'next-intl'
 
 interface RecentActivityProps {
   activities: Array<{
@@ -31,15 +32,17 @@ const itemVariants = {
 }
 
 export function RecentActivity({ activities }: RecentActivityProps) {
+  const t = useTranslations('dashboard.activity')
+
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Activite recente</CardTitle>
+        <CardTitle>{t('title')}</CardTitle>
       </CardHeader>
       <CardContent className="max-h-[400px] overflow-y-auto">
         {activities.length === 0 ? (
           <p className="text-sm text-slate-500 text-center py-8">
-            Aucune activite recente
+            {t('empty')}
           </p>
         ) : (
           <motion.ul
