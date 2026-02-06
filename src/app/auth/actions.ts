@@ -10,8 +10,11 @@ const emailSchema = z.object({
   email: z.string().email('Email invalide'),
 })
 
-// Helper pour récupérer l'origin
+// Helper pour récupérer l'origin — force NEXT_PUBLIC_APP_URL en production
 async function getOrigin(): Promise<string> {
+  if (process.env.NEXT_PUBLIC_APP_URL) {
+    return process.env.NEXT_PUBLIC_APP_URL
+  }
   const headersList = await headers()
   const host = headersList.get('host')
   const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http'
