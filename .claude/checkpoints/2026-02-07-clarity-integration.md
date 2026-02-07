@@ -1,91 +1,33 @@
 # Checkpoint: clarity-integration
 
-**Date**: 2026-02-07 10:10
-**Session**: Integration Microsoft Clarity + discussion MCP Clarity pour audit UX automatise
+**Date**: 2026-02-07 12:45
+**Session**: Integration Microsoft Clarity — TERMINEE
 
-## Objectif Principal
-Integrer Microsoft Clarity sur MuchLove pour tracker le comportement utilisateur (heatmaps, session recordings, rage clicks) et preparer un workflow d'audit UX automatise via Claude Code.
+## Statut: DONE
 
-## Progression
-- [x] Discussion strategie Clarity + Claude Code (MCP vs Playwright)
-- [x] Connexion au dashboard Clarity via Playwright (compte Google, projet MuchLove vdkjs9lifc)
-- [x] Decouverte : Clarity a un serveur MCP officiel (@microsoft/clarity-mcp-server)
-- [x] Installation package @microsoft/clarity dans MuchLove
-- [x] Creation ClarityProvider component (src/components/providers/ClarityProvider.tsx)
-- [x] Integration dans layout locale (src/app/[locale]/layout.tsx)
-- [x] Ajout env var dans .env.example et .env.local
-- [x] Commit + push (5be12d3 feat(analytics): integrate Microsoft Clarity tracking)
-- [x] Ajout NEXT_PUBLIC_CLARITY_PROJECT_ID=vdkjs9lifc sur Vercel env vars
-- [ ] Deploy Vercel (bloque par erreurs dashboard Vercel temporaires) <- ICI
-- [ ] Verifier que Clarity recoit les donnees apres deploy
-- [ ] Configurer le MCP Clarity dans Claude Code (.claude/settings)
-- [ ] Creer le skill /ux-audit
+Clarity est **live** sur muchlove.app. Le tracking fonctionne (tag charge, script init, donnees envoyees a y.clarity.ms/collect).
 
-## Fichiers Modifies
-| Fichier | Action | Description |
-|---------|--------|-------------|
-| src/components/providers/ClarityProvider.tsx | cree | Composant client, init Clarity via useEffect |
-| src/app/[locale]/layout.tsx | modifie | Import + ajout ClarityProvider dans body |
-| .env.example | modifie | Ajout NEXT_PUBLIC_CLARITY_PROJECT_ID |
-| .env.local | modifie | NEXT_PUBLIC_CLARITY_PROJECT_ID=vdkjs9lifc |
-| package.json | modifie | Ajout dep @microsoft/clarity |
-| package-lock.json | modifie | Lock file update |
+## Ce qui a ete fait
+- [x] Integration Microsoft Clarity (ClarityProvider, package @microsoft/clarity)
+- [x] Env var NEXT_PUBLIC_CLARITY_PROJECT_ID=vdkjs9lifc sur Vercel
+- [x] Reconnexion Git Vercel (webhook etait manquant — disconnect/reconnect)
+- [x] Auth Vercel CLI (vercel login via OAuth device flow)
+- [x] Deploy production via dashboard Vercel (redeploy sans cache)
+- [x] Verification Clarity actif : tag vdkjs9lifc charge, script clarity.js 0.8.53, 4x POST y.clarity.ms/collect 204
+- [x] Fix cron vercel.json : 0 * * * * (horaire) → 0 8 * * * (journalier) pour plan Hobby
+- [x] Commit + push (d9688f8)
 
-## Fichiers non commites (en attente)
-- .claude/PROGRESS.md (modifie)
-- src/app/[locale]/layout.tsx (modifie par linter — icons metadata ajoutees)
-- src/components/landing/HeroSection.tsx (modifie)
-- src/app/[locale]/opengraph-image.tsx (nouveau)
-- src/app/apple-icon.tsx (nouveau)
-- src/app/icon.svg (nouveau)
-- e2e/ fichiers doc (non commites)
+## Problemes resolus
+1. **Webhook GitHub manquant** : `gh api repos/dvinprogress/muchlove/hooks` retournait `[]`. Resolu par disconnect/reconnect Git dans Vercel settings.
+2. **Env var perdue** : NEXT_PUBLIC_CLARITY_PROJECT_ID disparue apres disconnect Git. Re-ajoutee manuellement.
+3. **Cron incompatible Hobby** : `0 * * * *` bloquait le deploy CLI. Corrige en `0 8 * * *`.
+4. **Vercel CLI non auth** : Login via OAuth device flow + autorisation Playwright.
 
-## Decisions Techniques
-1. **NPM package** au lieu de script tag : Plus propre pour Next.js, typage TS, controle lifecycle
-2. **ClarityProvider comme composant client** : Clarity doit s'executer cote client, le layout reste Server Component
-3. **Env var NEXT_PUBLIC_CLARITY_PROJECT_ID** : Permet de desactiver le tracking en ne definissant pas la variable, securite par defaut
-4. **MCP Clarity plutot que scraping Playwright** : Microsoft fournit un serveur MCP officiel (@microsoft/clarity-mcp-server) — API structuree, plus fiable que scraper le dashboard
-
-## Contexte Important
-- Clarity project ID MuchLove : `vdkjs9lifc`
-- Compte Clarity connecte via Google (Damien Visconte)
-- Le tracking Clarity n'est PAS encore installe cote Clarity (page "Encore quelques etapes")
-- Il se configurera automatiquement quand le site deploye enverra les premieres donnees
-- Vercel dashboard avait des erreurs intermittentes ("Something went wrong", "Connection closed")
-- L'auto-deploy GitHub → Vercel ne se declenchait pas malgre le push — webhook potentiellement desync
-- Env var ajoutee avec succes via dashboard Vercel
-- Commit vide pousse (29b8e25) pour tenter de re-declencher le webhook
-
-## Pour Reprendre
-1. Lire ce checkpoint
-2. Verifier si Vercel a finalement deploye (https://vercel.com/dvinprogress-projects/muchlove/deployments)
-3. Si pas deploye : redeploy manuel via dashboard Vercel
-4. Une fois deploye : visiter app.muchlove.fr et verifier dans Clarity que les donnees arrivent
-5. Configurer le MCP Clarity dans la config Claude Code
-6. Creer le skill /ux-audit
-
-## Commandes Utiles
-```bash
-# Verifier l'etat git
-cd projects/muchlove && git status && git log --oneline -5
-
-# Build local pour verifier
-cd projects/muchlove && npm run build
-
-# Tester en local avec Clarity actif
-cd projects/muchlove && npm run dev
-
-# Configurer MCP Clarity (a ajouter dans .claude/settings ou claude_desktop_config.json)
-# "mcpServers": {
-#   "@microsoft/clarity-mcp-server": {
-#     "command": "npx",
-#     "args": ["@microsoft/clarity-mcp-server", "--clarity_api_token=TOKEN_A_GENERER"]
-#   }
-# }
-```
-
-## Prochaines Etapes (apres deploy)
+## Prochaines etapes (non faites)
 1. Generer un API token Clarity (Settings → API dans le dashboard Clarity)
-2. Ajouter le MCP server Clarity a la config Claude Code
-3. Creer le skill /ux-audit avec workflow : Clarity MCP → analyse → corrections
-4. Tester le skill sur les premieres donnees
+2. Configurer le MCP Clarity dans Claude Code (.claude/settings)
+3. Creer le skill /ux-audit
+
+## Commits
+- d5cdba7 chore: trigger deploy after Vercel Git reconnection
+- d9688f8 fix(deploy): change cron to daily for Hobby plan compatibility

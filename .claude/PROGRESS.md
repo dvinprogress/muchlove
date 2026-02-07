@@ -4,7 +4,7 @@
 
 ## Statut Global
 - **Phase**: mvp
-- **Derniere action**: Audit complet 5 dimensions termine. 3 phases de corrections (securite, qualite, assets). 22 features DONE. Pret pour deploy production.
+- **Derniere action**: Microsoft Clarity integre et live sur muchlove.app. Vercel Git reconnecte. 23 features DONE.
 
 ## Infrastructure
 | Element | Statut | Date | Notes |
@@ -18,7 +18,7 @@
 | Vitest + Playwright | DONE | 2026-02-02 | Config prete, tests basiques |
 | ESLint | DONE | 2026-02-02 | Next.js core-web-vitals |
 | GitHub repo | DONE | 2026-02-06 | 2 commits, master branch, pushed |
-| Vercel deploy | DONE | 2026-02-06 | Live: muchlove.app + muchlove.vercel.app, 4 env vars, region cdg1, headers securite |
+| Vercel deploy | DONE | 2026-02-07 | Live: muchlove.app + muchlove.vercel.app, 5 env vars (+ NEXT_PUBLIC_CLARITY_PROJECT_ID), region cdg1, headers securite, Vercel CLI auth OK |
 | Domaine muchlove.app | DONE | 2026-02-06 | Achete sur Cloudflare ($14.20/an), expire Feb 2027 |
 | Cloudflare DNS | DONE | 2026-02-06 | A: @ → 76.76.21.21, CNAME: www → cname.vercel-dns.com (DNS only) |
 | CI/CD | DONE | 2026-02-06 | Auto-deploy via GitHub push → Vercel |
@@ -47,6 +47,7 @@
 | 19 | Internationalisation (i18n) | DONE | 2026-02-06 | src/i18n/, messages/{en,fr,es}.json, src/app/[locale]/, src/middleware.ts, src/components/ui/LanguageSwitcher.tsx | next-intl complet : routing [locale] as-needed (EN sans prefixe, /fr/, /es/), middleware i18n+Supabase, ~280 cles x 3 langues, LanguageSwitcher Framer Motion, SEO hreflang+alternates, generateMetadata multilingue, build OK |
 | 20 | Viral Demo Flow | DONE | 2026-02-07 | src/app/[locale]/demo/, components/demo/{DemoEmailCapture,DemoSharePanel,DemoCounter}.tsx, components/video/DemoVideoRecorder.tsx, api/demo/{upload-video,capture-email,count}/route.ts, components/landing/HeroSection.tsx, messages/{en,fr,es}.json | Flow complet : Intro → Recording (DemoVideoRecorder fork VideoRecorder) → Celebration → EmailCapture (honeypot RGPD) → SharePanel (LinkedIn + Twitter). DemoCounter social proof (fetch /api/demo/count). 3 API routes : upload-video (rate limit 3/IP/24h, bucket demo-videos), capture-email (update session), count (cache 5min). Bouton demo landing (amber). i18n EN/FR/ES (~340 cles). Watermark DEMO. Redirection /login?email= apres capture. Build OK. |
 | 21 | Systeme Feedback | DONE | 2026-02-07 | src/lib/feedback/{types,lib,components,api}/, feedback.config.ts, src/app/api/feedback/{route,upload,admin}/, src/components/feedback/FeedbackProvider.tsx, supabase/migrations/005_feedback.sql | Package complet integre : FeedbackWidget (floating button violet/purple), FeedbackModal (3 categories: bug/improvement/feature), FeedbackForm (title + description + email + screenshots), CategorySelector, ScreenshotUploader (drag&drop + paste + compression). Securite 8 layers : Turnstile anti-bot, rate limit IP (3 req/min), Zod validation, anti-spam (URLs, repetition, keywords), anti-injection (prompt/XSS/SQL), sanitization HTML, Supabase RLS, processing pipeline (auto-tags bugs, user tasks features). 3 API routes : POST /api/feedback (submit), POST /api/feedback/upload (screenshots), GET+PATCH /api/feedback/admin (admin only). Migration 005 : 5 tables (feedbacks + screenshots + admin_notes + user_tasks + rate_limits) + storage bucket + RLS policies + triggers. FeedbackProvider integre layout racine (visible partout). Config MuchLove : violet/purple branding, Turnstile (NEXT_PUBLIC_TURNSTILE_SITE_KEY + TURNSTILE_SECRET_KEY requis). TypeCheck + Build OK. |
+| 23 | Microsoft Clarity Analytics | DONE | 2026-02-07 | src/components/providers/ClarityProvider.tsx, src/app/[locale]/layout.tsx | Package @microsoft/clarity, ClarityProvider useEffect init, env var NEXT_PUBLIC_CLARITY_PROJECT_ID, heatmaps + session recordings + rage clicks |
 | 22 | Widget Embeddable | DONE | 2026-02-07 | src/app/api/widget/{testimonials,config}/, src/widget/{index,styles,render}.ts, src/app/[locale]/dashboard/widget/, src/components/widget/{WidgetConfigurator,WidgetSnippet}.tsx, scripts/build-widget.ts, public/widget/muchlove-widget.js | API publique GET /api/widget/testimonials avec validation api_key, CORS dynamique (allowed_domains + wildcard support), signed URLs 1h, cache 5min. API authentifiee GET/PUT /api/widget/config (CRUD config). Widget standalone vanilla JS (9.71 KB bundled) : Shadow DOM isolation, carousel responsive (1 card mobile, 2 tablets, 3 desktop), play video overlay, IntersectionObserver lazy-load, navigation dots + arrows. Configurateur dashboard : WidgetConfigurator (theme colors, layout, maxItems, showNames, showTranscription, poweredByVisible [Pro only], allowedDomains), WidgetSnippet (code HTML copiable), enable/disable toggle, Server Actions (enableWidget, disableWidget, updateWidgetConfig). Esbuild integration : build script npm run build:widget (pre-build hook), bundle < 20kb OK. i18n EN/FR/ES complet (~40 cles widget.*). Sidebar mis a jour (icone Code2). Pret pour production. |
 
 ## Bloquants qualite a corriger (issus de l'audit 2026-02-06)
@@ -120,6 +121,7 @@
 | Stripe | CODE_READY | Code complet, necessite: STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET, STRIPE_PRO/ENTERPRISE_PRICE_IDs dans Vercel env vars + produits Stripe Dashboard |
 | Resend | CODE_READY | Client wrapper pret, necessite: RESEND_API_KEY, RESEND_FROM_EMAIL, CRON_SECRET dans Vercel env vars |
 | Vercel | DEPLOYED | muchlove.app live, env vars configurees, NEXT_PUBLIC_APP_URL=https://muchlove.app, cron config vercel.json |
+| Clarity | LIVE | Tracking actif sur muchlove.app, project ID vdkjs9lifc, package @microsoft/clarity, ClarityProvider component |
 | Cloudflare | CONFIGURED | muchlove.app enregistre, DNS A+CNAME → Vercel, WHOIS redacte |
 
 ## Agents & Skills Projet
