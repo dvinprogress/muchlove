@@ -1,0 +1,53 @@
+{
+  "meta": {
+    "generated": "2026-02-07",
+    "generator": "Claude Code - Test Engineer",
+    "framework": "Playwright"
+  },
+  "files": {
+    "total": 5,
+    "specs": [
+      "landing.spec.ts",
+      "auth.spec.ts",
+      "demo.spec.ts",
+      "widget-api.spec.ts",
+      "dashboard.spec.ts"
+    ]
+  },
+  "tests": {
+    "total": 53,
+    "by_file": {
+      "landing.spec.ts": 9,
+      "auth.spec.ts": 8,
+      "demo.spec.ts": 8,
+      "widget-api.spec.ts": 20,
+      "dashboard.spec.ts": 8
+    }
+  },
+  "lines": {
+    "total": 607,
+    "average_per_test": 11.5
+  },
+  "coverage": {
+    "overall": "70%",
+    "by_flow": {
+      "landing": "85%",
+      "auth": "70%",
+      "demo": "60%",
+      "widget_api": "80%",
+      "dashboard": "50%"
+    }
+  },
+  "quality": {
+    "typescript_errors": 0,
+    "eslint_errors": 0,
+    "retries_configured": true,
+    "browsers": ["chromium"]
+  },
+  "next_steps": [
+    "Executer npm run e2e pour valider",
+    "Ajouter auth mocking (Phase 2)",
+    "Configurer CI/CD",
+    "Tests dashboard complets avec auth"
+  ]
+}

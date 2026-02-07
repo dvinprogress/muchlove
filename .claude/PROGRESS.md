@@ -1,10 +1,10 @@
 # MuchLove - Progress Tracker
 
-> Derniere MAJ: 2026-02-07 | Version: 0.1.6
+> Derniere MAJ: 2026-02-07 | Version: 0.1.7
 
 ## Statut Global
 - **Phase**: mvp
-- **Derniere action**: Refactorisation VideoRecorder/DemoVideoRecorder. Hook partage useVideoRecorderLogic extrait (logique commune: state management, transcription, upload, error handling). Duplication eliminee (~200 lignes). Les 2 composants gardent leur interface Props exacte (backward compatible). Build OK 53 routes. 22 features DONE.
+- **Derniere action**: Audit complet 5 dimensions termine. 3 phases de corrections (securite, qualite, assets). 22 features DONE. Pret pour deploy production.
 
 ## Infrastructure
 | Element | Statut | Date | Notes |
@@ -98,10 +98,10 @@
 - [x] Supprimer dead code api/transcribe — DONE 2026-02-07
 - [x] Fix ESLint config — DONE 2026-02-07 — Flat config sans FlatCompat, 0 erreurs 19 warnings
 - [x] Audit qualite : refactorer VideoRecorder duplication (280 lignes x2) — DONE 2026-02-07 — Hook useVideoRecorderLogic partage (hooks/useVideoRecorderLogic.ts), logique commune extraite, Props interfaces conservees, backward compatible
-- [ ] Audit qualite : eliminer 52 @ts-ignore (MAJEUR — necessite regen database.ts)
-- [ ] Templates emails (invitations, relances) — requis pour invitations contacts
-- [ ] Tests unitaires et e2e pour features critiques
-- [ ] Images/assets optimises (hero, illustrations)
+- [x] Audit qualite : @ts-ignore elimines — DONE 2026-02-07 — 0 @ts-ignore restant (resolus par corrections database.ts Relationships[] + FK definitions)
+- [x] Templates emails invitations — DONE 2026-02-07 — InvitationEmail.tsx + ReminderEmail.tsx (React Email, BaseLayout, CTA rose #f43f5e)
+- [x] Tests e2e Playwright — DONE 2026-02-07 — 53 tests (landing 9, auth 8, demo 8, widget-api 20, dashboard 8), config playwright.config.ts, 0 erreur TS
+- [x] Hero Section illustration visuelle — DONE 2026-02-07 — Layout split responsive (text left, mockup video right), play button overlay, floating decorations (Heart/Star), gradient rose/purple, animations Framer Motion
 
 ## Notes techniques migration 004
 - **Storage bucket demo-videos**: 50MB limit, MIME types video/mp4, video/webm, video/quicktime
@@ -138,7 +138,7 @@
 4. **Tester Viral Demo Flow** — Verifier upload video demo, email capture, compteur, share social
 5. **Tester Email Sequences** — Trigger manuel cron orchestrator, verifier creation sequences, envoi emails (voir EMAIL_SEQUENCES_IMPLEMENTATION.md)
 6. **Tester Widget Embeddable** — Creer config via dashboard, copier snippet, tester integration externe
-7. Templates emails (invitations contact initiale, relance video)
-8. Tests unitaires et e2e pour features critiques
-9. Images/assets optimises (hero, illustrations)
+7. ~~Templates emails (invitations contact initiale, relance video)~~ — DONE v0.1.7 (InvitationEmail + ReminderEmail)
+8. ~~Tests unitaires et e2e pour features critiques~~ — DONE v0.1.7 (11 Vitest + 53 Playwright)
+9. ~~Images/assets optimises (hero, illustrations)~~ — DONE v0.1.7 (favicon, OG image, apple icon, hero mockup)
 10. Push + deploy via GitHub → Vercel

@@ -37,6 +37,10 @@ export async function generateMetadata({params}: {params: Promise<{locale: strin
     title: t('title'),
     description: t('description'),
     keywords: ["video testimonials", "customer reviews", "social proof", "B2B", "trustpilot", "google reviews"],
+    icons: {
+      icon: '/icon.svg',
+      apple: '/apple-icon',
+    },
     openGraph: {
       title: t('title'),
       description: t('description'),
