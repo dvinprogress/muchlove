@@ -17,6 +17,7 @@
       "titlePart2": "sin esfuerzo.",
       "subtitle": "Convierte a tus clientes más felices en testimonios en video que se publican automáticamente en Trustpilot, Google Reviews y LinkedIn — en menos de 3 minutos.",
       "ctaPrimary": "Empieza a compartir amor (gratis) 💛",
+      "ctaDemo": "Prueba la demo — sin cuenta",
       "ctaSecondary": "Ver cómo funciona"
     },
     "howItWorks": {
@@ -464,6 +465,131 @@
         "adminAdjustment": "Ajuste",
         "refund": "Reembolso"
       }
+    }
+  },
+  "email": {
+    "unsubscribe": {
+      "title": "Cancelación de suscripción",
+      "success": "Te has dado de baja de estos correos con éxito.",
+      "error": "Algo salió mal. Por favor, inténtalo de nuevo.",
+      "backToDashboard": "Volver al panel",
+      "resubscribe": "¿Cambiaste de opinión? Puedes gestionar tus preferencias de correo en la configuración de tu panel."
+    }
+  },
+  "demo": {
+    "meta": {
+      "title": "Prueba la demo de MuchLove",
+      "description": "Experimenta el flujo completo de recopilación de testimonios. Sin cuenta necesaria."
+    },
+    "intro": {
+      "title": "Descubre MuchLove en 3 minutos",
+      "subtitle": "Graba un testimonio en video para nuestra empresa ficticia Acme Corp. Sin necesidad de cuenta.",
+      "cta": "Iniciar la demo",
+      "counter": "{count} personas probaron esta demo esta semana"
+    },
+    "recording": {
+      "companyName": "Acme Corp",
+      "greeting": "¡Hola!",
+      "description": "Acme Corp quiere escuchar tu opinión",
+      "watermark": "DEMO"
+    },
+    "celebration": {
+      "headline": "¿Ves? Eso es todo lo que se necesita.",
+      "body": "3 minutos. Un video. Impacto infinito. Imagina a tus clientes reales haciendo esto.",
+      "cta": "Quiero esto para mi negocio"
+    },
+    "emailCapture": {
+      "title": "¿Quieres convertir TUS clientes en embajadores?",
+      "subtitle": "Crea tu cuenta gratis — toma 30 segundos",
+      "placeholder": "tu@empresa.com",
+      "submit": "Empezar gratis 💛",
+      "skip": "Quizás más tarde",
+      "success": "¡Revisa tu bandeja! 💛"
+    },
+    "share": {
+      "title": "¿Te gustó la experiencia?",
+      "subtitle": "Ayuda a correr la voz",
+      "linkedin": "Compartir en LinkedIn",
+      "twitter": "Compartir en X",
+      "linkedinText": "Acabo de probar @MuchLove — convierte testimonios de clientes en video en 3 min. La UX es increíble. Pruébalo:",
+      "twitterText": "Probé @MuchLove — testimonios de clientes a video en 3 min. UX increíble. Pruébalo:",
+      "backToHome": "Volver al inicio"
+    }
+  },
+  "widget": {
+    "title": "Widget integrable",
+    "description": "Muestra tus testimonios en tu sitio web",
+    "enable": "Activar widget",
+    "disable": "Desactivar widget",
+    "enabled": "Widget activo",
+    "disabled": "Widget desactivado",
+    "snippet": {
+      "title": "Código de instalación",
+      "description": "Copia y pega este código en el HTML de tu sitio web",
+      "copy": "Copiar código",
+      "copied": "¡Copiado!"
+    },
+    "config": {
+      "title": "Personalizar",
+      "primaryColor": "Color principal",
+      "backgroundColor": "Color de fondo",
+      "borderRadius": "Radio del borde",
+      "layout": "Diseño",
+      "carousel": "Carrusel",
+      "grid": "Cuadrícula",
+      "maxItems": "Máx. testimonios",
+      "showNames": "Mostrar nombres",
+      "showTranscription": "Mostrar transcripción",
+      "poweredBy": "Mostrar 'Powered by MuchLove'",
+      "poweredByProOnly": "Plan Pro requerido para ocultar",
+      "domains": "Dominios permitidos",
+      "domainsHelp": "Un dominio por línea. Dejar vacío para permitir todos.",
+      "save": "Guardar cambios",
+      "saving": "Guardando...",
+      "saved": "¡Cambios guardados!"
+    },
+    "preview": {
+      "title": "Vista previa"
+    },
+    "sidebar": "Widget"
+  },
+  "sharing": {
+    "title": "¡Comparte el amor! 💛",
+    "subtitle": "Comparte en estas plataformas para ser Embajador",
+    "trustpilot": {
+      "title": "Trustpilot",
+      "action": "Dejar una reseña",
+      "notConfigured": "No disponible",
+      "done": "¡Compartido!"
+    },
+    "google": {
+      "title": "Reseñas Google",
+      "action": "Dejar una reseña",
+      "notConfigured": "No disponible",
+      "done": "¡Compartido!"
+    },
+    "linkedin": {
+      "title": "LinkedIn",
+      "action": "Compartir en LinkedIn",
+      "done": "¡Compartido!",
+      "consent": "Acepto aparecer en LinkedIn",
+      "consentDescription": "Celebraremos tu estatus de embajador en nuestra página de LinkedIn"
+    },
+    "ambassador": {
+      "title": "¡Eres Embajador! 🎉",
+      "subtitle": "Gracias por compartir el amor"
+    }
+  },
+  "emailSequences": {
+    "title": "Automatizaciones Email",
+    "active": "Activo",
+    "paused": "Pausado",
+    "completed": "Completado",
+    "segments": {
+      "frozen_starter": "Recordatorio activación",
+      "rejected_requester": "Impulso respuestas",
+      "collector_unused": "Recordatorio uso",
+      "free_maximizer": "Recordatorio upgrade"
     }
   }
 }

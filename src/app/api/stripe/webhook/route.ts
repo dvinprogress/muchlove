@@ -43,7 +43,6 @@ async function markEventProcessed(
   eventType: string
 ): Promise<void> {
   const supabase = getAdminClient()
-  // @ts-ignore - Supabase admin client type inference issue with service role
   await supabase.from('stripe_webhook_events').insert({
     id: eventId,
     type: eventType,
@@ -176,7 +175,6 @@ async function handleCheckoutSessionCompleted(
   const plan = (planId === 'pro' || planId === 'enterprise') ? planId : 'pro'
   await supabase
     .from('companies')
-    // @ts-ignore - Supabase admin client type inference issue with service role
     .update({
       stripe_customer_id: stripeCustomerId,
       plan,
@@ -258,11 +256,9 @@ async function handleSubscriptionUpdated(subscription: Stripe.Subscription) {
   if (existingSub) {
     await supabase
       .from('user_subscriptions')
-      // @ts-ignore - Supabase admin client type inference issue with service role
       .update(subscriptionRecord)
       .eq('stripe_subscription_id', subscription.id)
   } else {
-    // @ts-ignore - Supabase admin client type inference issue with service role
     await supabase.from('user_subscriptions').insert(subscriptionRecord)
   }
 
@@ -270,7 +266,6 @@ async function handleSubscriptionUpdated(subscription: Stripe.Subscription) {
   if (subscription.status === 'active' || subscription.status === 'trialing') {
     await supabase
       .from('companies')
-      // @ts-ignore - Supabase admin client type inference issue with service role
       .update({
         plan: planId,
         videos_limit: planConfig?.videosLimit ?? 100,
@@ -310,7 +305,6 @@ async function handleSubscriptionDeleted(subscription: Stripe.Subscription) {
   // Update subscription record
   await supabase
     .from('user_subscriptions')
-    // @ts-ignore - Supabase admin client type inference issue with service role
     .update({
       status: 'canceled',
       canceled_at: new Date().toISOString(),
@@ -320,7 +314,6 @@ async function handleSubscriptionDeleted(subscription: Stripe.Subscription) {
   // Downgrade company to free plan
   await supabase
     .from('companies')
-    // @ts-ignore - Supabase admin client type inference issue with service role
     .update({
       plan: 'free',
       videos_limit: 5,
@@ -381,7 +374,6 @@ async function handleInvoicePaid(invoice: Stripe.Invoice) {
 
   // Grant credits using atomic RPC
   try {
-    // @ts-ignore - Supabase admin client type inference issue with service role
     await supabase.rpc('grant_credits', {
       p_company_id: company.id,
       p_amount: creditAmount,

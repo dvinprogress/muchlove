@@ -43,6 +43,15 @@ export default async function TestimonialPage({ params }: PageProps) {
   const company = contact.companies
   const companyName = company?.name ?? contact.company_name
 
+  // Fetch the testimonial if one exists (for duration)
+  const { data: testimonial } = await supabase
+    .from('testimonials')
+    .select('id, duration_seconds')
+    .eq('contact_id', contact.id)
+    .order('created_at', { ascending: false })
+    .limit(1)
+    .single()
+
   return (
     <TestimonialRecordingPage
       contactId={contact.id}
@@ -51,6 +60,10 @@ export default async function TestimonialPage({ params }: PageProps) {
       companyName={companyName}
       companyLogoUrl={company?.logo_url ?? null}
       contactStatus={contact.status}
+      companyGooglePlaceId={company?.google_place_id ?? null}
+      companyTrustpilotUrl={company?.trustpilot_url ?? null}
+      testimonialId={testimonial?.id ?? ''}
+      testimonialDuration={testimonial?.duration_seconds ?? undefined}
     />
   )
 }

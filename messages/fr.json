@@ -17,6 +17,7 @@
       "titlePart2": "sans effort.",
       "subtitle": "Transformez vos clients les plus heureux en témoignages vidéo qui se publient automatiquement sur Trustpilot, Google Reviews et LinkedIn — en moins de 3 minutes.",
       "ctaPrimary": "Partagez l'amour (gratuit) 💛",
+      "ctaDemo": "Essayer la démo — sans compte",
       "ctaSecondary": "Voir comment ça marche"
     },
     "howItWorks": {
@@ -464,6 +465,131 @@
         "adminAdjustment": "Ajustement",
         "refund": "Remboursement"
       }
+    }
+  },
+  "email": {
+    "unsubscribe": {
+      "title": "Désabonné",
+      "success": "Vous avez été désabonné de ces emails avec succès.",
+      "error": "Une erreur s'est produite. Veuillez réessayer.",
+      "backToDashboard": "Retour au tableau de bord",
+      "resubscribe": "Changé d'avis ? Vous pouvez gérer vos préférences email dans les paramètres de votre tableau de bord."
+    }
+  },
+  "demo": {
+    "meta": {
+      "title": "Essayer la démo MuchLove",
+      "description": "Découvrez le processus complet de collecte de témoignages. Sans compte requis."
+    },
+    "intro": {
+      "title": "Découvrez MuchLove en 3 minutes",
+      "subtitle": "Enregistrez un témoignage vidéo pour notre entreprise fictive Acme Corp. Aucun compte nécessaire.",
+      "cta": "Lancer la démo",
+      "counter": "{count} personnes ont essayé cette démo cette semaine"
+    },
+    "recording": {
+      "companyName": "Acme Corp",
+      "greeting": "Salut !",
+      "description": "Acme Corp aimerait entendre votre retour",
+      "watermark": "DÉMO"
+    },
+    "celebration": {
+      "headline": "Vous voyez ? C'est tout ce qu'il faut.",
+      "body": "3 minutes. Une vidéo. Un impact infini. Imaginez vos vrais clients faire la même chose.",
+      "cta": "Je veux ça pour mon business"
+    },
+    "emailCapture": {
+      "title": "Envie de transformer VOS clients en ambassadeurs ?",
+      "subtitle": "Créez votre compte gratuit — ça prend 30 secondes",
+      "placeholder": "vous@entreprise.com",
+      "submit": "Commencer gratuitement 💛",
+      "skip": "Peut-être plus tard",
+      "success": "Vérifiez vos emails ! 💛"
+    },
+    "share": {
+      "title": "Vous avez aimé l'expérience ?",
+      "subtitle": "Aidez à faire passer le mot",
+      "linkedin": "Partager sur LinkedIn",
+      "twitter": "Partager sur X",
+      "linkedinText": "Je viens de tester @MuchLove — transforme les témoignages clients en vidéo en 3 min. L'UX est incroyable. Essayez :",
+      "twitterText": "Test de @MuchLove — témoignages clients en vidéo en 3 min. UX incroyable. Essayez :",
+      "backToHome": "Retour à l'accueil"
+    }
+  },
+  "widget": {
+    "title": "Widget intégrable",
+    "description": "Affichez vos témoignages sur votre site web",
+    "enable": "Activer le widget",
+    "disable": "Désactiver le widget",
+    "enabled": "Widget actif",
+    "disabled": "Widget désactivé",
+    "snippet": {
+      "title": "Code d'installation",
+      "description": "Copiez et collez ce code dans le HTML de votre site web",
+      "copy": "Copier le code",
+      "copied": "Copié !"
+    },
+    "config": {
+      "title": "Personnaliser",
+      "primaryColor": "Couleur principale",
+      "backgroundColor": "Couleur d'arrière-plan",
+      "borderRadius": "Arrondi des bords",
+      "layout": "Disposition",
+      "carousel": "Carrousel",
+      "grid": "Grille",
+      "maxItems": "Nombre max de témoignages",
+      "showNames": "Afficher les noms",
+      "showTranscription": "Afficher la transcription",
+      "poweredBy": "Afficher 'Powered by MuchLove'",
+      "poweredByProOnly": "Plan Pro requis pour masquer",
+      "domains": "Domaines autorisés",
+      "domainsHelp": "Un domaine par ligne. Laisser vide pour autoriser tous.",
+      "save": "Enregistrer",
+      "saving": "Enregistrement...",
+      "saved": "Modifications enregistrées !"
+    },
+    "preview": {
+      "title": "Aperçu"
+    },
+    "sidebar": "Widget"
+  },
+  "sharing": {
+    "title": "Partagez l'amour ! 💛",
+    "subtitle": "Partagez sur ces plateformes pour devenir Ambassadeur",
+    "trustpilot": {
+      "title": "Trustpilot",
+      "action": "Laisser un avis",
+      "notConfigured": "Non disponible",
+      "done": "Partagé !"
+    },
+    "google": {
+      "title": "Avis Google",
+      "action": "Laisser un avis",
+      "notConfigured": "Non disponible",
+      "done": "Partagé !"
+    },
+    "linkedin": {
+      "title": "LinkedIn",
+      "action": "Partager sur LinkedIn",
+      "done": "Partagé !",
+      "consent": "J'accepte d'être mis en avant sur LinkedIn",
+      "consentDescription": "Nous célébrerons votre statut d'ambassadeur sur notre page LinkedIn"
+    },
+    "ambassador": {
+      "title": "Vous êtes Ambassadeur ! 🎉",
+      "subtitle": "Merci d'avoir partagé l'amour"
+    }
+  },
+  "emailSequences": {
+    "title": "Automatisations Email",
+    "active": "Actif",
+    "paused": "En pause",
+    "completed": "Terminé",
+    "segments": {
+      "frozen_starter": "Relance activation",
+      "rejected_requester": "Boost réponses",
+      "collector_unused": "Rappel utilisation",
+      "free_maximizer": "Relance upgrade"
     }
   }
 }

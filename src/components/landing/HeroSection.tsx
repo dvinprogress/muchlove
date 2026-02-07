@@ -30,6 +30,12 @@ export function HeroSection() {
             >
               {t("ctaPrimary")}
             </Link>
+            <Link
+              href="/demo"
+              className="inline-flex items-center justify-center rounded-lg bg-amber-500 px-8 py-4 text-lg font-semibold text-white shadow-lg transition-all hover:bg-amber-600 hover:scale-105"
+            >
+              {t("ctaDemo")}
+            </Link>
             <button
               onClick={() => {
                 document

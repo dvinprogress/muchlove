@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
-import { LayoutDashboard, Users, Video, Settings, LogOut } from 'lucide-react'
+import { LayoutDashboard, Users, Video, Code2, Settings, LogOut } from 'lucide-react'
 import { Badge } from '@/components/ui'
 import { LanguageSwitcher } from '@/components/ui/LanguageSwitcher'
 import { signOut } from '@/app/auth/actions'
@@ -24,6 +24,7 @@ const navItemKeys = [
   { key: 'dashboard' as const, href: '/dashboard', icon: LayoutDashboard },
   { key: 'contacts' as const, href: '/dashboard/contacts', icon: Users },
   { key: 'testimonials' as const, href: '/dashboard/testimonials', icon: Video },
+  { key: 'widget.sidebar' as const, href: '/dashboard/widget', icon: Code2 },
   { key: 'settings' as const, href: '/dashboard/settings', icon: Settings },
 ]
 

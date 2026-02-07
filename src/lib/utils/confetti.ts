@@ -1,10 +1,13 @@
-import confetti from 'canvas-confetti'
-
 // Couleurs MuchLove : rose, gold, turquoise, corail
 const MUCHLOVE_COLORS = ['#f43f5e', '#fbbf24', '#2dd4bf', '#fb7185', '#fcd34d']
 
+async function getConfetti() {
+  return (await import('canvas-confetti')).default
+}
+
 // Celebration legere - 50 particules (apres partage)
-export function lightCelebration(): void {
+export async function lightCelebration(): Promise<void> {
+  const confetti = await getConfetti()
   confetti({
     particleCount: 50,
     spread: 60,
@@ -15,7 +18,8 @@ export function lightCelebration(): void {
 }
 
 // Celebration moyenne - 100 particules (apres video)
-export function mediumCelebration(): void {
+export async function mediumCelebration(): Promise<void> {
+  const confetti = await getConfetti()
   confetti({
     particleCount: 100,
     spread: 70,
@@ -26,7 +30,8 @@ export function mediumCelebration(): void {
 }
 
 // Celebration ambassadeur - 5 secondes continu, 2 sources (gauche + droite)
-export function ambassadorCelebration(): void {
+export async function ambassadorCelebration(): Promise<void> {
+  const confetti = await getConfetti()
   const duration = 5000
   const end = Date.now() + duration
 

@@ -56,7 +56,7 @@ export default async function TestimonialDetailPage({
   // Fetch testimonial with contact information
   const { data: testimonial, error } = await supabase
     .from('testimonials')
-    .select('*, contacts(first_name, last_name, company_name, email)')
+    .select('*, contacts(first_name, company_name, email)')
     .eq('id', id)
     .eq('company_id', user.id)
     .single()
@@ -132,7 +132,7 @@ export default async function TestimonialDetailPage({
             <CardContent className="space-y-4">
               <div>
                 <p className="text-sm text-slate-500 mb-1">Contact</p>
-                <p className="font-medium">{contact.first_name} {contact.last_name}</p>
+                <p className="font-medium">{contact.first_name}</p>
                 <p className="text-sm text-slate-600">{contact.email}</p>
                 <p className="text-sm text-slate-600">{contact.company_name}</p>
               </div>

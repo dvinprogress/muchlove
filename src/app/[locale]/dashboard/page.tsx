@@ -24,12 +24,17 @@ export default async function DashboardPage() {
     data: { user },
   } = await supabase.auth.getUser()
 
-  // Récupérer les données de la company
-  const { data: company } = await supabase
-    .from('companies')
-    .select('*')
-    .eq('id', user?.id)
-    .single<Company>()
+  // Récupérer company + stats en parallèle
+  const [companyResult, statsResult] = await Promise.all([
+    supabase
+      .from('companies')
+      .select('*')
+      .eq('id', user!.id)
+      .single<Company>(),
+    getDashboardStats(),
+  ])
+
+  const company = companyResult.data
 
   // Définir les limites par plan
   const planLimits: Record<string, number> = {
@@ -43,9 +48,6 @@ export default async function DashboardPage() {
   const videosUsed = company?.videos_used || 0
   const videosLimit = company?.videos_limit || planLimits[currentPlan] || 5
   const usagePercentage = videosLimit > 0 ? (videosUsed / videosLimit) * 100 : 0
-
-  // Récupérer les stats du dashboard
-  const statsResult = await getDashboardStats()
   const stats = statsResult.success
     ? statsResult.data
     : {

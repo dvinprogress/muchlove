@@ -9,13 +9,13 @@ export function useConfetti() {
   const celebrate = useCallback((type: CelebrationType = 'light') => {
     switch (type) {
       case 'light':
-        lightCelebration()
+        void lightCelebration()
         break
       case 'medium':
-        mediumCelebration()
+        void mediumCelebration()
         break
       case 'ambassador':
-        ambassadorCelebration()
+        void ambassadorCelebration()
         break
     }
   }, [])

@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { DashboardShell } from '@/components/dashboard'
+import { FeedbackProvider } from '@/components/feedback/FeedbackProvider'
 import type { Database } from '@/types/database'
 
 type Company = Database['public']['Tables']['companies']['Row']
@@ -42,6 +43,7 @@ export default async function DashboardLayout({
       }
     >
       {children}
+      <FeedbackProvider />
     </DashboardShell>
   )
 }

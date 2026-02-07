@@ -1,10 +1,10 @@
 # MuchLove - Progress Tracker
 
-> Derniere MAJ: 2026-02-07 | Version: 0.1.0
+> Derniere MAJ: 2026-02-07 | Version: 0.1.6
 
 ## Statut Global
 - **Phase**: mvp
-- **Derniere action**: Audit end-to-end flow temoignage video — 5 bugs critiques corriges (boucle infinie, layout, auth API, MIME type, bucket storage). Flow complet fonctionne : page → camera → enregistrement → transcription Whisper → upload → succes.
+- **Derniere action**: Refactorisation VideoRecorder/DemoVideoRecorder. Hook partage useVideoRecorderLogic extrait (logique commune: state management, transcription, upload, error handling). Duplication eliminee (~200 lignes). Les 2 composants gardent leur interface Props exacte (backward compatible). Build OK 53 routes. 22 features DONE.
 
 ## Infrastructure
 | Element | Statut | Date | Notes |
@@ -13,7 +13,7 @@
 | Tailwind CSS 4 | DONE | 2026-02-02 | PostCSS config |
 | Framer Motion | DONE | 2026-02-02 | Animations UI |
 | Supabase setup | DONE | 2026-02-02 | Auth + DB + Storage + RLS |
-| Schema DB (migrations) | DONE | 2026-02-07 | 001: companies, contacts, testimonials, shares, videos | 002: auth_trigger | 003: stripe_integration | 004: automations (demo_sessions, email_sequences, email_events, widget_configs) |
+| Schema DB (migrations) | DONE | 2026-02-07 | 001: companies, contacts, testimonials, shares, videos | 002: auth_trigger | 003: stripe_integration | 004: automations (demo_sessions, email_sequences, email_events, widget_configs) | 005: feedback (feedbacks, feedback_screenshots, feedback_admin_notes, user_feedback_tasks, feedback_rate_limits + storage bucket + RLS + triggers + cleanup function) |
 | Auth trigger (auto company) | DONE | 2026-02-02 | 002_auth_trigger.sql |
 | Vitest + Playwright | DONE | 2026-02-02 | Config prete, tests basiques |
 | ESLint | DONE | 2026-02-02 | Next.js core-web-vitals |
@@ -37,14 +37,17 @@
 | 9 | Interface enregistrement video | DONE | 2026-02-07 | src/components/video/, hooks/useMediaRecorder.ts, hooks/useWhisperTranscription.ts, app/[locale]/t/[link]/, api/upload-video/, lib/validation/ | Audit e2e 2026-02-07: 5 bugs fixes (boucle infinie useEffect, layout Fragment, auth session→contactId, MIME type codecs, bucket name). Transcription Whisper client-side. Flow complet OK. |
 | 10 | Pipeline traitement video | DONE | 2026-02-07 | src/app/api/upload-video/route.ts, hooks/useWhisperTranscription.ts, lib/validation/ | Transcription Whisper client-side (zero API), upload → Storage → DB, contactId auth, validation Zod+MIME |
 | 11 | Gestion contacts | DONE | 2026-02-06 | src/components/contacts/, app/dashboard/contacts/, actions.ts, CopyLinkButton.tsx, DeleteContactButton.tsx | Pagination 20/page, stats SQL optimisees, toast sonner, composants Client extraits |
-| 12 | Workflow partage (social) | TODO | | Trustpilot, Google, LinkedIn | |
+| 12 | Workflow partage (social) | DONE | 2026-02-07 | src/lib/linkedin/post-generator.ts, components/sharing/{LinkedInShareButton,LinkedInConsentCheckbox,SharingFlow}.tsx, app/[locale]/t/[link]/actions.ts, messages/{en,fr,es}.json | LinkedIn Viral Loop simplifie : generation texte post (3 locales EN/FR/ES), bouton partage pre-rempli (copy to clipboard + LinkedIn share-offsite), checkbox consentement RGPD, SharingFlow orchestrateur (Trustpilot + Google + LinkedIn), Server Action updateShareStatus (progression shared_1 → shared_2 → shared_3 ambassador), integration TestimonialRecordingPage (apres video → sharing flow), CelebrationModal ambassadeur. PAS d'OAuth posting (risque ToS), juste pre-fill + ouverture lien. i18n complet sharing.* (~30 cles x 3 langues). |
 | 13 | Gamification (ambassadeur) | DONE | 2026-02-06 | src/components/gamification/, lib/utils/confetti.ts | ProgressBar, StatusBadge, CelebrationModal |
 | 14 | Integration Stripe | DONE | 2026-02-07 | api/stripe/{checkout,portal,webhook}/, lib/stripe/{client,plans}.ts, components/billing/{BillingSection,UsageCard,Paywall,UpgradeModal}.tsx, hooks/{useSubscription,useCredits}.ts, dashboard/settings/ | Checkout Session, Customer Portal, Webhook (5 events + idempotence), Credits RPC atomiques, Paywall component, UpgradeModal Framer Motion, i18n billing EN/FR/ES |
 | 15 | Schema DB automations | DONE | 2026-02-07 | supabase/migrations/004_automations.sql, src/types/database.ts | Tables: demo_sessions, email_sequences, email_events, widget_configs. Modifications: companies (email_preferences, last_active_at), contacts (linkedin_consent). Storage bucket demo-videos. RLS policies. Triggers. Fonctions: cleanup_expired_demo_sessions, auto_generate_widget_api_key |
 | 16 | Infrastructure emails | DONE | 2026-02-07 | lib/email/resend.ts, lib/email/templates/BaseLayout.tsx, api/cron/orchestrator/route.ts, lib/cron/{demo-cleanup,email-sequences,segment-evaluation,weekly-digest}.ts, api/email/unsubscribe/route.ts, [locale]/unsubscribe/page.tsx, vercel.json, messages/{en,fr,es}.json | Resend client wrapper, BaseLayout responsive, Cron orchestrateur (toutes les heures), cleanup demos (logique complete), stubs sequences/segments/digest, API unsubscribe (token base64), page confirmation i18n, vercel cron config |
-| 17 | Systeme emails (templates) | TODO | | Templates invitation, relance, digest, notifications | Phase 2b apres infra |
+| 17 | Systeme emails (templates) | DONE | 2026-02-07 | lib/email/templates/{FrozenStarterEmail,RejectedRequesterEmail,CollectorUnusedEmail,FreeMaximizerEmail,WeeklyDigest}.tsx, lib/cron/{email-sequences,segment-evaluation,weekly-digest}.ts, lib/email/digest/{stats-aggregator,recommendation-engine}.ts, api/webhooks/resend/route.ts, api/upload-video/route.ts (trigger FREE_MAXIMIZER), messages/{en,fr,es}.json (emailSequences), EMAIL_SEQUENCES_IMPLEMENTATION.md | Email Sequences Comportementales (4 segments : frozen_starter signup>24h 0 contacts, rejected_requester invites sans videos 48h, collector_unused videos non partagees 3j, free_maximizer limite atteinte) + Weekly Digest. 4 templates React Email (FrozenStarter 2 steps J+1/J+3, RejectedRequester 1 step tips boost reponse, CollectorUnused 1 step 4 usages, FreeMaximizer 1 step upgrade code MOMENTUM 20%). Logique segment-evaluation (cree sequences anti-duplicate), email-sequences (envoie queue + checkIfStillInSegment + next_send_at + idempotence), webhook Resend (tracking delivered/opened/clicked/bounced/complained + auto-cancel). Trigger immediat FREE_MAXIMIZER dans upload-video (videos_used >= videos_limit). i18n emailSequences EN/FR/ES. Architecture cron orchestrateur → evaluateSegments + processEmailSequences → Resend → Webhook → email_events. Contraintes : max 3 emails/sequence, 48h espacement, inline CSS, unsubscribe obligatoire. BLOQUANT BUILD : database.ts manque tables migration 004 (pas appliquee Supabase). Doc complete EMAIL_SEQUENCES_IMPLEMENTATION.md. |
 | 18 | Landing page marketing | DONE | 2026-02-06 | src/components/landing/, app/page.tsx, app/terms/, app/privacy/ | SEO 8+/10, metadata complete, pages legales, liens footer OK, bouton demo scroll |
 | 19 | Internationalisation (i18n) | DONE | 2026-02-06 | src/i18n/, messages/{en,fr,es}.json, src/app/[locale]/, src/middleware.ts, src/components/ui/LanguageSwitcher.tsx | next-intl complet : routing [locale] as-needed (EN sans prefixe, /fr/, /es/), middleware i18n+Supabase, ~280 cles x 3 langues, LanguageSwitcher Framer Motion, SEO hreflang+alternates, generateMetadata multilingue, build OK |
+| 20 | Viral Demo Flow | DONE | 2026-02-07 | src/app/[locale]/demo/, components/demo/{DemoEmailCapture,DemoSharePanel,DemoCounter}.tsx, components/video/DemoVideoRecorder.tsx, api/demo/{upload-video,capture-email,count}/route.ts, components/landing/HeroSection.tsx, messages/{en,fr,es}.json | Flow complet : Intro → Recording (DemoVideoRecorder fork VideoRecorder) → Celebration → EmailCapture (honeypot RGPD) → SharePanel (LinkedIn + Twitter). DemoCounter social proof (fetch /api/demo/count). 3 API routes : upload-video (rate limit 3/IP/24h, bucket demo-videos), capture-email (update session), count (cache 5min). Bouton demo landing (amber). i18n EN/FR/ES (~340 cles). Watermark DEMO. Redirection /login?email= apres capture. Build OK. |
+| 21 | Systeme Feedback | DONE | 2026-02-07 | src/lib/feedback/{types,lib,components,api}/, feedback.config.ts, src/app/api/feedback/{route,upload,admin}/, src/components/feedback/FeedbackProvider.tsx, supabase/migrations/005_feedback.sql | Package complet integre : FeedbackWidget (floating button violet/purple), FeedbackModal (3 categories: bug/improvement/feature), FeedbackForm (title + description + email + screenshots), CategorySelector, ScreenshotUploader (drag&drop + paste + compression). Securite 8 layers : Turnstile anti-bot, rate limit IP (3 req/min), Zod validation, anti-spam (URLs, repetition, keywords), anti-injection (prompt/XSS/SQL), sanitization HTML, Supabase RLS, processing pipeline (auto-tags bugs, user tasks features). 3 API routes : POST /api/feedback (submit), POST /api/feedback/upload (screenshots), GET+PATCH /api/feedback/admin (admin only). Migration 005 : 5 tables (feedbacks + screenshots + admin_notes + user_tasks + rate_limits) + storage bucket + RLS policies + triggers. FeedbackProvider integre layout racine (visible partout). Config MuchLove : violet/purple branding, Turnstile (NEXT_PUBLIC_TURNSTILE_SITE_KEY + TURNSTILE_SECRET_KEY requis). TypeCheck + Build OK. |
+| 22 | Widget Embeddable | DONE | 2026-02-07 | src/app/api/widget/{testimonials,config}/, src/widget/{index,styles,render}.ts, src/app/[locale]/dashboard/widget/, src/components/widget/{WidgetConfigurator,WidgetSnippet}.tsx, scripts/build-widget.ts, public/widget/muchlove-widget.js | API publique GET /api/widget/testimonials avec validation api_key, CORS dynamique (allowed_domains + wildcard support), signed URLs 1h, cache 5min. API authentifiee GET/PUT /api/widget/config (CRUD config). Widget standalone vanilla JS (9.71 KB bundled) : Shadow DOM isolation, carousel responsive (1 card mobile, 2 tablets, 3 desktop), play video overlay, IntersectionObserver lazy-load, navigation dots + arrows. Configurateur dashboard : WidgetConfigurator (theme colors, layout, maxItems, showNames, showTranscription, poweredByVisible [Pro only], allowedDomains), WidgetSnippet (code HTML copiable), enable/disable toggle, Server Actions (enableWidget, disableWidget, updateWidgetConfig). Esbuild integration : build script npm run build:widget (pre-build hook), bundle < 20kb OK. i18n EN/FR/ES complet (~40 cles widget.*). Sidebar mis a jour (icone Code2). Pret pour production. |
 
 ## Bloquants qualite a corriger (issus de l'audit 2026-02-06)
 
@@ -76,7 +79,27 @@
 
 ### Transversal
 - [x] Infrastructure emails (Resend) — DONE 2026-02-07
-- [ ] Templates emails (invitations, relances, digest) — requis pour invitations contacts (#17)
+- [x] Template Weekly Digest email — DONE 2026-02-07
+- [x] database.ts types migration 004+005 — DONE 2026-02-07 — Ajout manuel tables + Relationships[] (requis par @supabase/postgrest-js)
+- [x] Build TypeScript + Next.js — DONE 2026-02-07 — 0 erreur tsc, 54 pages compilees
+- [x] Audit performance : dynamic imports VideoRecorder/CelebrationModal/SharingFlow — DONE 2026-02-07
+- [x] Audit performance : confetti lazy loaded (canvas-confetti) — DONE 2026-02-07
+- [x] Audit performance : fonts display:swap — DONE 2026-02-07
+- [x] Audit performance : dashboard parallel fetch (company + stats) — DONE 2026-02-07
+- [x] Audit performance : FeedbackProvider deplace root → dashboard layout — DONE 2026-02-07
+- [x] Audit performance : stripe+resend serverExternalPackages — DONE 2026-02-07
+- [x] Audit securite : CRON_SECRET fallback supprime (fail hard) — DONE 2026-02-07
+- [x] Audit securite : RESEND_FROM_EMAIL fallback supprime (fail hard) — DONE 2026-02-07
+- [x] Audit qualite : barrel export useWhisperTranscription ajoute — DONE 2026-02-07
+- [x] Audit qualite : useConfetti void pour async confetti — DONE 2026-02-07
+- [x] Audit securite : webhook Resend signature Svix — DONE 2026-02-07 — npm svix, Webhook.verify(), RESEND_WEBHOOK_SECRET fail-fast, 401 si invalide
+- [x] Audit securite : token unsubscribe signe HMAC — DONE 2026-02-07 — HMAC-SHA256, timingSafeEqual, base64url, UNSUBSCRIBE_TOKEN_SECRET env var
+- [x] Audit securite : RLS policies hardening — DONE 2026-02-07 — Migration 006: supprime service_role dead policies, ajoute UPDATE email_sequences, decompose widget_configs ALL en SELECT+UPDATE
+- [x] Supprimer dead code api/transcribe — DONE 2026-02-07
+- [x] Fix ESLint config — DONE 2026-02-07 — Flat config sans FlatCompat, 0 erreurs 19 warnings
+- [x] Audit qualite : refactorer VideoRecorder duplication (280 lignes x2) — DONE 2026-02-07 — Hook useVideoRecorderLogic partage (hooks/useVideoRecorderLogic.ts), logique commune extraite, Props interfaces conservees, backward compatible
+- [ ] Audit qualite : eliminer 52 @ts-ignore (MAJEUR — necessite regen database.ts)
+- [ ] Templates emails (invitations, relances) — requis pour invitations contacts
 - [ ] Tests unitaires et e2e pour features critiques
 - [ ] Images/assets optimises (hero, illustrations)
 
@@ -109,16 +132,13 @@
 | Knowledge base | DONE | decisions-log, ux-guidelines, video-patterns, supabase-schema |
 
 ## Prochaines Etapes (priorite)
-1. **Configurer Resend** — Creer compte, obtenir API key, verifier domaine muchlove.app, ajouter env vars Vercel (RESEND_API_KEY, RESEND_FROM_EMAIL, CRON_SECRET)
-2. **Appliquer migration 004 sur Supabase** — `supabase db push` ou via Dashboard SQL Editor
+1. **Appliquer migrations 004 + 005 sur Supabase** — `supabase db push` ou via Dashboard SQL Editor (REQUIS pour que les features fonctionnent en production)
+2. **Configurer Resend** — Creer compte, obtenir API key, verifier domaine muchlove.app, ajouter env vars Vercel (RESEND_API_KEY, RESEND_FROM_EMAIL, CRON_SECRET), configurer webhook https://muchlove.app/api/webhooks/resend
 3. **Configurer Stripe Dashboard** — Creer produits/prix, ajouter env vars dans Vercel, configurer webhook endpoint
-4. Templates emails (#17) — invitation contact, relance video, weekly digest, notifications
-5. Implementation automations (#15):
-   - Automation 1: Viral Demo (page /demo + API)
-   - Automation 2: Behavioral Email Sequences (logique worker processEmailSequences)
-   - Automation 3: Embeddable Widget (API publique + embed script)
-   - Automation 4: LinkedIn Auto-Share (OAuth + API)
-   - Automation 5: Smart Notifications (email triggers)
-6. Workflow partage social (#12)
-7. Tests unitaires et e2e pour features critiques
-8. Images/assets optimises (hero, illustrations)
+4. **Tester Viral Demo Flow** — Verifier upload video demo, email capture, compteur, share social
+5. **Tester Email Sequences** — Trigger manuel cron orchestrator, verifier creation sequences, envoi emails (voir EMAIL_SEQUENCES_IMPLEMENTATION.md)
+6. **Tester Widget Embeddable** — Creer config via dashboard, copier snippet, tester integration externe
+7. Templates emails (invitations contact initiale, relance video)
+8. Tests unitaires et e2e pour features critiques
+9. Images/assets optimises (hero, illustrations)
+10. Push + deploy via GitHub → Vercel

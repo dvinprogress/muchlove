@@ -144,7 +144,6 @@ export async function POST(request: NextRequest) {
     const hasTranscription = !!transcription
     const { data: testimonial, error: testimonialError } = await supabaseAdmin
       .from('testimonials')
-      // @ts-ignore - Supabase admin client type inference issue with service role
       .insert({
         company_id: contact.company_id,
         contact_id: contactId,
@@ -171,7 +170,6 @@ export async function POST(request: NextRequest) {
     // 10. Update le contact status
     const { error: updateContactError } = await supabaseAdmin
       .from('contacts')
-      // @ts-ignore - Supabase admin client type inference issue with service role
       .update({
         status: 'video_completed',
         updated_at: new Date().toISOString()
@@ -183,7 +181,69 @@ export async function POST(request: NextRequest) {
       // Ne pas faire planter la requete, juste logger
     }
 
-    // 11. Retourner le succes (plus de fire-and-forget vers /api/transcribe)
+    // 11. Vérifier si la company a atteint la limite (Free Maximizer trigger)
+    // Fetch company pour vérifier videos_used vs videos_limit
+    const { data: companyData, error: companyFetchError } = await supabaseAdmin
+      .from('companies')
+      .select('id, videos_used, videos_limit, plan, email_preferences')
+      .eq('id', contact.company_id)
+      .single<{
+        id: string
+        videos_used: number
+        videos_limit: number
+        plan: string
+        email_preferences: any
+      }>()
+
+    if (!companyFetchError && companyData) {
+      // Incrémenter videos_used
+      const newVideosUsed = companyData.videos_used + 1
+
+      await supabaseAdmin
+        .from('companies')
+        .update({ videos_used: newVideosUsed })
+        .eq('id', companyData.id)
+
+      // Si on atteint la limite ET plan = free ET email_preferences.sequences = true
+      // Créer immédiatement une séquence FREE_MAXIMIZER
+      const emailPrefs = (companyData.email_preferences || {}) as {
+        marketing?: boolean
+        sequences?: boolean
+        weekly_digest?: boolean
+      }
+
+      if (
+        newVideosUsed >= companyData.videos_limit &&
+        companyData.plan === 'free' &&
+        emailPrefs.sequences !== false
+      ) {
+        // Vérifier si une séquence active FREE_MAXIMIZER existe déjà
+        const { data: existingSequence } = await supabaseAdmin
+          .from('email_sequences')
+          .select('id')
+          .eq('company_id', companyData.id)
+          .eq('segment', 'free_maximizer')
+          .eq('status', 'active')
+          .single()
+
+        if (!existingSequence) {
+          // Créer la séquence immédiatement
+          const now = new Date()
+          await supabaseAdmin.from('email_sequences').insert({
+            company_id: companyData.id,
+            segment: 'free_maximizer',
+            step: 1,
+            status: 'active',
+            started_at: now.toISOString(),
+            next_send_at: now.toISOString(), // Envoyer immédiatement
+          })
+
+          console.log(`[upload-video] Created FREE_MAXIMIZER sequence for company ${companyData.id}`)
+        }
+      }
+    }
+
+    // 12. Retourner le succes (plus de fire-and-forget vers /api/transcribe)
     return NextResponse.json({
       success: true,
       testimonialId

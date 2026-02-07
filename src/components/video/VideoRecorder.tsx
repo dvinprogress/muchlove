@@ -1,11 +1,10 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Loader2, CheckCircle, AlertCircle } from 'lucide-react'
 import { useTranslations } from 'next-intl'
-import { useMediaRecorder } from '@/hooks/useMediaRecorder'
-import { useWhisperTranscription } from '@/hooks/useWhisperTranscription'
+import { useVideoRecorderLogic } from '@/hooks/useVideoRecorderLogic'
 import { PermissionRequest } from './PermissionRequest'
 import { VideoPreview } from './VideoPreview'
 import { RecordingControls } from './RecordingControls'
@@ -25,6 +24,23 @@ export function VideoRecorder({
   onComplete
 }: VideoRecorderProps) {
   const t = useTranslations('video.recorder')
+
+  const config = useMemo(() => ({
+    endpoint: '/api/upload-video',
+    buildFormData: (blob: Blob, duration: number, transcription: string | null) => {
+      const formData = new FormData()
+      formData.append('video', blob, 'recording.webm')
+      formData.append('contactId', contactId)
+      formData.append('companyId', companyId)
+      formData.append('duration', duration.toString())
+      formData.append('transcription', transcription || '')
+      return formData
+    },
+    onSuccess: (blob: Blob, duration: number) => {
+      onComplete(blob, duration)
+    }
+  }), [contactId, companyId, onComplete])
+
   const {
     phase,
     duration,
@@ -32,65 +48,20 @@ export function VideoRecorder({
     maxAttempts: hookMaxAttempts,
     error,
     stream,
-    videoBlob,
     videoUrl,
     countdown,
+    isTranscribing,
+    isModelLoading,
+    progress,
+    uploadPhase,
     startCamera,
     startRecording,
     stopRecording,
     retryRecording,
-    cleanup
-  } = useMediaRecorder()
-
-  const { transcribe, isTranscribing, isModelLoading, progress } = useWhisperTranscription()
-  const [uploadPhase, setUploadPhase] = useState<'idle' | 'uploading' | 'complete' | 'error'>('idle')
-
-  // Cleanup au unmount
-  useEffect(() => {
-    return () => {
-      cleanup()
-    }
-  }, [cleanup])
-
-  const handleValidate = async () => {
-    if (!videoBlob) return
-
-    try {
-      // Phase 1: Transcription client-side
-      const transcription = await transcribe(videoBlob)
-
-      // Phase 2: Upload avec transcription
-      setUploadPhase('uploading')
-
-      const formData = new FormData()
-      formData.append('video', videoBlob, 'recording.webm')
-      formData.append('contactId', contactId)
-      formData.append('companyId', companyId)
-      formData.append('duration', duration.toString())
-      formData.append('transcription', transcription || '')
-
-      const response = await fetch('/api/upload-video', {
-        method: 'POST',
-        body: formData
-      })
-
-      if (!response.ok) {
-        throw new Error('Upload failed')
-      }
-
-      await response.json()
-
-      // Upload réussi - passer en phase complete
-      setUploadPhase('complete')
-
-      // Appeler onComplete avec le blob et la durée
-      onComplete(videoBlob, duration)
-    } catch (err) {
-      console.error('Upload error:', err)
-      // En cas d'erreur, passer en phase error
-      setUploadPhase('error')
-    }
-  }
+    handleValidate,
+    resetUploadPhase,
+    retryCamera
+  } = useVideoRecorderLogic(config)
 
   const renderPhase = () => {
     // Phase de transcription
@@ -181,7 +152,7 @@ export function VideoRecorder({
             {t('uploadErrorDescription')}
           </p>
           <button
-            onClick={() => setUploadPhase('idle')}
+            onClick={resetUploadPhase}
             className="px-6 py-3 bg-rose-500 text-white font-semibold rounded-lg hover:bg-rose-600 transition-colors focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2"
           >
             {t('retryUpload')}
@@ -262,10 +233,7 @@ export function VideoRecorder({
               </p>
             )}
             <button
-              onClick={() => {
-                cleanup()
-                startCamera()
-              }}
+              onClick={retryCamera}
               className="px-6 py-3 bg-rose-500 text-white font-semibold rounded-lg hover:bg-rose-600 transition-colors focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2"
             >
               {t('retry')}

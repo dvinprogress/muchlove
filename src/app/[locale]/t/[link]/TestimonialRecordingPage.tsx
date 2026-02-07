@@ -1,12 +1,26 @@
 'use client'
 
 import { useState } from 'react'
+import dynamic from 'next/dynamic'
 import { motion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
-import { VideoRecorder } from '@/components/video/VideoRecorder'
 import { ProgressBar } from '@/components/gamification/ProgressBar'
-import { CelebrationModal } from '@/components/gamification/CelebrationModal'
 import type { ContactStatus } from '@/types/database'
+
+const VideoRecorder = dynamic(
+  () => import('@/components/video/VideoRecorder').then(m => ({ default: m.VideoRecorder })),
+  { ssr: false, loading: () => <div className="h-80 bg-slate-100 rounded-xl animate-pulse" /> }
+)
+
+const CelebrationModal = dynamic(
+  () => import('@/components/gamification/CelebrationModal').then(m => ({ default: m.CelebrationModal })),
+  { ssr: false }
+)
+
+const SharingFlow = dynamic(
+  () => import('@/components/sharing/SharingFlow').then(m => ({ default: m.SharingFlow })),
+  { ssr: false, loading: () => <div className="h-60 bg-slate-100 rounded-xl animate-pulse" /> }
+)
 
 interface TestimonialRecordingPageProps {
   contactId: string
@@ -15,6 +29,10 @@ interface TestimonialRecordingPageProps {
   companyName: string
   companyLogoUrl: string | null
   contactStatus: ContactStatus
+  companyGooglePlaceId: string | null
+  companyTrustpilotUrl: string | null
+  testimonialId: string
+  testimonialDuration?: number
 }
 
 export function TestimonialRecordingPage({
@@ -23,11 +41,16 @@ export function TestimonialRecordingPage({
   contactFirstName,
   companyName,
   companyLogoUrl,
-  contactStatus
+  contactStatus,
+  companyGooglePlaceId,
+  companyTrustpilotUrl,
+  testimonialId,
+  testimonialDuration
 }: TestimonialRecordingPageProps) {
   const t = useTranslations('recording.page')
   const [currentStatus, setCurrentStatus] = useState<ContactStatus>(contactStatus)
   const [showCelebration, setShowCelebration] = useState(false)
+  const [showSharingFlow, setShowSharingFlow] = useState(false)
 
   const isAlreadyCompleted =
     currentStatus === 'video_completed' ||
@@ -42,6 +65,10 @@ export function TestimonialRecordingPage({
 
   const handleCloseCelebration = () => {
     setShowCelebration(false)
+    // Show sharing flow after celebration closes (if video just completed)
+    if (currentStatus === 'video_completed') {
+      setShowSharingFlow(true)
+    }
   }
 
   return (
@@ -79,7 +106,7 @@ export function TestimonialRecordingPage({
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          {isAlreadyCompleted ? (
+          {isAlreadyCompleted && !showSharingFlow ? (
             <div className="bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-200 rounded-xl p-8 text-center space-y-4">
               <div className="w-16 h-16 mx-auto bg-green-100 rounded-full flex items-center justify-center">
                 <svg
@@ -102,6 +129,19 @@ export function TestimonialRecordingPage({
               <p className="text-slate-700">
                 {t('alreadyCompletedDescription')}
               </p>
+            </div>
+          ) : showSharingFlow ? (
+            <div className="bg-white rounded-xl shadow-xl overflow-hidden p-8">
+              <SharingFlow
+                contactId={contactId}
+                testimonialId={testimonialId}
+                contactFirstName={contactFirstName}
+                companyName={companyName}
+                companyGooglePlaceId={companyGooglePlaceId}
+                companyTrustpilotUrl={companyTrustpilotUrl}
+                testimonialDuration={testimonialDuration}
+                initialStatus={currentStatus}
+              />
             </div>
           ) : (
             <div className="bg-white rounded-xl shadow-xl overflow-hidden">
