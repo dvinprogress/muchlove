@@ -5,6 +5,7 @@ import {getMessages, getTranslations} from 'next-intl/server';
 import {routing} from '@/i18n/routing';
 import {notFound} from 'next/navigation';
 import {Toaster} from 'sonner';
+import {ClarityProvider} from '@/components/providers/ClarityProvider';
 import '../globals.css';
 
 const geistSans = Geist({
@@ -76,6 +77,7 @@ export default async function LocaleLayout({children, params}: Props) {
         <NextIntlClientProvider messages={messages}>
           {children}
           <Toaster position="bottom-right" richColors />
+          <ClarityProvider />
         </NextIntlClientProvider>
       </body>
     </html>
