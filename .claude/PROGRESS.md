@@ -4,7 +4,7 @@
 
 ## Statut Global
 - **Phase**: mvp
-- **Derniere action**: Microsoft Clarity integre et live sur muchlove.app. Vercel Git reconnecte. 23 features DONE.
+- **Derniere action**: Services production configures (Stripe, Resend, Cloudflare DNS). 16 env vars Vercel. Redeploy OK. Tests E2E passes.
 
 ## Infrastructure
 | Element | Statut | Date | Notes |
@@ -117,12 +117,12 @@
 ## Services Externes Configures
 | Service | Statut | Notes |
 |---------|--------|-------|
-| Supabase | CONFIGURED | Auth (Google + LinkedIn + Email), DB, Storage |
-| Stripe | CODE_READY | Code complet, necessite: STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET, STRIPE_PRO/ENTERPRISE_PRICE_IDs dans Vercel env vars + produits Stripe Dashboard |
-| Resend | CODE_READY | Client wrapper pret, necessite: RESEND_API_KEY, RESEND_FROM_EMAIL, CRON_SECRET dans Vercel env vars |
-| Vercel | DEPLOYED | muchlove.app live, env vars configurees, NEXT_PUBLIC_APP_URL=https://muchlove.app, cron config vercel.json |
+| Supabase | CONFIGURED | Auth (Google + LinkedIn + Email), DB, Storage. Migrations 001-006 appliquees (SQL Editor). |
+| Stripe | CONFIGURED | Account acct_1SyBKnAcl1xwxhHz (mode test). 2 produits (Pro + Enterprise), 4 prix, webhook 6 events. Env vars Vercel OK. |
+| Resend | CONFIGURED | Domaine muchlove.app verified (DKIM + SPF). API key + webhook (11 events). Env vars Vercel OK. |
+| Vercel | DEPLOYED | muchlove.app live, 16 env vars production, region cdg1, headers securite, cron config vercel.json |
 | Clarity | LIVE | Tracking actif sur muchlove.app, project ID vdkjs9lifc, package @microsoft/clarity, ClarityProvider component |
-| Cloudflare | CONFIGURED | muchlove.app enregistre, DNS A+CNAME → Vercel, WHOIS redacte |
+| Cloudflare | CONFIGURED | muchlove.app, DNS A+CNAME → Vercel + 3 records Resend (DKIM TXT, SPF MX, SPF TXT), WHOIS redacte |
 
 ## Agents & Skills Projet
 | Element | Statut | Notes |
@@ -134,10 +134,10 @@
 | Knowledge base | DONE | decisions-log, ux-guidelines, video-patterns, supabase-schema |
 
 ## Prochaines Etapes (priorite)
-1. **Appliquer migrations 004 + 005 sur Supabase** — `supabase db push` ou via Dashboard SQL Editor (REQUIS pour que les features fonctionnent en production)
-2. **Configurer Resend** — Creer compte, obtenir API key, verifier domaine muchlove.app, ajouter env vars Vercel (RESEND_API_KEY, RESEND_FROM_EMAIL, CRON_SECRET), configurer webhook https://muchlove.app/api/webhooks/resend
-3. **Configurer Stripe Dashboard** — Creer produits/prix, ajouter env vars dans Vercel, configurer webhook endpoint
-4. **Tester Viral Demo Flow** — Verifier upload video demo, email capture, compteur, share social
+1. ~~Appliquer migrations 004 + 005 + 006 sur Supabase~~ — DONE 2026-02-07 (via SQL Editor)
+2. ~~Configurer Resend~~ — DONE 2026-02-07 (compte, API key, webhook, domaine verified, DNS Cloudflare, env vars Vercel)
+3. ~~Configurer Stripe Dashboard~~ — DONE 2026-02-07 (compte, 2 produits, 4 prix, webhook, env vars Vercel)
+4. ~~Tester Viral Demo Flow~~ — DONE 2026-02-07 (UI OK FR/ES, API count 200, capture-email Zod OK, upload-video 500 sans FormData = bug mineur, camera non testable en auto)
 5. **Tester Email Sequences** — Trigger manuel cron orchestrator, verifier creation sequences, envoi emails (voir EMAIL_SEQUENCES_IMPLEMENTATION.md)
 6. **Tester Widget Embeddable** — Creer config via dashboard, copier snippet, tester integration externe
 7. ~~Templates emails (invitations contact initiale, relance video)~~ — DONE v0.1.7 (InvitationEmail + ReminderEmail)
