@@ -8,11 +8,13 @@ import { useVideoRecorderLogic } from '@/hooks/useVideoRecorderLogic'
 import { PermissionRequest } from './PermissionRequest'
 import { VideoPreview } from './VideoPreview'
 import { RecordingControls } from './RecordingControls'
+import { ScriptGuide } from './ScriptGuide'
 import { RECORDING_LIMITS } from '@/types/video'
 
 interface VideoRecorderProps {
   contactId: string
   companyId: string
+  companyName: string
   maxAttempts?: number
   onComplete: (blob: Blob, duration: number) => void
 }
@@ -20,6 +22,7 @@ interface VideoRecorderProps {
 export function VideoRecorder({
   contactId,
   companyId,
+  companyName,
   maxAttempts: _maxAttempts = RECORDING_LIMITS.maxAttempts,
   onComplete
 }: VideoRecorderProps) {
@@ -192,6 +195,9 @@ export function VideoRecorder({
               onRetry={retryRecording}
               onValidate={handleValidate}
             />
+            {(phase === 'previewing' || phase === 'recording') && (
+              <ScriptGuide companyName={companyName} />
+            )}
           </div>
         )
 

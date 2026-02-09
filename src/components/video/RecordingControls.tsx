@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion'
 import { Circle, Square, RotateCcw, Check } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import type { RecordingPhase } from '@/types/video'
 
 interface RecordingControlsProps {
@@ -35,6 +36,8 @@ export function RecordingControls({
   onRetry,
   onValidate
 }: RecordingControlsProps) {
+  const t = useTranslations('video.controls')
+
   return (
     <div className="w-full max-w-md mx-auto mt-6 space-y-4">
       <AnimatePresence mode="wait">
@@ -45,7 +48,7 @@ export function RecordingControls({
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
-            className="flex justify-center"
+            className="flex flex-col items-center space-y-2"
           >
             <button
               onClick={onStartRecording}
@@ -53,6 +56,9 @@ export function RecordingControls({
             >
               <Circle className="w-10 h-10 text-white fill-white" />
             </button>
+            <p className="text-sm text-gray-500 text-center">
+              {t('startHint')}
+            </p>
           </motion.div>
         )}
 
@@ -80,10 +86,20 @@ export function RecordingControls({
             exit={{ opacity: 0, y: -20 }}
             className="space-y-4"
           >
+            {/* Message d'encouragement */}
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="text-sm text-green-600 bg-green-50 border border-green-200 rounded-lg px-3 py-2 text-center"
+            >
+              {t('encouragement')}
+            </motion.div>
+
             <div className="flex items-center justify-between px-4">
               <div className="flex items-center space-x-2">
                 <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse" />
-                <span className="text-sm font-semibold text-red-500">Recording</span>
+                <span className="text-sm font-semibold text-red-500">{t('recording')}</span>
               </div>
               <div className="text-xl font-mono font-bold text-gray-900">
                 {formatDuration(duration)}
@@ -125,7 +141,7 @@ export function RecordingControls({
                 {formatDuration(duration)}
               </div>
               <div className="text-sm text-gray-600">
-                Attempt {attempts + 1} of {maxAttempts}
+                {t('attempts', { current: attempts + 1, max: maxAttempts })}
               </div>
             </div>
 
@@ -136,7 +152,7 @@ export function RecordingControls({
                 className="flex items-center space-x-2 px-6 py-3 border-2 border-rose-500 text-rose-500 font-semibold rounded-lg hover:bg-rose-50 transition-colors focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <RotateCcw className="w-5 h-5" />
-                <span>Retake</span>
+                <span>{t('retake')}</span>
               </button>
 
               <button
@@ -144,7 +160,7 @@ export function RecordingControls({
                 className="flex items-center space-x-2 px-6 py-3 bg-rose-500 text-white font-semibold rounded-lg hover:bg-rose-600 transition-colors focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2"
               >
                 <Check className="w-5 h-5" />
-                <span>Validate</span>
+                <span>{t('validate')}</span>
               </button>
             </div>
           </motion.div>

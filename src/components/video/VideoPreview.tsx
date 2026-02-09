@@ -14,8 +14,14 @@ export function VideoPreview({ stream, videoUrl, isRecording = false }: VideoPre
 
   // Mode live : attacher le stream
   useEffect(() => {
-    if (videoRef.current && stream) {
-      videoRef.current.srcObject = stream
+    if (videoRef.current) {
+      if (stream) {
+        videoRef.current.srcObject = stream
+      } else {
+        // Nettoyer le srcObject quand le stream est retiré
+        // pour que le browser utilise l'attribut src (blob URL)
+        videoRef.current.srcObject = null
+      }
     }
   }, [stream])
 

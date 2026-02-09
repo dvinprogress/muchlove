@@ -319,10 +319,20 @@
       "inUseDescription": "Tu cámara está siendo usada por otra aplicación. Por favor ciérrala e intenta de nuevo."
     },
     "controls": {
-      "recording": "GRABANDO",
-      "attemptLabel": "Intento {current}/{max}",
-      "retake": "Intentar de nuevo",
-      "validate": "¡Se ve genial!"
+      "recording": "Grabando",
+      "attempts": "Intento {current} de {max}",
+      "retake": "Repetir",
+      "validate": "Validar",
+      "startHint": "Pulse para empezar",
+      "encouragement": "¡Vamos! Hable con naturalidad, siempre puede repetir."
+    },
+    "scripts": {
+      "title1": "Testimonio simple",
+      "script1": "Me llamo ___. Trabajo con {companyName} desde ___. Lo que más aprecio es ___.",
+      "title2": "Antes / Después",
+      "script2": "Antes de {companyName}, tenía un problema: ___. Desde que trabajamos juntos, ___.",
+      "title3": "La recomendación",
+      "script3": "Si tuviera que recomendar {companyName} en una palabra, sería ___ porque ___."
     },
     "preview": {
       "recordingBadge": "GRABANDO"
@@ -356,11 +366,9 @@
       }
     },
     "progress": {
-      "stepStart": "Inicio",
-      "stepVideo": "Video",
-      "stepTrustpilot": "Trustpilot",
-      "stepGoogle": "Google",
-      "stepAmbassador": "Embajador"
+      "step1": "Vídeo",
+      "step2": "Compartir",
+      "step3": "Embajador"
     }
   },
   "testimonials": {
@@ -573,6 +581,7 @@
       "action": "Compartir en LinkedIn",
       "done": "¡Compartido!",
       "consent": "Acepto aparecer en LinkedIn",
+      "shareError": "No se pudo compartir en LinkedIn. Inténtelo de nuevo.",
       "consentDescription": "Celebraremos tu estatus de embajador en nuestra página de LinkedIn"
     },
     "ambassador": {

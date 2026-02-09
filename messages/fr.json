@@ -319,10 +319,20 @@
       "inUseDescription": "Votre caméra est utilisée par une autre application. Fermez-la et réessayez."
     },
     "controls": {
-      "recording": "REC",
-      "attemptLabel": "Essai {current}/{max}",
-      "retake": "Réessayer",
-      "validate": "Parfait !"
+      "recording": "Enregistrement",
+      "attempts": "Tentative {current} sur {max}",
+      "retake": "Refaire",
+      "validate": "Valider",
+      "startHint": "Appuyez pour commencer",
+      "encouragement": "C'est parti ! Parlez naturellement, vous pouvez recommencer."
+    },
+    "scripts": {
+      "title1": "Le témoignage simple",
+      "script1": "Je m'appelle ___. Je travaille avec {companyName} depuis ___. Ce que j'apprécie le plus, c'est ___.",
+      "title2": "Avant / Après",
+      "script2": "Avant {companyName}, j'avais un problème : ___. Depuis qu'on travaille ensemble, ___.",
+      "title3": "La recommandation",
+      "script3": "Si je devais recommander {companyName} en un mot, ce serait ___ parce que ___."
     },
     "preview": {
       "recordingBadge": "REC"
@@ -356,11 +366,9 @@
       }
     },
     "progress": {
-      "stepStart": "Départ",
-      "stepVideo": "Vidéo",
-      "stepTrustpilot": "Trustpilot",
-      "stepGoogle": "Google",
-      "stepAmbassador": "Ambassadeur"
+      "step1": "Vidéo",
+      "step2": "Partager",
+      "step3": "Ambassadeur"
     }
   },
   "testimonials": {
@@ -573,7 +581,8 @@
       "action": "Partager sur LinkedIn",
       "done": "Partagé !",
       "consent": "J'accepte d'être mis en avant sur LinkedIn",
-      "consentDescription": "Nous célébrerons votre statut d'ambassadeur sur notre page LinkedIn"
+      "consentDescription": "Nous célébrerons votre statut d'ambassadeur sur notre page LinkedIn",
+      "shareError": "Impossible de partager sur LinkedIn. Veuillez réessayer."
     },
     "ambassador": {
       "title": "Vous êtes Ambassadeur ! 🎉",

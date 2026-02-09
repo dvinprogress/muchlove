@@ -1,10 +1,10 @@
 # MuchLove - Progress Tracker
 
-> Derniere MAJ: 2026-02-09 | Version: 0.1.8
+> Derniere MAJ: 2026-02-09 | Version: 0.1.11
 
 ## Statut Global
 - **Phase**: mvp
-- **Derniere action**: Services production configures (Stripe, Resend, Cloudflare DNS). 16 env vars Vercel. Redeploy OK. Tests E2E passes.
+- **Derniere action**: Audit visuel tablette (768x1024) — fix HowItWorks grid orphan (md:grid-cols-3). TypeScript OK.
 
 ## Infrastructure
 | Element | Statut | Date | Notes |
@@ -50,6 +50,9 @@
 | 23 | Microsoft Clarity Analytics | DONE | 2026-02-07 | src/components/providers/ClarityProvider.tsx, src/app/[locale]/layout.tsx | Package @microsoft/clarity, ClarityProvider useEffect init, env var NEXT_PUBLIC_CLARITY_PROJECT_ID, heatmaps + session recordings + rage clicks |
 | 22 | Widget Embeddable | DONE | 2026-02-07 | src/app/api/widget/{testimonials,config}/, src/widget/{index,styles,render}.ts, src/app/[locale]/dashboard/widget/, src/components/widget/{WidgetConfigurator,WidgetSnippet}.tsx, scripts/build-widget.ts, public/widget/muchlove-widget.js | API publique GET /api/widget/testimonials avec validation api_key, CORS dynamique (allowed_domains + wildcard support), signed URLs 1h, cache 5min. API authentifiee GET/PUT /api/widget/config (CRUD config). Widget standalone vanilla JS (9.71 KB bundled) : Shadow DOM isolation, carousel responsive (1 card mobile, 2 tablets, 3 desktop), play video overlay, IntersectionObserver lazy-load, navigation dots + arrows. Configurateur dashboard : WidgetConfigurator (theme colors, layout, maxItems, showNames, showTranscription, poweredByVisible [Pro only], allowedDomains), WidgetSnippet (code HTML copiable), enable/disable toggle, Server Actions (enableWidget, disableWidget, updateWidgetConfig). Esbuild integration : build script npm run build:widget (pre-build hook), bundle < 20kb OK. i18n EN/FR/ES complet (~40 cles widget.*). Sidebar mis a jour (icone Code2). Pret pour production. |
 | 24 | Free plan 5→20 videos | DONE | 2026-02-09 | lib/stripe/plans.ts, api/stripe/webhook/route.ts, email/templates/FreeMaximizerEmail.tsx, dashboard/{page,settings}, cron/segment-evaluation.ts, messages/{en,fr,es}.json, migrations/007 | videosLimit 5→20 dans plans.ts (source verite), fallbacks dashboard, webhook downgrade, email template, i18n 3 langues, commentaire cron, migration SQL (ALTER DEFAULT + UPDATE existants) |
+| 25 | Audit visuel responsive | DONE | 2026-02-09 | components/landing/{LandingNavbar,HeroSection,Footer,Pricing,HowItWorks}.tsx, components/ui/LanguageSwitcher.tsx, app/[locale]/{login/page,demo/DemoFlow}.tsx | Audit Playwright mobile (390x844) + desktop (1440x900) + tablette (768x1024). 10 fixes : nav mobile (LanguageSwitcher compact, login hidden, CTA reduit), login whitespace (mt-20 supprime), hero CTA responsive (px-6/py-3 mobile), demo titre responsive (text-3xl mobile), footer LanguageSwitcher, pricing gap mobile, hero buttons layout desktop (sm:flex-row supprime), LanguageSwitcher Globe icon (fix emoji Windows), HowItWorks grid orphan tablette (sm:grid-cols-2 md:grid-cols-3). Build OK 0 erreur. |
+| 26 | ProgressBar UX refonte | DONE | 2026-02-09 | components/gamification/ProgressBar.tsx, messages/{fr,en,es}.json | Refonte complete : 3 etapes claires (Video/Partager/Ambassadeur) au lieu de 5 dots techniques (Start/Video/Trustpilot/Google/Ambassador). Icones Lucide (Video, Share2, Trophy). Mapping STATUS_TO_STEP 1-3 et STATUS_TO_PROGRESS 33-100%. Design compact : cercles w-10 h-10, icones w-5 h-5, texte xs. Couleurs : completed=bg-green-500, active=bg-rose-500 ring-4 ring-rose-200, pending=bg-gray-200. Ligne progression rose animee. Traductions i18n 3 langues (step1/step2/step3 remplacent anciennes cles). TypeScript OK. |
+| 27 | Bugs critiques video temoignage | DONE | 2026-02-09 | hooks/useVideoRecorderLogic.ts, components/video/{VideoPreview,RecordingControls}.tsx, messages/{fr,en,es}.json | Bug 1 fix : Transcription Whisper non-bloquante (try-catch isole, upload continue avec transcription=null si echec). Bug 2 fix : VideoPreview.srcObject=null au cleanup stream (browser utilise blob URL src). Bug 3 fix : RecordingControls i18n complet (recording/attempts/retake/validate), traductions FR/EN/ES alignees spec. TypeScript OK. |
 
 ## Bloquants qualite a corriger (issus de l'audit 2026-02-06)
 
@@ -65,6 +68,9 @@
 - [x] Fix MIME type codecs dans validation serveur — DONE 2026-02-07 — baseType = type.split(';')[0]
 - [x] Fix nom bucket storage (raw-videos→videos) — DONE 2026-02-07 — Aligne sur migration 001
 - [x] Aligner limites duree client/serveur (15s-120s) — DONE 2026-02-07
+- [x] Upload bloque par transcription Whisper — DONE 2026-02-09 — Transcription non-bloquante
+- [x] Video enregistree ne joue pas en phase validation — DONE 2026-02-09 — srcObject cleanup
+- [x] Traductions RecordingControls hardcodees anglais — DONE 2026-02-09 — i18n video.controls FR/EN/ES
 
 ### Contacts (#11) — UX critique
 - [x] Systeme de toast (remplacer alert/confirm par sonner ou shadcn/toast) — DONE 2026-02-06

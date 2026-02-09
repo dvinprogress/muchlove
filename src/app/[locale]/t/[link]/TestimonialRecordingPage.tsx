@@ -148,6 +148,7 @@ export function TestimonialRecordingPage({
               <VideoRecorder
                 contactId={contactId}
                 companyId={companyId}
+                companyName={companyName}
                 onComplete={handleVideoComplete}
               />
             </div>

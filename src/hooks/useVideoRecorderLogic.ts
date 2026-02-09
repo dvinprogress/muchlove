@@ -44,10 +44,16 @@ export function useVideoRecorderLogic(config: UploadConfig) {
     if (!videoBlob) return
 
     try {
-      // Phase 1: Transcription client-side
-      const transcription = await transcribe(videoBlob)
+      // Phase 1: Transcription client-side (non-bloquante)
+      let transcription: string | null = null
+      try {
+        transcription = await transcribe(videoBlob)
+      } catch (transcriptionError) {
+        console.warn('Transcription failed (non-blocking):', transcriptionError)
+        // Continue sans transcription
+      }
 
-      // Phase 2: Upload avec transcription
+      // Phase 2: Upload avec ou sans transcription
       setUploadPhase('uploading')
 
       const formData = config.buildFormData(videoBlob, duration, transcription)
@@ -58,7 +64,8 @@ export function useVideoRecorderLogic(config: UploadConfig) {
       })
 
       if (!response.ok) {
-        throw new Error('Upload failed')
+        const errorData = await response.json().catch(() => ({}))
+        throw new Error(errorData.error || 'Upload failed')
       }
 
       await response.json()

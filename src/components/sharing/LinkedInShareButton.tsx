@@ -62,7 +62,7 @@ export function LinkedInShareButton({
     } catch (error) {
       console.error('LinkedIn share error:', error)
       setShareState('idle')
-      alert('Could not share to LinkedIn. Please try again.')
+      alert(t('shareError'))
     }
   }
 

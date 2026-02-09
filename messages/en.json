@@ -319,10 +319,20 @@
       "inUseDescription": "Your camera is being used by another app. Please close it and try again."
     },
     "controls": {
-      "recording": "REC",
-      "attemptLabel": "Attempt {current}/{max}",
-      "retake": "Try again",
-      "validate": "Looks great!"
+      "recording": "Recording",
+      "attempts": "Attempt {current} of {max}",
+      "retake": "Retake",
+      "validate": "Validate",
+      "startHint": "Tap to start",
+      "encouragement": "Here we go! Speak naturally, you can always redo it."
+    },
+    "scripts": {
+      "title1": "Simple testimonial",
+      "script1": "My name is ___. I've been working with {companyName} for ___. What I appreciate most is ___.",
+      "title2": "Before / After",
+      "script2": "Before {companyName}, I had a problem: ___. Since we started working together, ___.",
+      "title3": "The recommendation",
+      "script3": "If I had to recommend {companyName} in one word, it would be ___ because ___."
     },
     "preview": {
       "recordingBadge": "REC"
@@ -356,11 +366,9 @@
       }
     },
     "progress": {
-      "stepStart": "Start",
-      "stepVideo": "Video",
-      "stepTrustpilot": "Trustpilot",
-      "stepGoogle": "Google",
-      "stepAmbassador": "Ambassador"
+      "step1": "Video",
+      "step2": "Share",
+      "step3": "Ambassador"
     }
   },
   "testimonials": {
@@ -573,6 +581,7 @@
       "action": "Share on LinkedIn",
       "done": "Shared!",
       "consent": "I agree to be featured on LinkedIn",
+      "shareError": "Could not share to LinkedIn. Please try again.",
       "consentDescription": "We'll celebrate your ambassador status on our LinkedIn page"
     },
     "ambassador": {
