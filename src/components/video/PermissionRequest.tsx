@@ -18,14 +18,14 @@ export function PermissionRequest({ onRequestPermission, error }: PermissionRequ
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      className="flex flex-col items-center justify-center max-w-md mx-auto p-8 space-y-6"
+      className="flex flex-col items-center justify-center max-w-md mx-auto p-4 space-y-4"
     >
-      <div className="w-32 h-32 rounded-full bg-rose-100 flex items-center justify-center">
-        <Camera className="w-16 h-16 text-rose-500" />
+      <div className="w-20 h-20 rounded-full bg-rose-100 flex items-center justify-center">
+        <Camera className="w-10 h-10 text-rose-500" />
       </div>
 
       <div className="text-center space-y-2">
-        <h2 className="text-2xl font-bold text-gray-900">
+        <h2 className="text-xl font-bold text-gray-900">
           {t('title')}
         </h2>
         <p className="text-gray-600">
@@ -73,7 +73,7 @@ export function PermissionRequest({ onRequestPermission, error }: PermissionRequ
 
       <button
         onClick={onRequestPermission}
-        className="px-8 py-4 bg-rose-500 text-white font-semibold rounded-lg hover:bg-rose-600 transition-colors focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2"
+        className="px-6 py-3 bg-rose-500 text-white font-semibold rounded-lg hover:bg-rose-600 transition-colors focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2"
       >
         {t('buttonAllow')}
       </button>

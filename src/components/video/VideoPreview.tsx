@@ -34,7 +34,7 @@ export function VideoPreview({ stream, videoUrl, isRecording = false }: VideoPre
     <div className="relative w-full max-w-md mx-auto">
       <div
         className={`
-          relative aspect-square rounded-2xl overflow-hidden bg-gray-900
+          relative aspect-video rounded-2xl overflow-hidden bg-gray-900
           ${isRecording ? 'ring-4 ring-red-500 animate-pulse' : ''}
         `}
       >

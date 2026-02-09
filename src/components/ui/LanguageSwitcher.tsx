@@ -90,7 +90,7 @@ export function LanguageSwitcher({
           </>
         ) : (
           <>
-            <span className="text-lg">{currentLanguage.flag}</span>
+            <Globe className="w-4 h-4 text-slate-600" />
             <span className="text-slate-700 font-medium">
               {currentLanguage.code}
             </span>
@@ -136,7 +136,7 @@ export function LanguageSwitcher({
                     }
                   `}
                 >
-                  {!isCompact && <span className="text-lg">{lang.flag}</span>}
+                  <span className="text-lg">{lang.flag}</span>
                   <div className="flex-1">
                     <span className="text-sm">{lang.label}</span>
                   </div>

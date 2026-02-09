@@ -72,7 +72,7 @@ export function DemoFlow() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 }}
-                className="text-5xl font-bold tracking-tight text-slate-900"
+                className="text-3xl sm:text-5xl font-bold tracking-tight text-slate-900"
               >
                 {t('intro.title')}
               </motion.h1>
@@ -93,7 +93,7 @@ export function DemoFlow() {
                 className="flex flex-col items-center gap-6"
               >
                 {/* Logo fictif Acme Corp */}
-                <div className="text-4xl font-bold text-slate-700 bg-slate-100 px-8 py-4 rounded-lg">
+                <div className="text-2xl sm:text-4xl font-bold text-slate-700 bg-slate-100 px-6 py-3 sm:px-8 sm:py-4 rounded-lg">
                   ACME CORP
                 </div>
 

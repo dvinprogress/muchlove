@@ -247,7 +247,7 @@ export function VideoRecorder({
   }
 
   return (
-    <div className="w-full min-h-screen flex items-center justify-center p-4 bg-gray-50">
+    <div className="w-full bg-slate-50 rounded-xl">
       <AnimatePresence mode="wait">
         {renderPhase()}
       </AnimatePresence>

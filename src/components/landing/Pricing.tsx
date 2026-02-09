@@ -39,7 +39,7 @@ export function Pricing() {
             {t("subtitle")}
           </p>
         </div>
-        <div className="mt-16 grid gap-8 lg:grid-cols-3">
+        <div className="mt-16 grid gap-10 sm:gap-8 lg:grid-cols-3">
           {plans.map((plan) => (
             <div
               key={plan.planKey}

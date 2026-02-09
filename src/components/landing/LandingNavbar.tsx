@@ -14,17 +14,18 @@ export function LandingNavbar() {
           <Link href="/" className="text-2xl font-bold text-rose-500">
             {t("logo")}
           </Link>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 sm:gap-4">
+            <LanguageSwitcher variant="compact" className="sm:hidden" />
             <LanguageSwitcher className="hidden sm:block" />
             <Link
               href="/login"
-              className="text-sm font-medium text-slate-700 transition-colors hover:text-rose-500"
+              className="hidden sm:inline text-sm font-medium text-slate-700 transition-colors hover:text-rose-500"
             >
               {t("login")}
             </Link>
             <Link
               href="/login"
-              className="rounded-lg bg-rose-500 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-rose-600"
+              className="rounded-lg bg-rose-500 px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-semibold text-white transition-colors hover:bg-rose-600"
             >
               {t("getStarted")}
             </Link>

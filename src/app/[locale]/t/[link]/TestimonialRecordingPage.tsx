@@ -72,14 +72,14 @@ export function TestimonialRecordingPage({
   }
 
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center p-4">
-      <div className="w-full max-w-lg space-y-6">
+    <div className="h-dvh bg-white flex flex-col items-center justify-center p-4 overflow-hidden">
+      <div className="w-full max-w-lg space-y-3">
         {/* Header : logo ou nom + salutation */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-center space-y-3"
+          className="text-center space-y-1"
         >
           {companyLogoUrl ? (
             <div className="flex justify-center">
@@ -90,12 +90,12 @@ export function TestimonialRecordingPage({
               />
             </div>
           ) : (
-            <h1 className="text-3xl font-bold text-slate-900">{companyName}</h1>
+            <h1 className="text-2xl font-bold text-slate-900">{companyName}</h1>
           )}
-          <h2 className="text-2xl font-semibold text-slate-900">
+          <h2 className="text-xl font-semibold text-slate-900">
             {t('greeting', { firstName: contactFirstName })}
           </h2>
-          <p className="text-lg text-slate-700">
+          <p className="text-base text-slate-700">
             {t('description', { companyName })}
           </p>
         </motion.div>

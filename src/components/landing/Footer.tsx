@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useTranslations } from "next-intl";
+import { LanguageSwitcher } from "@/components/ui/LanguageSwitcher";
 
 export function Footer() {
   const t = useTranslations("landing.footer");
@@ -16,7 +17,7 @@ export function Footer() {
               {t("copyright")}
             </p>
           </div>
-          <div className="flex gap-6">
+          <div className="flex items-center gap-6">
             <Link
               href="/terms"
               className="text-sm text-slate-600 transition-colors hover:text-rose-500"
@@ -29,6 +30,7 @@ export function Footer() {
             >
               {t("privacy")}
             </Link>
+            <LanguageSwitcher variant="compact" />
           </div>
         </div>
       </div>

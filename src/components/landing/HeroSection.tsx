@@ -19,23 +19,23 @@ export function HeroSection() {
             transition={{ duration: 0.6 }}
             className="text-center lg:text-left"
           >
-            <h1 className="text-5xl font-bold tracking-tight text-slate-900 sm:text-6xl">
+            <h1 className="text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
               {t("titlePart1")}{" "}
               <span className="text-rose-500">{t("titlePart2")}</span>
             </h1>
             <p className="mx-auto lg:mx-0 mt-6 max-w-2xl text-xl text-slate-600">
               {t("subtitle")}
             </p>
-            <div className="mt-10 flex flex-col items-center lg:items-start justify-center lg:justify-start gap-4 sm:flex-row">
+            <div className="mt-10 flex flex-col items-center lg:items-start justify-center lg:justify-start gap-4">
               <Link
                 href="/login"
-                className="inline-flex items-center justify-center rounded-lg bg-rose-500 px-8 py-4 text-lg font-semibold text-white shadow-lg transition-all hover:bg-rose-600 hover:scale-105"
+                className="inline-flex items-center justify-center rounded-lg bg-rose-500 px-6 py-3 text-base sm:px-8 sm:py-4 sm:text-lg font-semibold text-white shadow-lg transition-all hover:bg-rose-600 hover:scale-105"
               >
                 {t("ctaPrimary")}
               </Link>
               <Link
                 href="/demo"
-                className="inline-flex items-center justify-center rounded-lg bg-amber-500 px-8 py-4 text-lg font-semibold text-white shadow-lg transition-all hover:bg-amber-600 hover:scale-105"
+                className="inline-flex items-center justify-center rounded-lg bg-amber-500 px-6 py-3 text-base sm:px-8 sm:py-4 sm:text-lg font-semibold text-white shadow-lg transition-all hover:bg-amber-600 hover:scale-105"
               >
                 {t("ctaDemo")}
               </Link>
@@ -45,7 +45,7 @@ export function HeroSection() {
                     .getElementById("how-it-works")
                     ?.scrollIntoView({ behavior: "smooth" });
                 }}
-                className="inline-flex items-center justify-center rounded-lg border-2 border-slate-300 px-8 py-4 text-lg font-semibold text-slate-700 transition-colors hover:border-slate-400 hover:bg-slate-50"
+                className="inline-flex items-center justify-center rounded-lg border-2 border-slate-300 px-6 py-3 text-base sm:px-8 sm:py-4 sm:text-lg font-semibold text-slate-700 transition-colors hover:border-slate-400 hover:bg-slate-50"
               >
                 {t("ctaSecondary")}
               </button>
