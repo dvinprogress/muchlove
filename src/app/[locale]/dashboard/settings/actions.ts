@@ -56,7 +56,7 @@ export async function getBillingData(): Promise<ActionResult<BillingData>> {
   const recentTransactions = transactionsResult.data ?? []
 
   const videosUsed = company?.videos_used ?? 0
-  const videosLimit = company?.videos_limit ?? 5
+  const videosLimit = company?.videos_limit ?? 20
   const creditsRemaining = Math.max(0, videosLimit - videosUsed)
   const usagePercentage = videosLimit > 0 ? (videosUsed / videosLimit) * 100 : 0
 

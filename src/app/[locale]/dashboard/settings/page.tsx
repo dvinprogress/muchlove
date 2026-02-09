@@ -27,7 +27,7 @@ export default async function SettingsPage() {
         {/* Usage Card */}
         <UsageCard
           videosUsed={billing.company?.videos_used ?? 0}
-          videosLimit={billing.company?.videos_limit ?? 5}
+          videosLimit={billing.company?.videos_limit ?? 20}
           plan={billing.company?.plan ?? 'free'}
         />
 

@@ -316,7 +316,7 @@ async function handleSubscriptionDeleted(subscription: Stripe.Subscription) {
     .from('companies')
     .update({
       plan: 'free',
-      videos_limit: 5,
+      videos_limit: 20,
     })
     .eq('id', company.id)
 

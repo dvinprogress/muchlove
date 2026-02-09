@@ -60,7 +60,7 @@ export function FreeMaximizerEmail({
       <Text style={styles.paragraph}>Here&apos;s what you get with the Pro plan:</Text>
 
       <Section style={styles.list}>
-        <Text style={styles.listItem}>✓ 50 video testimonials/month (vs 5 on free)</Text>
+        <Text style={styles.listItem}>✓ 100 video testimonials/month (vs 20 on free)</Text>
         <Text style={styles.listItem}>✓ Custom branding (remove &quot;Powered by MuchLove&quot;)</Text>
         <Text style={styles.listItem}>✓ Embeddable widget for your website</Text>
         <Text style={styles.listItem}>✓ Priority support</Text>

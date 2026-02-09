@@ -46,7 +46,7 @@ export default async function DashboardPage() {
 
   const currentPlan = company?.plan || 'free'
   const videosUsed = company?.videos_used || 0
-  const videosLimit = company?.videos_limit || planLimits[currentPlan] || 5
+  const videosLimit = company?.videos_limit || planLimits[currentPlan] || 20
   const usagePercentage = videosLimit > 0 ? (videosUsed / videosLimit) * 100 : 0
   const stats = statsResult.success
     ? statsResult.data

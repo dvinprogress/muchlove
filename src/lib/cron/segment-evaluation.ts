@@ -9,7 +9,7 @@ import { EMAIL_SEGMENTS, type EmailSegment } from '@/types/automations'
  * - Frozen Starter: signup > 24h ET 0 contacts créés
  * - Rejected Requester: 1-5 contacts invités + 0 vidéos reçues après 48h
  * - Collector Unused: 1+ vidéos complétées + aucune vue/partage après 3 jours
- * - Free Maximizer: videos_used >= videos_limit (5/5 en free)
+ * - Free Maximizer: videos_used >= videos_limit (20/20 en free)
  */
 export async function evaluateSegments(): Promise<{
   evaluated: number

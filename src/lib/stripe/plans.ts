@@ -33,7 +33,7 @@ export const PLANS: Record<PlanId, PlanConfig> = {
     description: 'To get started',
     price: 0,
     yearlyPrice: 0,
-    videosLimit: 5,
+    videosLimit: 20,
     features: ['videos', 'link', 'storage', 'support'],
     highlighted: false,
     stripePriceIdMonthly: null,

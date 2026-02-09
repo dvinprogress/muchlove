@@ -1,6 +1,6 @@
 # MuchLove - Progress Tracker
 
-> Derniere MAJ: 2026-02-07 | Version: 0.1.7
+> Derniere MAJ: 2026-02-09 | Version: 0.1.8
 
 ## Statut Global
 - **Phase**: mvp
@@ -49,6 +49,7 @@
 | 21 | Systeme Feedback | DONE | 2026-02-07 | src/lib/feedback/{types,lib,components,api}/, feedback.config.ts, src/app/api/feedback/{route,upload,admin}/, src/components/feedback/FeedbackProvider.tsx, supabase/migrations/005_feedback.sql | Package complet integre : FeedbackWidget (floating button violet/purple), FeedbackModal (3 categories: bug/improvement/feature), FeedbackForm (title + description + email + screenshots), CategorySelector, ScreenshotUploader (drag&drop + paste + compression). Securite 8 layers : Turnstile anti-bot, rate limit IP (3 req/min), Zod validation, anti-spam (URLs, repetition, keywords), anti-injection (prompt/XSS/SQL), sanitization HTML, Supabase RLS, processing pipeline (auto-tags bugs, user tasks features). 3 API routes : POST /api/feedback (submit), POST /api/feedback/upload (screenshots), GET+PATCH /api/feedback/admin (admin only). Migration 005 : 5 tables (feedbacks + screenshots + admin_notes + user_tasks + rate_limits) + storage bucket + RLS policies + triggers. FeedbackProvider integre layout racine (visible partout). Config MuchLove : violet/purple branding, Turnstile (NEXT_PUBLIC_TURNSTILE_SITE_KEY + TURNSTILE_SECRET_KEY requis). TypeCheck + Build OK. |
 | 23 | Microsoft Clarity Analytics | DONE | 2026-02-07 | src/components/providers/ClarityProvider.tsx, src/app/[locale]/layout.tsx | Package @microsoft/clarity, ClarityProvider useEffect init, env var NEXT_PUBLIC_CLARITY_PROJECT_ID, heatmaps + session recordings + rage clicks |
 | 22 | Widget Embeddable | DONE | 2026-02-07 | src/app/api/widget/{testimonials,config}/, src/widget/{index,styles,render}.ts, src/app/[locale]/dashboard/widget/, src/components/widget/{WidgetConfigurator,WidgetSnippet}.tsx, scripts/build-widget.ts, public/widget/muchlove-widget.js | API publique GET /api/widget/testimonials avec validation api_key, CORS dynamique (allowed_domains + wildcard support), signed URLs 1h, cache 5min. API authentifiee GET/PUT /api/widget/config (CRUD config). Widget standalone vanilla JS (9.71 KB bundled) : Shadow DOM isolation, carousel responsive (1 card mobile, 2 tablets, 3 desktop), play video overlay, IntersectionObserver lazy-load, navigation dots + arrows. Configurateur dashboard : WidgetConfigurator (theme colors, layout, maxItems, showNames, showTranscription, poweredByVisible [Pro only], allowedDomains), WidgetSnippet (code HTML copiable), enable/disable toggle, Server Actions (enableWidget, disableWidget, updateWidgetConfig). Esbuild integration : build script npm run build:widget (pre-build hook), bundle < 20kb OK. i18n EN/FR/ES complet (~40 cles widget.*). Sidebar mis a jour (icone Code2). Pret pour production. |
+| 24 | Free plan 5→20 videos | DONE | 2026-02-09 | lib/stripe/plans.ts, api/stripe/webhook/route.ts, email/templates/FreeMaximizerEmail.tsx, dashboard/{page,settings}, cron/segment-evaluation.ts, messages/{en,fr,es}.json, migrations/007 | videosLimit 5→20 dans plans.ts (source verite), fallbacks dashboard, webhook downgrade, email template, i18n 3 langues, commentaire cron, migration SQL (ALTER DEFAULT + UPDATE existants) |
 
 ## Bloquants qualite a corriger (issus de l'audit 2026-02-06)
 
@@ -117,7 +118,7 @@
 ## Services Externes Configures
 | Service | Statut | Notes |
 |---------|--------|-------|
-| Supabase | CONFIGURED | Auth (Google + LinkedIn + Email), DB, Storage. Migrations 001-006 appliquees (SQL Editor). |
+| Supabase | CONFIGURED | Auth (Google + LinkedIn + Email), DB, Storage. Migrations 001-006 appliquees (SQL Editor). Migration 007 a appliquer (free plan 20 videos). |
 | Stripe | CONFIGURED | Account acct_1SyBKnAcl1xwxhHz (mode test). 2 produits (Pro + Enterprise), 4 prix, webhook 6 events. Env vars Vercel OK. |
 | Resend | CONFIGURED | Domaine muchlove.app verified (DKIM + SPF). API key + webhook (11 events). Env vars Vercel OK. |
 | Vercel | DEPLOYED | muchlove.app live, 16 env vars production, region cdg1, headers securite, cron config vercel.json |
