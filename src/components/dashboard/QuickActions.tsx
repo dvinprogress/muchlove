@@ -12,7 +12,7 @@ export function QuickActions() {
 
   const handleCopyLink = async () => {
     // TODO: Récupérer le vrai lien de la page publique depuis les settings
-    const publicLink = `${window.location.origin}/p/demo`
+    const publicLink = `${window.location.origin}/demo`
 
     await navigator.clipboard.writeText(publicLink)
     setCopied(true)
