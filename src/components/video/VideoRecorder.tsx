@@ -30,15 +30,8 @@ export function VideoRecorder({
 
   const config = useMemo(() => ({
     endpoint: '/api/upload-video',
-    buildFormData: (blob: Blob, duration: number, transcription: string | null) => {
-      const formData = new FormData()
-      formData.append('video', blob, 'recording.webm')
-      formData.append('contactId', contactId)
-      formData.append('companyId', companyId)
-      formData.append('duration', duration.toString())
-      formData.append('transcription', transcription || '')
-      return formData
-    },
+    contactId,
+    companyId,
     onSuccess: (blob: Blob, duration: number) => {
       onComplete(blob, duration)
     }

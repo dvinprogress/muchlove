@@ -636,7 +636,18 @@
   },
   "settings": {
     "title": "Paramètres",
-    "description": "Gérez votre compte et vos préférences"
+    "description": "Gérez votre compte et vos préférences",
+    "profile": {
+      "title": "Profil entreprise",
+      "description": "Informations visibles par vos contacts",
+      "businessInfo": "Informations générales",
+      "sharingLinks": "Liens d'avis",
+      "sharingLinksDescription": "Après l'enregistrement vidéo, vos contacts seront invités à laisser un avis sur ces plateformes.",
+      "save": "Enregistrer",
+      "saving": "Enregistrement...",
+      "saved": "Modifications enregistrées",
+      "error": "Erreur lors de l'enregistrement"
+    }
   },
   "billing": {
     "currentPlan": "Votre plan",

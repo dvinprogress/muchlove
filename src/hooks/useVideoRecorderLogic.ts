@@ -3,12 +3,15 @@
 import { useEffect, useState, useCallback } from 'react'
 import { useMediaRecorder } from './useMediaRecorder'
 import { useWhisperTranscription } from './useWhisperTranscription'
+import { createClient } from '@/lib/supabase/client'
 
 export type UploadPhase = 'idle' | 'uploading' | 'complete' | 'error'
 
 export interface UploadConfig {
   endpoint: string
-  buildFormData: (blob: Blob, duration: number, transcription: string | null) => FormData
+  contactId?: string
+  companyId?: string
+  buildFormData?: (blob: Blob, duration: number, transcription: string | null) => FormData
   onSuccess: (blob: Blob, duration: number, transcription: string | null) => void
 }
 
@@ -45,6 +48,9 @@ export function useVideoRecorderLogic(config: UploadConfig) {
     if (!videoBlob) return
 
     try {
+      setUploadPhase('uploading')
+      setUploadError(null)
+
       // Phase 1: Transcription client-side (non-bloquante)
       let transcription: string | null = null
       try {
@@ -54,23 +60,67 @@ export function useVideoRecorderLogic(config: UploadConfig) {
         // Continue sans transcription
       }
 
-      // Phase 2: Upload avec ou sans transcription
-      setUploadPhase('uploading')
-      setUploadError(null)
+      // Détecter le mode (legacy FormData pour demo vs nouveau JSON metadata)
+      const isLegacyMode = !!config.buildFormData
 
-      const formData = config.buildFormData(videoBlob, duration, transcription)
+      if (isLegacyMode) {
+        // Mode legacy (demo) : FormData upload
+        const formData = config.buildFormData!(videoBlob, duration, transcription)
 
-      const response = await fetch(config.endpoint, {
-        method: 'POST',
-        body: formData
-      })
+        const response = await fetch(config.endpoint, {
+          method: 'POST',
+          body: formData
+        })
 
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}))
-        throw new Error(errorData.error || 'Upload failed')
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({}))
+          throw new Error(errorData.error || 'Upload failed')
+        }
+
+        await response.json()
+      } else {
+        // Nouveau mode (production) : Upload Storage client-side + JSON metadata
+        if (!config.contactId || !config.companyId) {
+          throw new Error('contactId and companyId are required for direct upload mode')
+        }
+
+        // Phase 2: Upload direct du blob vers Supabase Storage
+        const supabase = createClient()
+        const timestamp = Date.now()
+        const filePath = `${config.companyId}/${config.contactId}/raw_${timestamp}.webm`
+
+        const { error: uploadError } = await supabase.storage
+          .from('videos')
+          .upload(filePath, videoBlob, {
+            contentType: videoBlob.type || 'video/webm',
+            upsert: false
+          })
+
+        if (uploadError) {
+          throw new Error(`Storage upload failed: ${uploadError.message}`)
+        }
+
+        // Phase 3: POST vers API avec metadata JSON (pas de FormData)
+        const response = await fetch(config.endpoint, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            contactId: config.contactId,
+            filePath,
+            duration,
+            transcription: transcription || undefined
+          })
+        })
+
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({}))
+          throw new Error(errorData.error || 'Upload failed')
+        }
+
+        await response.json()
       }
-
-      await response.json()
 
       // Upload réussi - passer en phase complete
       setUploadPhase('complete')

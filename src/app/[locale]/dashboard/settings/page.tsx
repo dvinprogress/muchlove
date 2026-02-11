@@ -2,6 +2,7 @@ import { Header } from '@/components/dashboard'
 import { getBillingData } from './actions'
 import { BillingSection, UsageCard } from '@/components/billing'
 import { CreditTransactionsList } from './CreditTransactionsList'
+import { CompanyProfileSection } from '@/components/settings/CompanyProfileSection'
 import { getTranslations } from 'next-intl/server'
 
 export default async function SettingsPage() {
@@ -24,6 +25,19 @@ export default async function SettingsPage() {
       <Header title={t('title')} description={t('description')} />
 
       <div className="space-y-6">
+        {/* Company Profile */}
+        {billing.company && (
+          <CompanyProfileSection
+            company={{
+              name: billing.company.name,
+              industry: billing.company.industry,
+              logo_url: billing.company.logo_url,
+              trustpilot_url: billing.company.trustpilot_url,
+              google_place_id: billing.company.google_place_id,
+            }}
+          />
+        )}
+
         {/* Usage Card */}
         <UsageCard
           videosUsed={billing.company?.videos_used ?? 0}

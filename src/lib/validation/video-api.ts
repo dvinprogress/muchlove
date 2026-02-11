@@ -26,6 +26,22 @@ export const transcribeSchema = z.object({
 })
 
 /**
+ * Schema de validation pour /api/upload-video (nouveau format JSON metadata)
+ *
+ * Valide le body JSON apres upload Storage client-side :
+ * - contactId: UUID valide
+ * - filePath: chemin du fichier dans le bucket
+ * - duration: nombre positif
+ * - transcription: optionnel
+ */
+export const uploadVideoMetadataSchema = z.object({
+  contactId: z.string().uuid('ID du contact invalide'),
+  filePath: z.string().min(1, 'Chemin du fichier requis'),
+  duration: z.number().positive('La durée doit être positive'),
+  transcription: z.string().max(10000, 'Transcription trop longue').optional(),
+})
+
+/**
  * Constantes de validation
  */
 export const VIDEO_VALIDATION = {

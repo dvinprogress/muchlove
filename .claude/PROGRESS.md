@@ -1,10 +1,10 @@
 # MuchLove - Progress Tracker
 
-> Derniere MAJ: 2026-02-09 | Version: 0.1.15
+> Derniere MAJ: 2026-02-11 | Version: 0.1.17
 
 ## Statut Global
 - **Phase**: mvp
-- **Derniere action**: Onboarding post-inscription complet (3 etapes skippables + celebration). Fix LanguageSwitcher emoji→SVG. TypeScript + Build OK.
+- **Derniere action**: Ajout section Profil entreprise dans dashboard settings (nom, logo, secteur, Trustpilot URL, Google Place ID). Réutilisation server actions onboarding. i18n FR/EN/ES. TypeScript OK.
 
 ## Infrastructure
 | Element | Statut | Date | Notes |
@@ -59,6 +59,8 @@
 | 31 | Refonte landing page SEO | DONE | 2026-02-09 | components/landing/{LandingNavbar,HeroSection,LogoCloud,ProblemSection,FeaturesGrid,HowItWorks,StatsSection,TestimonialsSection,UseCasesSection,WidgetShowcase,ComparisonTable,Pricing,FAQSection,CTASection,Footer}.tsx, app/[locale]/page.tsx, app/[locale]/layout.tsx, messages/{en,fr,es}.json | Refonte complete 5→15 sections. Nouvelles sections: LogoCloud, ProblemSection, FeaturesGrid (6 features), StatsSection (4 metrics), TestimonialsSection (3 temoignages), UseCasesSection (4 industries), WidgetShowcase (mockup + code snippet), ComparisonTable (vs avis ecrits), FAQSection (8 Q&A accordion), CTASection (gradient rose). Sections reecrites: HeroSection (badge, H1 gradient, mockup video CSS), LandingNavbar (nav anchor links + hamburger mobile), HowItWorks (4 etapes connectees), Pricing (toggle annuel/mensuel, 3 tiers), Footer (4 colonnes). SEO: schema.org JSON-LD (Organization + SoftwareApplication + FAQPage), metadata enrichies par locale (titre ~60 chars, description ~155 chars, keywords 11), OpenGraph images, hreflang. Contenu i18n EN/FR/ES enrichi (~400 cles landing). SocialProof.tsx supprime (remplace par StatsSection). TypeScript + Build OK 0 erreur. |
 | 32 | Onboarding post-inscription | DONE | 2026-02-09 | app/[locale]/dashboard/onboarding/{page,OnboardingFlow,actions}.tsx, onboarding/components/{Step1BusinessInfo,Step2SharingLinks,Step3FirstContact,InfoTooltip,LogoUploader,ProgressIndicator}.tsx, middleware.ts, supabase/migrations/008_onboarding.sql, types/database.ts, messages/{en,fr,es}.json | Flow 3 etapes skippables : Step1 (nom entreprise + logo upload + secteur), Step2 (URL Trustpilot + Google Place ID avec tooltips aide ℹ️ et liens directs), Step3 (premier contact + envoi invitation email). Celebration confetti ambassadorCelebration(). Migration 008 : colonnes onboarding_completed_at + industry, bucket company-logos (2MB, RLS 4 policies). 5 Server Actions Zod. Middleware redirect auto si onboarding incomplet (evite /dashboard/onboarding loop). ProgressIndicator 3 cercles animes. InfoTooltip panneau expandable bleu. LogoUploader drag-drop. i18n EN/FR/ES (~40 cles onboarding.*). TypeScript + Build OK 55 pages. |
 | 33 | Fix LanguageSwitcher emoji→SVG | DONE | 2026-02-09 | components/ui/LanguageSwitcher.tsx | Remplacement emoji drapeaux (non supportes Windows) par SVG inline : UK (Union Jack), FR (tricolore), ES (bandes). Zero dependance, cross-platform. |
+| 34 | Refactoring upload video (limite 4.5MB) | DONE | 2026-02-11 | hooks/useVideoRecorderLogic.ts, api/upload-video/route.ts, components/video/VideoRecorder.tsx, lib/validation/video-api.ts | Probleme: videos WebM 15-120s depassent limite 4.5MB serverless Vercel. Solution: Upload direct Supabase Storage client-side (phase 2) puis POST API JSON metadata (phase 3). Nouveau schema uploadVideoMetadataSchema (contactId, filePath, duration, transcription). UploadConfig refactore (contactId + companyId requis, buildFormData optionnel pour demo). API route ne recoit plus FormData, juste JSON. Backward compatible avec DemoVideoRecorder (mode legacy FormData detecte). TypeScript + Build OK 55 pages. |
+| 35 | Section Profil entreprise dans settings | DONE | 2026-02-11 | components/settings/CompanyProfileSection.tsx, app/[locale]/dashboard/settings/page.tsx, messages/{fr,en,es}.json, onboarding/actions.ts | Formulaire editable dans dashboard settings : nom entreprise, secteur, logo (drag-drop), URL Trustpilot, Google Place ID avec InfoTooltips. Reutilisation server actions onboarding (updateBusinessInfo, uploadCompanyLogo, updateSharingLinks). Reutilisation composants LogoUploader + InfoTooltip. Toast sonner feedback. Revalidation pages apres modif. i18n FR/EN/ES (cles settings.profile.*). TypeScript OK. |
 
 ## Bloquants qualite a corriger (issus de l'audit 2026-02-06)
 
@@ -77,6 +79,7 @@
 - [x] Upload bloque par transcription Whisper — DONE 2026-02-09 — Transcription non-bloquante
 - [x] Video enregistree ne joue pas en phase validation — DONE 2026-02-09 — srcObject cleanup
 - [x] Traductions RecordingControls hardcodees anglais — DONE 2026-02-09 — i18n video.controls FR/EN/ES
+- [x] Upload video bloque par limite 4.5MB Vercel — DONE 2026-02-11 — Upload direct Supabase Storage client-side
 
 ### Contacts (#11) — UX critique
 - [x] Systeme de toast (remplacer alert/confirm par sonner ou shadcn/toast) — DONE 2026-02-06

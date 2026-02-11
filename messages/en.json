@@ -636,7 +636,18 @@
   },
   "settings": {
     "title": "Settings",
-    "description": "Manage your account and preferences"
+    "description": "Manage your account and preferences",
+    "profile": {
+      "title": "Company profile",
+      "description": "Information visible to your contacts",
+      "businessInfo": "Business information",
+      "sharingLinks": "Review links",
+      "sharingLinksDescription": "After video recording, your contacts will be invited to leave a review on these platforms.",
+      "save": "Save changes",
+      "saving": "Saving...",
+      "saved": "Changes saved",
+      "error": "Error saving changes"
+    }
   },
   "billing": {
     "currentPlan": "Your plan",

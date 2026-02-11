@@ -636,7 +636,18 @@
   },
   "settings": {
     "title": "Configuración",
-    "description": "Gestiona tu cuenta y preferencias"
+    "description": "Gestiona tu cuenta y preferencias",
+    "profile": {
+      "title": "Perfil de empresa",
+      "description": "Información visible para tus contactos",
+      "businessInfo": "Información general",
+      "sharingLinks": "Enlaces de reseñas",
+      "sharingLinksDescription": "Después de grabar el video, tus contactos serán invitados a dejar una reseña en estas plataformas.",
+      "save": "Guardar cambios",
+      "saving": "Guardando...",
+      "saved": "Cambios guardados",
+      "error": "Error al guardar"
+    }
   },
   "billing": {
     "currentPlan": "Tu plan",

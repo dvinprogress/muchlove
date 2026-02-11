@@ -67,6 +67,7 @@ export async function updateBusinessInfo(
   // 4. Revalidate paths
   revalidatePath('/dashboard')
   revalidatePath('/dashboard/onboarding')
+  revalidatePath('/dashboard/settings')
 
   return { success: true, data: undefined }
 }
@@ -151,6 +152,7 @@ export async function uploadCompanyLogo(formData: FormData): Promise<ActionResul
     // 9. Revalidate paths
     revalidatePath('/dashboard')
     revalidatePath('/dashboard/onboarding')
+    revalidatePath('/dashboard/settings')
 
     return { success: true, data: undefined }
   } catch (error) {
@@ -202,6 +204,7 @@ export async function updateSharingLinks(
   // 4. Revalidate paths
   revalidatePath('/dashboard')
   revalidatePath('/dashboard/onboarding')
+  revalidatePath('/dashboard/settings')
 
   return { success: true, data: undefined }
 }

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import type { Database } from '@/types/database'
-import { uploadVideoSchema, VIDEO_VALIDATION } from '@/lib/validation/video-api'
+import { uploadVideoMetadataSchema } from '@/lib/validation/video-api'
 
 function getSupabaseAdmin() {
   return createClient<Database>(
@@ -19,19 +19,11 @@ export async function POST(request: NextRequest) {
   try {
     const supabaseAdmin = getSupabaseAdmin()
 
-    // 2. Parser le FormData
-    const formData = await request.formData()
-    const video = formData.get('video') as File | null
-    const contactIdRaw = formData.get('contactId') as string | null
-    const durationRaw = formData.get('duration') as string | null
-    const transcriptionRaw = formData.get('transcription') as string | null
+    // 2. Parser le JSON body
+    const body = await request.json()
 
-    // 3. Validation Zod des inputs
-    const validationResult = uploadVideoSchema.safeParse({
-      contactId: contactIdRaw,
-      duration: durationRaw,
-      transcription: transcriptionRaw,
-    })
+    // 3. Validation Zod des metadata
+    const validationResult = uploadVideoMetadataSchema.safeParse(body)
 
     if (!validationResult.success) {
       return NextResponse.json(
@@ -40,37 +32,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const { contactId, duration: durationSeconds, transcription } = validationResult.data
-
-    // 4. Validation du fichier vidéo
-    if (!video) {
-      return NextResponse.json(
-        { success: false, error: 'Vidéo manquante' },
-        { status: 400 }
-      )
-    }
-
-    const baseType = (video.type.split(';')[0]?.trim() || video.type) as string
-    if (!VIDEO_VALIDATION.ALLOWED_MIME_TYPES.includes(baseType as 'video/webm' | 'video/mp4')) {
-      return NextResponse.json(
-        { success: false, error: 'Format vidéo non supporté (accepté: webm, mp4)' },
-        { status: 400 }
-      )
-    }
-
-    if (video.size > VIDEO_VALIDATION.MAX_FILE_SIZE) {
-      return NextResponse.json(
-        { success: false, error: 'Fichier trop volumineux (max 50MB)' },
-        { status: 400 }
-      )
-    }
-
-    if (durationSeconds < VIDEO_VALIDATION.MIN_DURATION || durationSeconds > VIDEO_VALIDATION.MAX_DURATION) {
-      return NextResponse.json(
-        { success: false, error: `Durée invalide (entre ${VIDEO_VALIDATION.MIN_DURATION}s et ${VIDEO_VALIDATION.MAX_DURATION}s)` },
-        { status: 400 }
-      )
-    }
+    const { contactId, filePath, duration: durationSeconds, transcription } = validationResult.data
 
     // 5. Fetch le contact et vérifier qu'il est autorisé à uploader
     const { data: contact, error: contactError } = await supabaseAdmin
@@ -111,36 +73,15 @@ export async function POST(request: NextRequest) {
 
     const attemptNumber = (count || 0) + 1
 
-    // 7. Upload vers Supabase Storage (bucket: raw-videos)
-    const timestamp = Date.now()
-    const fileName = `${contact.company_id}/${contactId}/raw_${timestamp}.webm`
-
-    const videoBuffer = await video.arrayBuffer()
-    const { data: uploadData, error: uploadError } = await supabaseAdmin
-      .storage
-      .from('videos')
-      .upload(fileName, videoBuffer, {
-        contentType: video.type || 'video/webm',
-        upsert: false
-      })
-
-    if (uploadError || !uploadData) {
-      console.error('Upload error:', uploadError)
-      return NextResponse.json(
-        { success: false, error: 'Erreur lors de l\'upload de la vidéo' },
-        { status: 500 }
-      )
-    }
-
-    // 8. Obtenir l'URL publique
+    // 7. Le fichier a déjà été uploadé par le client - construire l'URL publique
     const { data: urlData } = supabaseAdmin
       .storage
       .from('videos')
-      .getPublicUrl(fileName)
+      .getPublicUrl(filePath)
 
     const rawVideoUrl = urlData.publicUrl
 
-    // 9. Upsert dans la table testimonials (contact_id est UNIQUE — gère le re-enregistrement)
+    // 8. Upsert dans la table testimonials (contact_id est UNIQUE — gère le re-enregistrement)
     const hasTranscription = !!transcription
     const { data: testimonial, error: testimonialError } = await supabaseAdmin
       .from('testimonials')
@@ -169,7 +110,7 @@ export async function POST(request: NextRequest) {
 
     const testimonialId = (testimonial as { id: string }).id
 
-    // 10. Update le contact status
+    // 9. Update le contact status
     const { error: updateContactError } = await supabaseAdmin
       .from('contacts')
       .update({
@@ -183,7 +124,7 @@ export async function POST(request: NextRequest) {
       // Ne pas faire planter la requete, juste logger
     }
 
-    // 11. Vérifier si la company a atteint la limite (Free Maximizer trigger)
+    // 10. Vérifier si la company a atteint la limite (Free Maximizer trigger)
     // Fetch company pour vérifier videos_used vs videos_limit
     const { data: companyData, error: companyFetchError } = await supabaseAdmin
       .from('companies')
@@ -245,7 +186,7 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // 12. Retourner le succes (plus de fire-and-forget vers /api/transcribe)
+    // 11. Retourner le succes
     return NextResponse.json({
       success: true,
       testimonialId
