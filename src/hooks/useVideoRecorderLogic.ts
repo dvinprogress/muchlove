@@ -32,6 +32,7 @@ export function useVideoRecorderLogic(config: UploadConfig) {
 
   const { transcribe, isTranscribing, isModelLoading, progress } = useWhisperTranscription()
   const [uploadPhase, setUploadPhase] = useState<UploadPhase>('idle')
+  const [uploadError, setUploadError] = useState<string | null>(null)
 
   // Cleanup au unmount
   useEffect(() => {
@@ -55,6 +56,7 @@ export function useVideoRecorderLogic(config: UploadConfig) {
 
       // Phase 2: Upload avec ou sans transcription
       setUploadPhase('uploading')
+      setUploadError(null)
 
       const formData = config.buildFormData(videoBlob, duration, transcription)
 
@@ -77,6 +79,7 @@ export function useVideoRecorderLogic(config: UploadConfig) {
       config.onSuccess(videoBlob, duration, transcription)
     } catch (err) {
       console.error('Upload error:', err)
+      setUploadError(err instanceof Error ? err.message : 'Upload failed')
       setUploadPhase('error')
     }
   }, [videoBlob, duration, transcribe, config])
@@ -109,6 +112,7 @@ export function useVideoRecorderLogic(config: UploadConfig) {
 
     // State de l'upload
     uploadPhase,
+    uploadError,
 
     // Actions
     startCamera,

@@ -140,11 +140,11 @@ export async function POST(request: NextRequest) {
 
     const rawVideoUrl = urlData.publicUrl
 
-    // 9. Insert dans la table testimonials
+    // 9. Upsert dans la table testimonials (contact_id est UNIQUE — gère le re-enregistrement)
     const hasTranscription = !!transcription
     const { data: testimonial, error: testimonialError } = await supabaseAdmin
       .from('testimonials')
-      .insert({
+      .upsert({
         company_id: contact.company_id,
         contact_id: contactId,
         raw_video_url: rawVideoUrl,
@@ -153,6 +153,8 @@ export async function POST(request: NextRequest) {
         transcription: transcription || null,
         processing_status: hasTranscription ? 'completed' : 'pending',
         completed_at: hasTranscription ? new Date().toISOString() : null
+      }, {
+        onConflict: 'contact_id'
       })
       .select('id')
       .single()

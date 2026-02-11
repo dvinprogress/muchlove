@@ -1,7 +1,8 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 import { motion } from 'framer-motion'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
 interface ScriptGuideProps {
@@ -34,6 +35,22 @@ export function ScriptGuide({ companyName }: ScriptGuideProps) {
     ))
   }
 
+  const scrollToIndex = useCallback((index: number) => {
+    const container = scrollContainerRef.current
+    const card = container?.querySelector(`[data-index="${index}"]`)
+    card?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
+  }, [])
+
+  const goToPrev = useCallback(() => {
+    const newIndex = Math.max(0, activeIndex - 1)
+    scrollToIndex(newIndex)
+  }, [activeIndex, scrollToIndex])
+
+  const goToNext = useCallback(() => {
+    const newIndex = Math.min(SCRIPTS.length - 1, activeIndex + 1)
+    scrollToIndex(newIndex)
+  }, [activeIndex, scrollToIndex])
+
   // Observer pour détecter quelle carte est visible
   useEffect(() => {
     const container = scrollContainerRef.current
@@ -62,34 +79,59 @@ export function ScriptGuide({ companyName }: ScriptGuideProps) {
 
   return (
     <div className="mt-4 space-y-2">
-      {/* Container scrollable horizontal */}
-      <div
-        ref={scrollContainerRef}
-        className="flex gap-2 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-2"
-        style={{
-          scrollbarWidth: 'none',
-          msOverflowStyle: 'none',
-        }}
-      >
-        {SCRIPTS.map((script, index) => (
-          <motion.div
-            key={script.key}
-            data-index={index}
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: index * 0.1 }}
-            className="flex-shrink-0 w-[280px] snap-center"
+      {/* Container avec flèches */}
+      <div className="relative">
+        {/* Flèche gauche */}
+        {activeIndex > 0 && (
+          <button
+            onClick={goToPrev}
+            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1 z-10 w-8 h-8 rounded-full bg-white shadow-md border border-slate-200 flex items-center justify-center text-slate-500 hover:text-rose-500 hover:border-rose-300 transition-colors"
+            aria-label="Script précédent"
           >
-            <div className="bg-white/80 backdrop-blur border border-gray-100 rounded-lg p-3 h-full shadow-sm">
-              <h4 className="text-xs font-semibold text-rose-500 mb-1">
-                {t(script.titleKey)}
-              </h4>
-              <p className="text-sm text-gray-700 leading-relaxed">
-                {formatScript(t(script.scriptKey, { companyName }))}
-              </p>
-            </div>
-          </motion.div>
-        ))}
+            <ChevronLeft className="w-4 h-4" />
+          </button>
+        )}
+
+        {/* Flèche droite */}
+        {activeIndex < SCRIPTS.length - 1 && (
+          <button
+            onClick={goToNext}
+            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1 z-10 w-8 h-8 rounded-full bg-white shadow-md border border-slate-200 flex items-center justify-center text-slate-500 hover:text-rose-500 hover:border-rose-300 transition-colors"
+            aria-label="Script suivant"
+          >
+            <ChevronRight className="w-4 h-4" />
+          </button>
+        )}
+
+        {/* Container scrollable horizontal */}
+        <div
+          ref={scrollContainerRef}
+          className="flex gap-2 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-2 px-2"
+          style={{
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none',
+          }}
+        >
+          {SCRIPTS.map((script, index) => (
+            <motion.div
+              key={script.key}
+              data-index={index}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: index * 0.1 }}
+              className="flex-shrink-0 w-[280px] snap-center"
+            >
+              <div className="bg-white/80 backdrop-blur border border-gray-100 rounded-lg p-3 h-full shadow-sm">
+                <h4 className="text-xs font-semibold text-rose-500 mb-1">
+                  {t(script.titleKey)}
+                </h4>
+                <p className="text-sm text-gray-700 leading-relaxed">
+                  {formatScript(t(script.scriptKey, { companyName }))}
+                </p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
       </div>
 
       {/* Dots indicators */}
@@ -97,17 +139,13 @@ export function ScriptGuide({ companyName }: ScriptGuideProps) {
         {SCRIPTS.map((_, index) => (
           <button
             key={index}
-            onClick={() => {
-              const container = scrollContainerRef.current
-              const card = container?.querySelector(`[data-index="${index}"]`)
-              card?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
-            }}
-            className={`w-1.5 h-1.5 rounded-full transition-all duration-200 ${
+            onClick={() => scrollToIndex(index)}
+            className={`h-1.5 rounded-full transition-all duration-200 ${
               activeIndex === index
                 ? 'bg-rose-500 w-4'
-                : 'bg-gray-300 hover:bg-gray-400'
+                : 'bg-gray-300 hover:bg-gray-400 w-1.5'
             }`}
-            aria-label={`Voir le script ${index + 1}`}
+            aria-label={`Script ${index + 1}`}
           />
         ))}
       </div>

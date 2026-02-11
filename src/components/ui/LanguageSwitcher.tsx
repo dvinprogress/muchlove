@@ -13,13 +13,55 @@ type LanguageSwitcherProps = {
   className?: string;
 };
 
-const languages: Record<
-  Locale,
-  { code: string; label: string; flag: string }
-> = {
-  en: { code: "EN", label: "English", flag: "🇬🇧" },
-  fr: { code: "FR", label: "Français", flag: "🇫🇷" },
-  es: { code: "ES", label: "Español", flag: "🇪🇸" },
+// SVG Flag Components
+const FlagSVG = {
+  en: ({ className = "" }: { className?: string }) => (
+    <svg
+      width="20"
+      height="15"
+      viewBox="0 0 20 15"
+      className={`rounded-sm shadow-sm ${className}`}
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <rect width="20" height="15" fill="#012169" />
+      <path d="M0 0 L20 15 M20 0 L0 15" stroke="#FFFFFF" strokeWidth="3" />
+      <path d="M0 0 L20 15 M20 0 L0 15" stroke="#C8102E" strokeWidth="2" />
+      <path d="M10 0 V15 M0 7.5 H20" stroke="#FFFFFF" strokeWidth="5" />
+      <path d="M10 0 V15 M0 7.5 H20" stroke="#C8102E" strokeWidth="3" />
+    </svg>
+  ),
+  fr: ({ className = "" }: { className?: string }) => (
+    <svg
+      width="20"
+      height="15"
+      viewBox="0 0 20 15"
+      className={`rounded-sm shadow-sm ${className}`}
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <rect width="6.67" height="15" fill="#002395" />
+      <rect x="6.67" width="6.67" height="15" fill="#FFFFFF" />
+      <rect x="13.34" width="6.66" height="15" fill="#ED2939" />
+    </svg>
+  ),
+  es: ({ className = "" }: { className?: string }) => (
+    <svg
+      width="20"
+      height="15"
+      viewBox="0 0 20 15"
+      className={`rounded-sm shadow-sm ${className}`}
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <rect width="20" height="15" fill="#F1BF00" />
+      <rect width="20" height="3.75" fill="#AA151B" />
+      <rect y="11.25" width="20" height="3.75" fill="#AA151B" />
+    </svg>
+  ),
+};
+
+const languages: Record<Locale, { code: string; label: string }> = {
+  en: { code: "EN", label: "English" },
+  fr: { code: "FR", label: "Français" },
+  es: { code: "ES", label: "Español" },
 };
 
 export function LanguageSwitcher({
@@ -122,6 +164,8 @@ export function LanguageSwitcher({
               const lang = languages[locale];
               const isActive = locale === currentLocale;
 
+              const Flag = FlagSVG[locale];
+
               return (
                 <button
                   key={locale}
@@ -136,7 +180,7 @@ export function LanguageSwitcher({
                     }
                   `}
                 >
-                  <span className="text-lg">{lang.flag}</span>
+                  <Flag />
                   <div className="flex-1">
                     <span className="text-sm">{lang.label}</span>
                   </div>

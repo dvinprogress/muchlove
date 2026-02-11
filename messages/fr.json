@@ -3,110 +3,304 @@
     "loading": "Chargement..."
   },
   "metadata": {
-    "title": "MuchLove — Beaucoup d'amour. Partagé sans effort.",
-    "description": "Transformez vos clients les plus heureux en témoignages vidéo qui se publient automatiquement sur Trustpilot, Google Reviews et LinkedIn — en moins de 3 minutes."
+    "title": "Collectez des Témoignages Vidéo de Vos Clients | MuchLove",
+    "description": "MuchLove est la plateforme n°1 de témoignages vidéo. Collectez des avis vidéo authentiques, partagez sur les réseaux sociaux et intégrez un widget. Gratuit.",
+    "keywords": "témoignages vidéo, avis clients, preuve sociale, logiciel témoignage, marketing vidéo, avis trustpilot, avis google, témoignages linkedin, retour client, contenu généré utilisateurs, collecte vidéo"
   },
   "landing": {
     "navbar": {
       "logo": "MuchLove",
+      "features": "Fonctionnalités",
+      "howItWorks": "Comment ça marche",
+      "pricing": "Tarifs",
+      "faq": "FAQ",
       "login": "Connexion",
       "getStarted": "Commencer gratuitement"
     },
     "hero": {
-      "titlePart1": "Much love. Partagé",
-      "titlePart2": "sans effort.",
-      "subtitle": "Transformez vos clients les plus heureux en témoignages vidéo qui se publient automatiquement sur Trustpilot, Google Reviews et LinkedIn — en moins de 3 minutes.",
-      "ctaPrimary": "Partagez l'amour (gratuit) 💛",
-      "ctaDemo": "Essayer la démo — sans compte",
-      "ctaSecondary": "Voir comment ça marche"
+      "badge": "Plateforme n°1 de Témoignages Vidéo",
+      "titleLine1": "Transformez Vos Clients Satisfaits",
+      "titleLine2": "en Témoignages Vidéo Puissants",
+      "subtitle": "Collectez des témoignages vidéo authentiques de vos clients les plus heureux en quelques minutes. Partagez-les partout, intégrez-les sur votre site web et regardez vos conversions augmenter.",
+      "ctaPrimary": "Commencer la collecte gratuitement",
+      "ctaDemo": "Regarder une démo",
+      "trusted": "Approuvé par plus de 500 entreprises innovantes"
     },
-    "howItWorks": {
-      "title": "Comment ça marche",
-      "subtitle": "Trois étapes simples pour collecter de vrais témoignages vidéo",
-      "steps": {
-        "invite": {
-          "title": "Invitez vos clients ravis",
-          "description": "Envoyez un lien unique à quelqu'un que vous avez enchanté"
+    "logos": {
+      "title": "APPROUVÉ PAR DES ENTREPRISES INNOVANTES DANS LE MONDE ENTIER"
+    },
+    "problem": {
+      "title": "Pourquoi les Avis Écrits ne Suffisent Plus",
+      "subtitle": "Dans un monde où les consommateurs sont de plus en plus sceptiques, l'authenticité est primordiale. Les avis écrits perdent en crédibilité — et votre entreprise perd des conversions.",
+      "items": {
+        "0": {
+          "title": "Les Avis Écrits Manquent d'Authenticité",
+          "description": "72% des consommateurs soupçonnent que la plupart des avis écrits sont faux ou incitatifs. Les témoignages textuels n'ont plus le poids qu'ils avaient autrefois."
         },
-        "record": {
-          "title": "Ils racontent leur histoire 🎥",
-          "description": "En 1 minute. On les guide à chaque étape."
+        "1": {
+          "title": "Collecter des Témoignages Vidéo Est Trop Difficile",
+          "description": "La production vidéo professionnelle est coûteuse et chronophage. Demander aux clients d'enregistrer, monter et envoyer des vidéos crée trop de friction."
         },
-        "share": {
-          "title": "Partagez partout ✨",
-          "description": "Publiez sur Trustpilot, Google et LinkedIn automatiquement"
+        "2": {
+          "title": "Votre Preuve Sociale Est Éparpillée Partout",
+          "description": "Les bons avis sont enfouis sur Trustpilot, Google, LinkedIn et dans les emails. Il n'y a pas d'endroit centralisé pour les collecter, gérer et présenter."
         }
       }
     },
-    "socialProof": {
-      "title": "Simple, rapide, authentique",
-      "stats": {
-        "time": {
-          "value": "3 minutes",
-          "label": "pour créer votre première campagne"
+    "features": {
+      "title": "Tout Ce Dont Vous Avez Besoin pour Collecter et Partager des Témoignages Vidéo",
+      "subtitle": "De la collecte à l'affichage, MuchLove gère l'ensemble du processus de témoignages vidéo pour que vous puissiez vous concentrer sur vos clients.",
+      "items": {
+        "0": {
+          "title": "Collecte Vidéo en Un Clic",
+          "description": "Envoyez un simple lien à vos clients. Ils enregistrent un témoignage vidéo directement depuis leur navigateur — aucune application à télécharger, aucune connexion requise."
         },
-        "duration": {
-          "value": "30s - 2min",
-          "label": "la durée idéale d'un témoignage"
+        "1": {
+          "title": "Partage Social Intelligent",
+          "description": "La gamification intégrée encourage vos clients à partager leur témoignage sur LinkedIn, Trustpilot et Google Reviews — amplifiant votre portée de manière organique."
         },
-        "authentic": {
-          "value": "100% authentique",
-          "label": "de vrais témoignages vidéo"
+        "2": {
+          "title": "Widget Intégrable",
+          "description": "Affichez un magnifique carrousel de témoignages responsive sur n'importe quel site web. Copiez simplement une ligne de code. Couleurs, disposition et branding personnalisables."
+        },
+        "3": {
+          "title": "Analyses Avancées",
+          "description": "Suivez les vues, partages et impact de conversion de chaque témoignage. Comprenez quelles histoires résonnent le plus avec votre audience."
+        },
+        "4": {
+          "title": "Support Multi-Langues",
+          "description": "Servez vos clients internationaux en anglais, français et espagnol. L'expérience complète — de l'invitation à l'enregistrement — est entièrement localisée."
+        },
+        "5": {
+          "title": "Moteur de Gamification",
+          "description": "Transformez vos clients satisfaits en ambassadeurs de marque. Barres de progression, badges de statut et célébrations les motivent à enregistrer et partager."
         }
+      }
+    },
+    "howItWorks": {
+      "title": "Comment Fonctionne MuchLove",
+      "subtitle": "Commencez en quelques minutes, pas en jours. Quatre étapes simples vers des témoignages vidéo puissants.",
+      "steps": {
+        "0": {
+          "title": "Inviter",
+          "description": "Importez vos contacts ou ajoutez-les manuellement. Envoyez des invitations email personnalisées en un clic."
+        },
+        "1": {
+          "title": "Enregistrer",
+          "description": "Vos clients cliquent sur le lien et enregistrent un témoignage vidéo de 30 secondes à 2 minutes directement dans leur navigateur."
+        },
+        "2": {
+          "title": "Partager",
+          "description": "La gamification encourage vos clients à partager leur témoignage sur LinkedIn, Trustpilot et Google — devenant ainsi des ambassadeurs de marque."
+        },
+        "3": {
+          "title": "Afficher",
+          "description": "Intégrez le widget MuchLove sur votre site web. Un magnifique carrousel présentant des témoignages vidéo authentiques qui boostent les conversions."
+        }
+      }
+    },
+    "stats": {
+      "title": "Les Chiffres Parlent d'Eux-Mêmes",
+      "items": {
+        "0": { "value": "92%", "label": "des consommateurs font plus confiance aux témoignages vidéo qu'aux avis textuels" },
+        "1": { "value": "3x", "label": "plus de conversions avec une preuve sociale vidéo authentique" },
+        "2": { "value": "2 min", "label": "temps moyen pour qu'un client enregistre un témoignage" },
+        "3": { "value": "20", "label": "témoignages vidéo gratuits pour démarrer" }
+      }
+    },
+    "testimonials": {
+      "title": "Ce Que Disent Nos Clients",
+      "subtitle": "Des entreprises de toutes tailles utilisent MuchLove pour collecter et exploiter des témoignages vidéo authentiques.",
+      "items": {
+        "0": {
+          "name": "Sophie Martin",
+          "role": "Responsable Marketing",
+          "company": "TechFlow",
+          "quote": "MuchLove a complètement transformé notre façon de collecter les témoignages clients. Nous sommes passés de 2 avis écrits par mois à 15 témoignages vidéo. L'impact sur notre taux de conversion a été incroyable."
+        },
+        "1": {
+          "name": "James Chen",
+          "role": "CEO",
+          "company": "GrowthMetrics",
+          "quote": "L'aspect gamification est génial. Nos clients apprécient vraiment enregistrer des témoignages et les partager sur LinkedIn. Cela a transformé nos utilisateurs les plus satisfaits en ambassadeurs de marque."
+        },
+        "2": {
+          "name": "Maria Santos",
+          "role": "Directrice E-commerce",
+          "company": "StyleHub",
+          "quote": "Nous avons intégré le widget MuchLove sur nos pages produits et constaté une augmentation de 34% du taux d'ajout au panier. Les avis vidéo authentiques créent une confiance incomparable."
+        }
+      }
+    },
+    "useCases": {
+      "title": "Conçu pour Tous les Secteurs",
+      "subtitle": "Que vous soyez dans le SaaS, l'e-commerce ou les services professionnels, MuchLove s'adapte à votre workflow.",
+      "items": {
+        "0": {
+          "title": "SaaS et Technologie",
+          "description": "Augmentez les taux de conversion gratuit vers payant avec des témoignages authentiques de développeurs et utilisateurs. Présentez de vraies expériences produit qui résonnent avec les acheteurs techniques."
+        },
+        "1": {
+          "title": "E-commerce et Retail",
+          "description": "Transformez vos clients satisfaits en ambassadeurs vidéo. Les avis vidéo de produits génèrent un engagement supérieur et réduisent les taux de retour en créant la confiance."
+        },
+        "2": {
+          "title": "Services Professionnels",
+          "description": "Renforcez votre crédibilité avec des témoignages authentiques de réussite clients. Cabinets d'avocats, consultants et agences utilisent les témoignages vidéo pour gagner de nouveaux clients."
+        },
+        "3": {
+          "title": "Éducation et Formation",
+          "description": "Présentez les histoires de réussite d'étudiants et participants. Les témoignages vidéo de diplômés et stagiaires sont les leviers d'inscription les plus puissants."
+        }
+      }
+    },
+    "showcase": {
+      "title": "Intégrez des Témoignages Vidéo Partout",
+      "subtitle": "Une ligne de code. Des résultats magnifiques. Le widget MuchLove s'intègre parfaitement à n'importe quel site web.",
+      "featureTitle": "Fonctionnalités du Widget",
+      "feature0": "Entièrement responsive — superbe rendu sur mobile, tablette et desktop",
+      "feature1": "Couleurs, disposition et branding personnalisables pour correspondre à votre site",
+      "feature2": "Léger (< 10KB) avec chargement paresseux pour un impact performance zéro",
+      "cta": "Configurez votre widget →",
+      "codeLabel": "Ajoutez à votre site web :"
+    },
+    "comparison": {
+      "title": "Pourquoi les Témoignages Vidéo Surpassent les Avis Écrits",
+      "subtitle": "Découvrez comment MuchLove se compare aux approches traditionnelles pour créer la confiance client et la preuve sociale.",
+      "feature": "Fonctionnalité",
+      "writtenReviews": "Avis Écrits",
+      "noTestimonials": "Sans Témoignages",
+      "muchLove": "MuchLove",
+      "rows": {
+        "0": { "feature": "Authenticité Perçue", "written": "Moyenne", "none": "Faible", "muchLove": "Très Élevée" },
+        "1": { "feature": "Taux d'Engagement", "written": "Faible", "none": "Aucun", "muchLove": "3x Supérieur" },
+        "2": { "feature": "Impact Conversion", "written": "+10-15%", "none": "0%", "muchLove": "+30-50%" },
+        "3": { "feature": "Facilité de Collecte", "written": "Facile", "none": "N/A", "muchLove": "Très Facile" },
+        "4": { "feature": "Partage Social", "written": "Difficile", "none": "Aucun", "muchLove": "Automatisé" },
+        "5": { "feature": "Impact SEO", "written": "Faible", "none": "Aucun", "muchLove": "Élevé (UGC Vidéo)" }
       }
     },
     "pricing": {
-      "title": "Tarifs simples et transparents",
-      "subtitle": "Choisissez le plan qui vous convient",
-      "popular": "Populaire",
+      "title": "Tarifs Simples et Transparents",
+      "subtitle": "Commencez gratuitement, passez au niveau supérieur en grandissant. Pas de frais cachés, pas de surprises.",
+      "monthly": "Mensuel",
+      "yearly": "Annuel",
+      "yearlyDiscount": "Économisez 20%",
       "perMonth": "/mois",
+      "popular": "Populaire",
       "plans": {
         "free": {
           "name": "Gratuit",
-          "description": "Pour démarrer",
-          "cta": "Commencer",
+          "price": "0",
+          "description": "Parfait pour démarrer avec les témoignages vidéo.",
+          "cta": "Commencer gratuitement",
           "features": {
-            "videos": "20 vidéos par mois",
-            "link": "Lien de partage unique",
-            "storage": "Stockage 30 jours",
-            "support": "Support par email"
+            "0": "Jusqu'à 20 témoignages vidéo",
+            "1": "Widget intégrable de base",
+            "2": "Invitations email",
+            "3": "Support 3 langues (EN/FR/ES)",
+            "4": "Intégration partage social",
+            "5": "Analyses de base"
           }
         },
         "pro": {
           "name": "Pro",
-          "description": "Pour les entreprises en croissance",
-          "cta": "Essai gratuit",
+          "priceMonthly": "29",
+          "priceYearly": "23",
+          "description": "Pour les entreprises en croissance qui ont besoin de plus de puissance et de personnalisation.",
+          "cta": "Essai Pro",
           "features": {
-            "videos": "100 vidéos par mois",
-            "linkedin": "Publication auto sur LinkedIn",
-            "storage": "Stockage illimité",
-            "branding": "Personnalisation de marque",
-            "integrations": "Intégrations Google & Trustpilot",
-            "support": "Support prioritaire"
+            "0": "Témoignages vidéo illimités",
+            "1": "Branding widget personnalisé",
+            "2": "Retrait du filigrane MuchLove",
+            "3": "Analyses et rapports avancés",
+            "4": "Support email prioritaire",
+            "5": "Import contacts CSV",
+            "6": "Séquences email et automatisation",
+            "7": "Accès API"
           }
         },
         "enterprise": {
           "name": "Enterprise",
-          "description": "Pour les grandes équipes",
-          "cta": "Nous contacter",
+          "price": "Sur mesure",
+          "description": "Pour les grandes organisations avec des besoins avancés et un support dédié.",
+          "cta": "Contacter les ventes",
           "features": {
-            "videos": "500 vidéos par mois",
-            "linkedin": "Publication auto sur LinkedIn",
-            "storage": "Stockage illimité",
-            "branding": "Personnalisation de marque",
-            "integrations": "Toutes les intégrations incluses",
-            "api": "Accès API",
-            "dedicated": "Gestionnaire de compte dédié",
-            "support": "Support prioritaire 24/7"
+            "0": "Tout dans Pro",
+            "1": "Gestionnaire de compte dédié",
+            "2": "Intégrations personnalisées",
+            "3": "SSO et sécurité avancée",
+            "4": "SLA et support prioritaire",
+            "5": "Contrat et facturation sur mesure"
           }
         }
       }
     },
+    "faq": {
+      "title": "Questions Fréquentes",
+      "subtitle": "Tout ce que vous devez savoir sur MuchLove et les témoignages vidéo.",
+      "items": {
+        "0": {
+          "question": "Comment fonctionne MuchLove ?",
+          "answer": "MuchLove simplifie la collecte de témoignages vidéo. Vous invitez vos clients satisfaits par email, ils cliquent sur un lien et enregistrent une courte vidéo directement dans leur navigateur — aucune application ni compte requis. Le témoignage est ensuite disponible dans votre tableau de bord pour le partager et l'intégrer."
+        },
+        "1": {
+          "question": "Quels formats vidéo sont supportés ?",
+          "answer": "MuchLove supporte tous les principaux formats vidéo dont MP4 et WebM. Les vidéos sont enregistrées directement dans le navigateur en utilisant les technologies web standard, donc elles fonctionnent sur n'importe quel appareil moderne — desktop, tablette ou mobile."
+        },
+        "2": {
+          "question": "MuchLove est-il vraiment gratuit ?",
+          "answer": "Oui ! Notre plan Gratuit inclut jusqu'à 20 témoignages vidéo, un widget intégrable de base, des invitations email et le partage social. Aucune carte bancaire requise. Passez au Pro quand vous avez besoin de témoignages illimités et de fonctionnalités avancées."
+        },
+        "3": {
+          "question": "Comment intégrer le widget sur mon site web ?",
+          "answer": "Copiez simplement une ligne de code JavaScript depuis votre tableau de bord et collez-la dans le HTML de votre site. Le widget charge automatiquement et affiche vos témoignages vidéo dans un magnifique carrousel responsive."
+        },
+        "4": {
+          "question": "Mes données sont-elles sécurisées ? Êtes-vous conforme RGPD ?",
+          "answer": "Absolument. MuchLove est entièrement conforme au RGPD. Toutes les données sont chiffrées, stockées sur des serveurs européens (Supabase), et nous ne partageons jamais vos données avec des tiers. Les utilisateurs peuvent demander la suppression de leurs données à tout moment."
+        },
+        "5": {
+          "question": "En combien de langues MuchLove est-il disponible ?",
+          "answer": "MuchLove supporte actuellement l'anglais, le français et l'espagnol. L'expérience complète — des invitations email à l'interface d'enregistrement au widget intégré — est entièrement traduite dans ces trois langues."
+        },
+        "6": {
+          "question": "Puis-je personnaliser le widget ?",
+          "answer": "Oui ! Les utilisateurs Pro peuvent personnaliser les couleurs du widget, la disposition, le nombre de témoignages affichés, et même retirer le branding MuchLove. Le widget est conçu pour s'intégrer parfaitement au design de votre site web."
+        },
+        "7": {
+          "question": "Comment mes clients enregistrent-ils leur témoignage ?",
+          "answer": "Vos clients reçoivent un email avec un lien unique. Ils cliquent dessus, arrivent sur une page brandée, et enregistrent une vidéo de 30 secondes à 2 minutes directement dans leur navigateur. Aucune application à télécharger, aucun compte à créer — juste un clic et ils enregistrent."
+        }
+      }
+    },
+    "cta": {
+      "title": "Prêt à Transformer Vos Témoignages Clients ?",
+      "subtitle": "Rejoignez des centaines d'entreprises qui boostent leur crédibilité et leurs conversions avec des témoignages vidéo authentiques.",
+      "button": "Commencer Gratuitement",
+      "noCard": "Aucune carte bancaire requise · 20 témoignages vidéo gratuits"
+    },
     "footer": {
-      "logo": "MuchLove",
+      "productTitle": "Produit",
+      "features": "Fonctionnalités",
+      "pricing": "Tarifs",
+      "demo": "Démo",
+      "widget": "Widget",
+      "companyTitle": "Entreprise",
+      "about": "À propos",
+      "blog": "Blog",
+      "blogSoon": "Bientôt disponible",
+      "careers": "Carrières",
+      "resourcesTitle": "Ressources",
+      "documentation": "Documentation",
+      "helpCenter": "Centre d'aide",
+      "api": "API",
+      "legalTitle": "Légal",
+      "terms": "Conditions d'utilisation",
+      "privacy": "Politique de confidentialité",
+      "gdpr": "RGPD",
       "copyright": "© 2026 MuchLove. Tous droits réservés.",
-      "terms": "CGU",
-      "privacy": "Confidentialité"
+      "tagline": "Transformez vos clients satisfaits en témoignages vidéo puissants."
     }
   },
   "auth": {
@@ -156,7 +350,7 @@
     "sidebar": {
       "dashboard": "Tableau de bord",
       "contacts": "Contacts",
-      "testimonials": "Témoignages",
+      "widget": "Widget",
       "settings": "Paramètres",
       "signOut": "Déconnexion",
       "myCompany": "Mon entreprise"
@@ -213,6 +407,7 @@
       "searchPlaceholder": "Rechercher par nom, email ou entreprise...",
       "allStatuses": "Tous les statuts",
       "addContact": "Ajouter un contact",
+      "importCSV": "Importer CSV",
       "noContacts": "Aucun contact pour le moment",
       "noMatch": "Aucun contact ne correspond aux filtres",
       "table": {
@@ -281,6 +476,48 @@
       "deleteSuccess": "{name} a été supprimé 💛",
       "deleteError": "Impossible de supprimer : {error}"
     },
+    "import": {
+      "button": "Importer CSV",
+      "title": "Importer des contacts",
+      "description": "Colonnes requises : first_name, email, company_name",
+      "selectFile": "Choisir un fichier CSV",
+      "dragDrop": "ou glissez-deposez ici",
+      "preview": "Apercu ({count} contacts)",
+      "import": "Importer",
+      "importing": "Import en cours...",
+      "success": "{count} contact(s) importe(s) !",
+      "errors": "{count} erreur(s) detectee(s)",
+      "maxRows": "Maximum 200 contacts par import",
+      "invalidFormat": "Format CSV invalide",
+      "missingColumn": "Colonne manquante : {column}",
+      "emptyFile": "Le fichier est vide",
+      "cancel": "Annuler",
+      "done": "Terminer",
+      "resultTitle": "{count} contact(s) importe(s) !",
+      "rowsSkipped": "{count} ligne(s) ignoree(s)",
+      "row": "Ligne {row}",
+      "andMore": "... et {count} de plus",
+      "headerFirstName": "Prenom",
+      "headerEmail": "Email",
+      "headerCompany": "Entreprise"
+    },
+    "email": {
+      "send": "Envoyer l'invitation",
+      "sending": "Envoi...",
+      "sent": "Invitation envoyee !",
+      "alreadyInvited": "Deja invite",
+      "error": "Erreur d'envoi : {error}"
+    },
+    "bulk": {
+      "selected": "{count} selectionne(s)",
+      "selectAll": "Tout selectionner",
+      "sendEmails": "Envoyer les invitations",
+      "delete": "Supprimer",
+      "sendSuccess": "{sent} invitation(s) envoyee(s)",
+      "sendPartial": "{sent} envoyee(s), {failed} echec(s)",
+      "deleteConfirm": "Supprimer {count} contact(s) ? Irreversible.",
+      "deleteSuccess": "{count} contact(s) supprime(s)"
+    },
     "card": {
       "createdOn": "Créé le {date}",
       "viewDetail": "Voir les détails →"
@@ -327,12 +564,12 @@
       "encouragement": "C'est parti ! Parlez naturellement, vous pouvez recommencer."
     },
     "scripts": {
-      "title1": "Le témoignage simple",
-      "script1": "Je m'appelle ___. Je travaille avec {companyName} depuis ___. Ce que j'apprécie le plus, c'est ___.",
-      "title2": "Avant / Après",
-      "script2": "Avant {companyName}, j'avais un problème : ___. Depuis qu'on travaille ensemble, ___.",
-      "title3": "La recommandation",
-      "script3": "Si je devais recommander {companyName} en un mot, ce serait ___ parce que ___."
+      "title1": "Racontez votre histoire",
+      "script1": "Salut ! Je m'appelle ___ et je travaille avec {companyName} depuis ___. Ce que j'apprecie le plus, c'est ___. Si je devais resumer mon experience en une phrase, je dirais que ___. Merci {companyName} !",
+      "title2": "Le declic",
+      "script2": "Avant de travailler avec {companyName}, j'avais un vrai probleme : ___. J'avais essaye ___ mais rien ne marchait vraiment. Et puis j'ai decouvert {companyName}, et la ___. Aujourd'hui, ce qui a change pour moi c'est ___. Franchement, je recommande !",
+      "title3": "Le conseil a un ami",
+      "script3": "Si un ami me demandait pourquoi bosser avec {companyName}, je lui dirais : ___. Ce qui m'a le plus surpris, c'est ___. Le truc que j'adore par-dessus tout ? ___. Bref, foncez !"
     },
     "preview": {
       "recordingBadge": "REC"
@@ -369,23 +606,6 @@
       "step1": "Vidéo",
       "step2": "Partager",
       "step3": "Ambassadeur"
-    }
-  },
-  "testimonials": {
-    "title": "Témoignages",
-    "description": "Consultez et gérez vos témoignages vidéo",
-    "card": {
-      "altThumbnail": "Témoignage de {name}",
-      "companyFallback": "Entreprise",
-      "contactFallback": "Contact"
-    },
-    "list": {
-      "filterAll": "Tous",
-      "filterPending": "En attente",
-      "filterProcessing": "En traitement",
-      "filterCompleted": "Terminés",
-      "filterFailed": "Échoués",
-      "emptyState": "Aucun témoignage avec ce statut"
     }
   },
   "recording": {
@@ -599,6 +819,81 @@
       "rejected_requester": "Boost réponses",
       "collector_unused": "Rappel utilisation",
       "free_maximizer": "Relance upgrade"
+    }
+  },
+  "onboarding": {
+    "progress": {
+      "step1": "Mon entreprise",
+      "step2": "Liens d'avis",
+      "step3": "Premier contact"
+    },
+    "step1": {
+      "title": "Parlez-nous de votre entreprise",
+      "subtitle": "Nous avons pre-rempli quelques infos. Personnalisez-les !",
+      "nameLabel": "Nom de l'entreprise",
+      "namePlaceholder": "Le nom de votre entreprise",
+      "industryLabel": "Secteur d'activite (optionnel)",
+      "industryPlaceholder": "Selectionnez votre secteur",
+      "industries": {
+        "saas": "SaaS / Logiciel",
+        "ecommerce": "E-commerce",
+        "consulting": "Conseil",
+        "agency": "Agence",
+        "healthcare": "Sante",
+        "education": "Education",
+        "restaurant": "Restauration / Hotellerie",
+        "retail": "Commerce de detail",
+        "other": "Autre"
+      },
+      "logoLabel": "Logo de l'entreprise (optionnel)",
+      "logoUpload": "Glissez-deposez ou cliquez pour importer",
+      "logoChange": "Changer le logo",
+      "logoMaxSize": "JPG, PNG ou WebP. Max 2 Mo.",
+      "continue": "Continuer",
+      "skip": "Passer cette etape"
+    },
+    "step2": {
+      "title": "Ou vos clients laissent-ils des avis ?",
+      "subtitle": "Connectez vos plateformes d'avis. Apres l'enregistrement video, vos clients seront invites a y laisser un avis.",
+      "trustpilotLabel": "URL Trustpilot",
+      "trustpilotPlaceholder": "https://www.trustpilot.com/review/votreentreprise.com",
+      "trustpilotTooltipTitle": "Comment trouver votre URL Trustpilot",
+      "trustpilotTooltipStep1": "Allez sur trustpilot.com",
+      "trustpilotTooltipStep2": "Recherchez votre entreprise",
+      "trustpilotTooltipStep3": "Copiez l'URL depuis la barre d'adresse",
+      "trustpilotTooltipLink": "Rechercher sur Trustpilot",
+      "googleLabel": "Google Place ID",
+      "googlePlaceholder": "ChIJN1t_tDeuEmsRUsoyG83frY4",
+      "googleTooltipTitle": "Comment trouver votre Google Place ID",
+      "googleTooltipStep1": "Ouvrez le Place ID Finder de Google",
+      "googleTooltipStep2": "Recherchez le nom de votre entreprise",
+      "googleTooltipStep3": "Copiez le Place ID affiche sur la carte",
+      "googleTooltipLink": "Ouvrir le Place ID Finder",
+      "whyItMatters": "Apres leur temoignage video, vos clients seront invites a laisser un avis sur ces plateformes — doublant ainsi votre preuve sociale !",
+      "continue": "Continuer",
+      "back": "Retour",
+      "skip": "Je le ferai plus tard"
+    },
+    "step3": {
+      "title": "Invitez votre premier client satisfait",
+      "subtitle": "Envoyez votre premiere invitation en moins de 30 secondes.",
+      "firstNameLabel": "Prenom",
+      "firstNamePlaceholder": "Alex",
+      "emailLabel": "Adresse email",
+      "emailPlaceholder": "alex@clientsatisfait.com",
+      "preview": "Nous enverrons a {firstName} une invitation chaleureuse pour enregistrer un temoignage video. Vous pourrez suivre sa progression depuis votre tableau de bord.",
+      "previewDefault": "votre client",
+      "send": "Envoyer l'invitation",
+      "sending": "Envoi en cours...",
+      "back": "Retour",
+      "skip": "Je le ferai plus tard",
+      "successToast": "Invitation envoyee a {email} !",
+      "errorToast": "Impossible d'envoyer l'invitation. Veuillez reessayer."
+    },
+    "celebration": {
+      "title": "Vous etes pret !",
+      "subtitle": "Votre compte est configure. Commencez a collecter des temoignages video qui repandent l'amour !",
+      "cta": "Aller a mon tableau de bord"
     }
   }
 }

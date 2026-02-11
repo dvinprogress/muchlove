@@ -57,6 +57,7 @@ export function VideoRecorder({
     isModelLoading,
     progress,
     uploadPhase,
+    uploadError,
     startCamera,
     startRecording,
     stopRecording,
@@ -152,7 +153,7 @@ export function VideoRecorder({
             {t('uploadError')}
           </p>
           <p className="text-sm text-gray-600 text-center max-w-md">
-            {t('uploadErrorDescription')}
+            {uploadError || t('uploadErrorDescription')}
           </p>
           <button
             onClick={resetUploadPhase}
@@ -195,7 +196,7 @@ export function VideoRecorder({
               onRetry={retryRecording}
               onValidate={handleValidate}
             />
-            {(phase === 'previewing' || phase === 'recording') && (
+            {(phase === 'previewing' || phase === 'countdown' || phase === 'recording') && (
               <ScriptGuide companyName={companyName} />
             )}
           </div>

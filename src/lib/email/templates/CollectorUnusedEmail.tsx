@@ -86,8 +86,8 @@ export function CollectorUnusedEmail({
       </Text>
 
       <Section style={styles.cta}>
-        <Link href={`${dashboardUrl}/testimonials`} style={styles.button}>
-          View your testimonials →
+        <Link href={`${dashboardUrl}/contacts`} style={styles.button}>
+          View your contacts →
         </Link>
       </Section>
 

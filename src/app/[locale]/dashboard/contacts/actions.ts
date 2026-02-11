@@ -196,3 +196,330 @@ export async function getContactStats(): Promise<ActionResult<Record<ContactStat
     return { success: false, error: error instanceof Error ? error.message : 'Erreur lors du calcul des stats' }
   }
 }
+
+// Import pour les nouvelles actions email
+import { createHmac } from 'crypto'
+import { sendEmail } from '@/lib/email/resend'
+import { InvitationEmail } from '@/lib/email/templates/InvitationEmail'
+import type { Company } from '@/types/database'
+
+// Schema pour import CSV
+const csvRowSchema = z.object({
+  first_name: z.string().min(1, 'Le prénom est requis'),
+  email: z.string().email('Email invalide'),
+  company_name: z.string().min(1, "Le nom de l'entreprise est requis"),
+})
+
+/**
+ * Importe des contacts depuis un fichier CSV
+ * 1. Valide chaque ligne avec Zod (max 200 lignes)
+ * 2. Génère un unique_link pour chaque contact
+ * 3. Insère en batch dans la base
+ * 4. Retourne le nombre de contacts créés et les erreurs éventuelles
+ */
+export async function importContactsCSV(
+  rows: { first_name: string; email: string; company_name: string }[]
+): Promise<ActionResult<{ created: number; errors: { row: number; message: string }[] }>> {
+  // 1. Get user from session
+  const supabase = await createClient()
+  const { data: { user }, error: authError } = await supabase.auth.getUser()
+
+  if (authError || !user) {
+    return { success: false, error: 'Non authentifié' }
+  }
+
+  // 2. Validation max 200 lignes
+  if (rows.length > 200) {
+    return { success: false, error: 'Maximum 200 contacts par import' }
+  }
+
+  // 3. Valider et préparer les données
+  const errors: { row: number; message: string }[] = []
+  const validRows: Array<{
+    company_id: string
+    first_name: string
+    email: string
+    company_name: string
+    unique_link: string
+    status: ContactStatus
+  }> = []
+
+  rows.forEach((row, index) => {
+    const validation = csvRowSchema.safeParse(row)
+    if (!validation.success) {
+      errors.push({
+        row: index + 1,
+        message: validation.error.issues[0]?.message ?? 'Données invalides',
+      })
+    } else {
+      validRows.push({
+        company_id: user.id,
+        first_name: validation.data.first_name,
+        email: validation.data.email,
+        company_name: validation.data.company_name,
+        unique_link: nanoid(12),
+        status: 'created' as ContactStatus,
+      })
+    }
+  })
+
+  // 4. Insert batch si au moins une ligne valide
+  if (validRows.length > 0) {
+    const { error: insertError } = await supabase
+      .from('contacts')
+      .insert(validRows)
+
+    if (insertError) {
+      return { success: false, error: insertError.message }
+    }
+  }
+
+  // 5. revalidatePath
+  revalidatePath('/dashboard')
+  revalidatePath('/dashboard/contacts')
+
+  // 6. Return success
+  return {
+    success: true,
+    data: {
+      created: validRows.length,
+      errors,
+    },
+  }
+}
+
+/**
+ * Envoie un email d'invitation à un contact
+ * 1. Récupère le contact depuis Supabase
+ * 2. Récupère les infos de la company
+ * 3. Génère les URLs (recording + unsubscribe avec HMAC)
+ * 4. Envoie l'email via Resend
+ * 5. Met à jour le status du contact si nécessaire
+ */
+export async function sendInvitationEmail(contactId: string): Promise<ActionResult> {
+  // 1. Get user from session
+  const supabase = await createClient()
+  const { data: { user }, error: authError } = await supabase.auth.getUser()
+
+  if (authError || !user) {
+    return { success: false, error: 'Non authentifié' }
+  }
+
+  // 2. Validate contactId est un UUID
+  const uuidSchema = z.string().uuid()
+  const validation = uuidSchema.safeParse(contactId)
+  if (!validation.success) {
+    return { success: false, error: 'ID de contact invalide' }
+  }
+
+  // 3. Récupérer le contact
+  const { data: contact, error: contactError } = await supabase
+    .from('contacts')
+    .select('*')
+    .eq('id', contactId)
+    .single()
+
+  if (contactError || !contact) {
+    return { success: false, error: 'Contact introuvable' }
+  }
+
+  // 4. Récupérer la company
+  const { data: company, error: companyError } = await supabase
+    .from('companies')
+    .select('*')
+    .eq('id', user.id)
+    .single<Company>()
+
+  if (companyError || !company) {
+    return { success: false, error: 'Informations entreprise introuvables' }
+  }
+
+  // 5. Construire recordingUrl
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL
+  if (!appUrl) {
+    return { success: false, error: 'Configuration manquante' }
+  }
+  const recordingUrl = `${appUrl}/t/${contact.unique_link}`
+
+  // 6. Construire unsubscribeUrl avec HMAC
+  const secret = process.env.UNSUBSCRIBE_TOKEN_SECRET || 'fallback'
+  const hash = createHmac('sha256', secret)
+    .update(contact.email)
+    .digest('hex')
+
+  const tokenData = JSON.stringify({ email: contact.email, hash })
+  const token = Buffer.from(tokenData).toString('base64url')
+  const unsubscribeUrl = `${appUrl}/unsubscribe?token=${token}`
+
+  // 7. Envoyer l'email
+  try {
+    await sendEmail({
+      to: contact.email,
+      subject: `${company.name} wants to hear from you 💛`,
+      react: InvitationEmail({
+        contactName: contact.first_name,
+        companyName: company.name,
+        recordingUrl,
+        unsubscribeUrl,
+      }),
+      tags: [
+        { name: 'type', value: 'invitation' },
+        { name: 'company_id', value: user.id },
+      ],
+    })
+  } catch (error) {
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : "Erreur lors de l'envoi de l'email",
+    }
+  }
+
+  // 8. Mettre à jour le status si contact était 'created'
+  if (contact.status === 'created') {
+    const { error: updateError } = await supabase
+      .from('contacts')
+      .update({ status: 'invited' as ContactStatus })
+      .eq('id', contactId)
+
+    if (updateError) {
+      return { success: false, error: updateError.message }
+    }
+  }
+
+  // 9. revalidatePath
+  revalidatePath('/dashboard')
+  revalidatePath('/dashboard/contacts')
+
+  // 10. Return success
+  return { success: true, data: undefined }
+}
+
+/**
+ * Envoie des emails d'invitation en masse
+ * 1. Valide les IDs (max 50 contacts)
+ * 2. Récupère tous les contacts et la company
+ * 3. Envoie les emails avec try/catch individuel
+ * 4. Met à jour les statuts en batch
+ * 5. Retourne le nombre d'envois réussis et échoués
+ */
+export async function sendBulkInvitationEmails(
+  contactIds: string[]
+): Promise<ActionResult<{ sent: number; failed: number; errors: string[] }>> {
+  // 1. Get user from session
+  const supabase = await createClient()
+  const { data: { user }, error: authError } = await supabase.auth.getUser()
+
+  if (authError || !user) {
+    return { success: false, error: 'Non authentifié' }
+  }
+
+  // 2. Validation max 50 contacts
+  if (contactIds.length > 50) {
+    return { success: false, error: 'Maximum 50 contacts par envoi' }
+  }
+
+  // 3. Valider chaque ID est un UUID
+  const uuidSchema = z.string().uuid()
+  for (const id of contactIds) {
+    const validation = uuidSchema.safeParse(id)
+    if (!validation.success) {
+      return { success: false, error: `ID invalide: ${id}` }
+    }
+  }
+
+  // 4. Récupérer tous les contacts
+  const { data: contacts, error: contactsError } = await supabase
+    .from('contacts')
+    .select('*')
+    .in('id', contactIds)
+
+  if (contactsError || !contacts) {
+    return { success: false, error: 'Erreur lors de la récupération des contacts' }
+  }
+
+  // 5. Récupérer la company
+  const { data: company, error: companyError } = await supabase
+    .from('companies')
+    .select('*')
+    .eq('id', user.id)
+    .single<Company>()
+
+  if (companyError || !company) {
+    return { success: false, error: 'Informations entreprise introuvables' }
+  }
+
+  // 6. Vérifier NEXT_PUBLIC_APP_URL
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL
+  if (!appUrl) {
+    return { success: false, error: 'Configuration manquante' }
+  }
+
+  const secret = process.env.UNSUBSCRIBE_TOKEN_SECRET || 'fallback'
+
+  // 7. Envoyer les emails avec try/catch individuel
+  let sent = 0
+  let failed = 0
+  const errors: string[] = []
+  const successfulContactIds: string[] = []
+
+  for (const contact of contacts) {
+    try {
+      // Construire URLs
+      const recordingUrl = `${appUrl}/t/${contact.unique_link}`
+      const hash = createHmac('sha256', secret)
+        .update(contact.email)
+        .digest('hex')
+      const tokenData = JSON.stringify({ email: contact.email, hash })
+      const token = Buffer.from(tokenData).toString('base64url')
+      const unsubscribeUrl = `${appUrl}/unsubscribe?token=${token}`
+
+      // Envoyer email
+      await sendEmail({
+        to: contact.email,
+        subject: `${company.name} wants to hear from you 💛`,
+        react: InvitationEmail({
+          contactName: contact.first_name,
+          companyName: company.name,
+          recordingUrl,
+          unsubscribeUrl,
+        }),
+        tags: [
+          { name: 'type', value: 'invitation' },
+          { name: 'company_id', value: user.id },
+        ],
+      })
+
+      sent++
+      if (contact.status === 'created') {
+        successfulContactIds.push(contact.id)
+      }
+    } catch (error) {
+      failed++
+      const message = error instanceof Error ? error.message : 'Erreur inconnue'
+      errors.push(`${contact.email}: ${message}`)
+    }
+  }
+
+  // 8. Mettre à jour les statuts en batch pour les contacts 'created'
+  if (successfulContactIds.length > 0) {
+    await supabase
+      .from('contacts')
+      .update({ status: 'invited' as ContactStatus })
+      .in('id', successfulContactIds)
+      .eq('status', 'created')
+  }
+
+  // 9. revalidatePath
+  revalidatePath('/dashboard')
+  revalidatePath('/dashboard/contacts')
+
+  // 10. Return success
+  return {
+    success: true,
+    data: {
+      sent,
+      failed,
+      errors,
+    },
+  }
+}

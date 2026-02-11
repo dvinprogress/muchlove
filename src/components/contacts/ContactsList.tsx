@@ -1,9 +1,9 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
-import { motion } from 'framer-motion'
-import { Plus, ChevronLeft, ChevronRight } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Plus, ChevronLeft, ChevronRight, Upload } from 'lucide-react'
 import type { Contact, ContactStatus } from '@/types/database'
 import { SearchInput } from '@/components/ui/SearchInput'
 import { Button } from '@/components/ui/Button'
@@ -11,6 +11,9 @@ import { ContactStatusBadge } from './ContactStatusBadge'
 import { AddContactForm } from './AddContactForm'
 import { CopyLinkButton } from './CopyLinkButton'
 import { DeleteContactButton } from './DeleteContactButton'
+import { SendEmailButton } from './SendEmailButton'
+import { CSVImportModal } from './CSVImportModal'
+import { BulkActionsBar } from './BulkActionsBar'
 import { formatDate } from '@/lib/utils/format'
 import { CONTACT_STATUS_ORDER } from '@/lib/utils/contact-status'
 import { useTranslations } from 'next-intl'
@@ -39,9 +42,13 @@ const itemVariants = {
 export function ContactsList({ contacts, currentPage, totalContacts, pageSize }: ContactsListProps) {
   const router = useRouter()
   const t = useTranslations('contacts.list')
+  const tStatus = useTranslations('contacts.status')
+  const tBulk = useTranslations('contacts.bulk')
   const [showAddModal, setShowAddModal] = useState(false)
+  const [showImportModal, setShowImportModal] = useState(false)
   const [search, setSearch] = useState('')
   const [statusFilter, setStatusFilter] = useState<ContactStatus | 'all'>('all')
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
 
   // Calcul pagination
   const totalPages = Math.ceil(totalContacts / pageSize)
@@ -51,19 +58,44 @@ export function ContactsList({ contacts, currentPage, totalContacts, pageSize }:
   // Filtre les contacts selon la recherche et le statut (cote client pour la page courante)
   const filteredContacts = useMemo(() => {
     return contacts.filter((contact) => {
-      // Filtre recherche
       const searchLower = search.toLowerCase()
       const matchesSearch =
         contact.first_name.toLowerCase().includes(searchLower) ||
         contact.email.toLowerCase().includes(searchLower) ||
         contact.company_name.toLowerCase().includes(searchLower)
 
-      // Filtre statut
       const matchesStatus = statusFilter === 'all' || contact.status === statusFilter
 
       return matchesSearch && matchesStatus
     })
   }, [contacts, search, statusFilter])
+
+  // Selection
+  const allFilteredSelected = filteredContacts.length > 0 && filteredContacts.every(c => selectedIds.has(c.id))
+
+  const toggleSelect = useCallback((id: string) => {
+    setSelectedIds(prev => {
+      const next = new Set(prev)
+      if (next.has(id)) {
+        next.delete(id)
+      } else {
+        next.add(id)
+      }
+      return next
+    })
+  }, [])
+
+  const toggleSelectAll = useCallback(() => {
+    if (allFilteredSelected) {
+      setSelectedIds(new Set())
+    } else {
+      setSelectedIds(new Set(filteredContacts.map(c => c.id)))
+    }
+  }, [allFilteredSelected, filteredContacts])
+
+  const clearSelection = useCallback(() => {
+    setSelectedIds(new Set())
+  }, [])
 
   // Navigation pagination
   const handlePageChange = (newPage: number) => {
@@ -91,7 +123,7 @@ export function ContactsList({ contacts, currentPage, totalContacts, pageSize }:
         </div>
 
         {/* Filtre statut */}
-        <div className="w-full md:w-64">
+        <div className="w-full md:w-48">
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value as ContactStatus | 'all')}
@@ -106,11 +138,16 @@ export function ContactsList({ contacts, currentPage, totalContacts, pageSize }:
             <option value="all">{t('allStatuses')}</option>
             {CONTACT_STATUS_ORDER.map((status) => (
               <option key={status} value={status}>
-                {status.replace('_', ' ')}
+                {tStatus(status)}
               </option>
             ))}
           </select>
         </div>
+
+        {/* Bouton import CSV */}
+        <Button variant="secondary" icon={<Upload className="w-4 h-4" />} onClick={() => setShowImportModal(true)}>
+          {t('importCSV')}
+        </Button>
 
         {/* Bouton ajouter */}
         <Button variant="primary" icon={<Plus className="w-4 h-4" />} onClick={() => setShowAddModal(true)}>
@@ -136,6 +173,15 @@ export function ContactsList({ contacts, currentPage, totalContacts, pageSize }:
           >
             <thead>
               <tr className="border-b border-slate-200">
+                <th className="py-3 px-2 w-10">
+                  <input
+                    type="checkbox"
+                    checked={allFilteredSelected}
+                    onChange={toggleSelectAll}
+                    className="w-4 h-4 rounded border-slate-300 text-rose-500 focus:ring-rose-500"
+                    title={tBulk('selectAll')}
+                  />
+                </th>
                 <th className="text-left py-3 px-4 text-sm font-medium text-slate-700">{t('table.contact')}</th>
                 <th className="text-left py-3 px-4 text-sm font-medium text-slate-700">{t('table.email')}</th>
                 <th className="text-left py-3 px-4 text-sm font-medium text-slate-700">{t('table.company')}</th>
@@ -149,8 +195,18 @@ export function ContactsList({ contacts, currentPage, totalContacts, pageSize }:
                 <motion.tr
                   key={contact.id}
                   variants={itemVariants}
-                  className="border-b border-slate-100 hover:bg-slate-50 transition-colors"
+                  className={`border-b border-slate-100 transition-colors ${
+                    selectedIds.has(contact.id) ? 'bg-rose-50' : 'hover:bg-slate-50'
+                  }`}
                 >
+                  <td className="py-3 px-2">
+                    <input
+                      type="checkbox"
+                      checked={selectedIds.has(contact.id)}
+                      onChange={() => toggleSelect(contact.id)}
+                      className="w-4 h-4 rounded border-slate-300 text-rose-500 focus:ring-rose-500"
+                    />
+                  </td>
                   <td className="py-3 px-4">
                     <div className="flex items-center gap-3">
                       <div className="w-8 h-8 rounded-full bg-rose-50 text-rose-600 flex items-center justify-center font-medium text-sm">
@@ -166,7 +222,8 @@ export function ContactsList({ contacts, currentPage, totalContacts, pageSize }:
                   </td>
                   <td className="py-3 px-4 text-slate-500 text-sm">{formatDate(contact.created_at)}</td>
                   <td className="py-3 px-4">
-                    <div className="flex items-center justify-end gap-2">
+                    <div className="flex items-center justify-end gap-1">
+                      <SendEmailButton contactId={contact.id} contactStatus={contact.status} variant="icon" />
                       <CopyLinkButton uniqueLink={contact.unique_link} variant="icon" />
                       <DeleteContactButton
                         contactId={contact.id}
@@ -193,11 +250,19 @@ export function ContactsList({ contacts, currentPage, totalContacts, pageSize }:
           <motion.div
             key={contact.id}
             variants={itemVariants}
-            className="bg-white border border-slate-200 rounded-lg p-4 space-y-3"
+            className={`border rounded-lg p-4 space-y-3 ${
+              selectedIds.has(contact.id) ? 'bg-rose-50 border-rose-200' : 'bg-white border-slate-200'
+            }`}
           >
-            {/* Header */}
+            {/* Header avec checkbox */}
             <div className="flex items-start justify-between">
               <div className="flex items-center gap-3">
+                <input
+                  type="checkbox"
+                  checked={selectedIds.has(contact.id)}
+                  onChange={() => toggleSelect(contact.id)}
+                  className="w-4 h-4 rounded border-slate-300 text-rose-500 focus:ring-rose-500 mt-1"
+                />
                 <div className="w-10 h-10 rounded-full bg-rose-50 text-rose-600 flex items-center justify-center font-medium">
                   {getInitial(contact.first_name)}
                 </div>
@@ -220,6 +285,7 @@ export function ContactsList({ contacts, currentPage, totalContacts, pageSize }:
 
             {/* Actions */}
             <div className="flex gap-2 pt-2 border-t border-slate-100">
+              <SendEmailButton contactId={contact.id} contactStatus={contact.status} variant="button" className="flex-1" />
               <CopyLinkButton uniqueLink={contact.unique_link} variant="button" className="flex-1" />
               <DeleteContactButton contactId={contact.id} contactName={contact.first_name} variant="button" />
             </div>
@@ -257,8 +323,16 @@ export function ContactsList({ contacts, currentPage, totalContacts, pageSize }:
         </div>
       )}
 
-      {/* Modal d'ajout */}
+      {/* Modals */}
       <AddContactForm isOpen={showAddModal} onClose={() => setShowAddModal(false)} />
+      <CSVImportModal isOpen={showImportModal} onClose={() => setShowImportModal(false)} />
+
+      {/* Bulk Actions Bar */}
+      <AnimatePresence>
+        {selectedIds.size > 0 && (
+          <BulkActionsBar selectedIds={selectedIds} onClear={clearSelection} />
+        )}
+      </AnimatePresence>
     </div>
   )
 }

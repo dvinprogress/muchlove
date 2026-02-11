@@ -3,92 +3,131 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
-import { Play, Heart, Star } from "lucide-react";
+import { Heart, Star } from "lucide-react";
 
-export function HeroSection() {
+export default function HeroSection() {
   const t = useTranslations("landing.hero");
 
+  const containerVariants = {
+    initial: { opacity: 0 },
+    animate: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    initial: { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0 },
+  };
+
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-rose-50/50 via-white to-white">
-      <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-32 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+    <section className="relative overflow-hidden bg-gradient-to-b from-rose-50/50 via-white to-white py-20 md:py-28">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <motion.div
+          variants={containerVariants}
+          initial="initial"
+          animate="animate"
+          className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center"
+        >
           {/* Left: Text content */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center lg:text-left"
-          >
-            <h1 className="text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
-              {t("titlePart1")}{" "}
-              <span className="text-rose-500">{t("titlePart2")}</span>
-            </h1>
-            <p className="mx-auto lg:mx-0 mt-6 max-w-2xl text-xl text-slate-600">
+          <div className="text-center lg:text-left">
+            {/* Badge */}
+            <motion.div variants={itemVariants} className="inline-flex">
+              <div className="rounded-full bg-rose-100 px-4 py-1.5 text-xs font-medium text-rose-800">
+                {t("badge")}
+              </div>
+            </motion.div>
+
+            {/* H1 - THE ONLY H1 */}
+            <motion.h1
+              variants={itemVariants}
+              className="mt-6 text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight"
+            >
+              <span className="block text-slate-900">{t("titleLine1")}</span>
+              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-rose-500 to-rose-600">
+                {t("titleLine2")}
+              </span>
+            </motion.h1>
+
+            {/* Subtitle */}
+            <motion.p
+              variants={itemVariants}
+              className="mt-6 text-xl text-slate-600 max-w-2xl mx-auto lg:mx-0"
+            >
               {t("subtitle")}
-            </p>
-            <div className="mt-10 flex flex-col items-center lg:items-start justify-center lg:justify-start gap-4">
+            </motion.p>
+
+            {/* CTAs */}
+            <motion.div
+              variants={itemVariants}
+              className="mt-10 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4"
+            >
               <Link
                 href="/login"
-                className="inline-flex items-center justify-center rounded-lg bg-rose-500 px-6 py-3 text-base sm:px-8 sm:py-4 sm:text-lg font-semibold text-white shadow-lg transition-all hover:bg-rose-600 hover:scale-105"
+                className="w-full sm:w-auto inline-flex items-center justify-center rounded-xl bg-rose-500 px-8 py-4 text-base font-semibold text-white shadow-lg transition-all hover:bg-rose-600 hover:scale-105"
               >
                 {t("ctaPrimary")}
               </Link>
               <Link
                 href="/demo"
-                className="inline-flex items-center justify-center rounded-lg bg-amber-500 px-6 py-3 text-base sm:px-8 sm:py-4 sm:text-lg font-semibold text-white shadow-lg transition-all hover:bg-amber-600 hover:scale-105"
+                className="w-full sm:w-auto inline-flex items-center justify-center rounded-xl border-2 border-slate-300 px-8 py-4 text-base font-semibold text-slate-700 transition-colors hover:border-rose-500 hover:text-rose-500"
               >
                 {t("ctaDemo")}
               </Link>
-              <button
-                onClick={() => {
-                  document
-                    .getElementById("how-it-works")
-                    ?.scrollIntoView({ behavior: "smooth" });
-                }}
-                className="inline-flex items-center justify-center rounded-lg border-2 border-slate-300 px-6 py-3 text-base sm:px-8 sm:py-4 sm:text-lg font-semibold text-slate-700 transition-colors hover:border-slate-400 hover:bg-slate-50"
-              >
-                {t("ctaSecondary")}
-              </button>
-            </div>
-          </motion.div>
+            </motion.div>
 
-          {/* Right: Illustration mockup */}
+            {/* Trust line */}
+            <motion.div
+              variants={itemVariants}
+              className="mt-8 flex items-center justify-center lg:justify-start gap-3"
+            >
+              <div className="flex -space-x-2">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-rose-300 to-rose-400 border-2 border-white" />
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-300 to-amber-400 border-2 border-white" />
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-300 to-purple-400 border-2 border-white" />
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-300 to-blue-400 border-2 border-white" />
+              </div>
+              <p className="text-sm text-slate-600">{t("trusted")}</p>
+            </motion.div>
+          </div>
+
+          {/* Right: Mockup */}
           <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
+            variants={itemVariants}
             className="relative"
           >
-            {/* Video testimonial card mockup */}
-            <div className="relative rounded-2xl bg-white shadow-2xl p-4 border border-slate-100">
-              {/* Video area with gradient background */}
-              <div className="relative aspect-video rounded-xl bg-gradient-to-br from-rose-400 to-purple-500 flex items-center justify-center overflow-hidden">
-                {/* Play button overlay */}
-                <motion.div
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="w-16 h-16 rounded-full bg-white/90 flex items-center justify-center cursor-pointer shadow-lg backdrop-blur-sm"
-                >
-                  <Play className="w-8 h-8 text-rose-500 ml-1 fill-rose-500" />
-                </motion.div>
+            {/* Video interface mockup */}
+            <div className="relative rounded-2xl bg-white shadow-2xl border border-slate-100 p-6 rotate-2 hover:rotate-0 transition-transform duration-300">
+              {/* Top bar - fake controls */}
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-3 h-3 rounded-full bg-red-400" />
+                <div className="w-3 h-3 rounded-full bg-amber-400" />
+                <div className="w-3 h-3 rounded-full bg-green-400" />
               </div>
 
-              {/* Quote area */}
-              <div className="mt-4 px-2">
-                <p className="text-slate-600 italic text-sm">
-                  &quot;Amazing product! Helped us increase conversions by 40%&quot;
-                </p>
-                <div className="mt-2 flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-rose-300 to-purple-300" />
-                  <div>
-                    <p className="text-xs font-semibold text-slate-800">Sarah Chen</p>
-                    <p className="text-xs text-slate-500">CEO, TechStart</p>
-                  </div>
+              {/* Video area */}
+              <div className="relative aspect-video rounded-lg bg-slate-100 flex items-center justify-center overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-rose-200 via-amber-200 to-purple-200 opacity-50" />
+                <div className="relative w-16 h-16 rounded-full bg-rose-500 flex items-center justify-center">
+                  <div className="w-4 h-4 rounded-full bg-white" />
                 </div>
+              </div>
+
+              {/* Progress bar */}
+              <div className="mt-4 h-2 bg-slate-100 rounded-full overflow-hidden">
+                <div className="h-full bg-gradient-to-r from-rose-500 to-amber-500 w-3/4 rounded-full" />
+              </div>
+
+              {/* Record button */}
+              <div className="mt-4 flex justify-center">
+                <div className="w-12 h-12 rounded-full bg-red-500 shadow-lg" />
               </div>
             </div>
 
-            {/* Floating decorative elements */}
+            {/* Floating decorations */}
             <motion.div
               className="absolute -top-4 -right-4 text-rose-400"
               animate={{ y: [-5, 5, -5] }}
@@ -111,7 +150,7 @@ export function HeroSection() {
               <Star className="w-5 h-5 fill-purple-200" />
             </motion.div>
           </motion.div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

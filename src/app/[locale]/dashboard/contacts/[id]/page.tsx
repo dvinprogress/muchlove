@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { ArrowLeft, Video } from 'lucide-react'
 import { Card, CardContent, Badge, Button, EmptyState } from '@/components/ui'
+
 import { createClient } from '@/lib/supabase/server'
 import { CopyLinkButton } from '@/components/contacts/CopyLinkButton'
 import { DeleteContactButton } from '@/components/contacts/DeleteContactButton'
@@ -203,9 +204,6 @@ export default async function ContactDetailPage({
                           : 'En attente'}
                       </Badge>
                     </div>
-                    <Link href={`/dashboard/testimonials/${testimonial.id}`}>
-                      <Button variant="secondary">Voir détail →</Button>
-                    </Link>
                   </CardContent>
                 </Card>
               ))}

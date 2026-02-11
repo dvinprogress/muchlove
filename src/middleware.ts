@@ -55,6 +55,21 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL(`${prefix}/dashboard`, request.url));
   }
 
+  // Onboarding redirect: si user authentifie sur /dashboard (sauf /dashboard/onboarding),
+  // verifier si onboarding est complete
+  const isOnboardingRoute = /^(\/[a-z]{2})?\/dashboard\/onboarding/.test(pathname);
+  if (user && isProtectedRoute && !isOnboardingRoute) {
+    const { data: company } = await supabase
+      .from('companies')
+      .select('onboarding_completed_at')
+      .eq('id', user.id)
+      .single()
+
+    if (company && !company.onboarding_completed_at) {
+      return NextResponse.redirect(new URL(`${prefix}/dashboard/onboarding`, request.url));
+    }
+  }
+
   return response;
 }
 

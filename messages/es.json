@@ -3,110 +3,304 @@
     "loading": "Cargando..."
   },
   "metadata": {
-    "title": "MuchLove — Mucho amor. Compartido sin esfuerzo.",
-    "description": "Convierte a tus clientes más felices en testimonios en video que se publican automáticamente en Trustpilot, Google Reviews y LinkedIn — en menos de 3 minutos."
+    "title": "Recopile Testimonios de Video de Sus Clientes | MuchLove",
+    "description": "MuchLove es la plataforma #1 de testimonios de video. Recopile reseñas auténticas, comparta en redes sociales e integre un widget. Gratis.",
+    "keywords": "testimonios de video, reseñas de clientes, prueba social, software testimonios, marketing de video, reseñas trustpilot, reseñas google, testimonios linkedin, opiniones clientes, contenido generado usuarios, colección de video"
   },
   "landing": {
     "navbar": {
       "logo": "MuchLove",
+      "features": "Características",
+      "howItWorks": "Cómo funciona",
+      "pricing": "Precios",
+      "faq": "FAQ",
       "login": "Iniciar sesión",
-      "getStarted": "Empieza gratis"
+      "getStarted": "Comenzar gratis"
     },
     "hero": {
-      "titlePart1": "Much love. Compartido",
-      "titlePart2": "sin esfuerzo.",
-      "subtitle": "Convierte a tus clientes más felices en testimonios en video que se publican automáticamente en Trustpilot, Google Reviews y LinkedIn — en menos de 3 minutos.",
-      "ctaPrimary": "Empieza a compartir amor (gratis) 💛",
-      "ctaDemo": "Prueba la demo — sin cuenta",
-      "ctaSecondary": "Ver cómo funciona"
+      "badge": "Plataforma n°1 de Testimonios de Video",
+      "titleLine1": "Transforme Sus Clientes Satisfechos",
+      "titleLine2": "en Testimonios de Video Poderosos",
+      "subtitle": "Recopile testimonios de video auténticos de sus clientes más felices en minutos. Compártalos en todas partes, intégrelos en su sitio web y observe cómo crecen sus conversiones.",
+      "ctaPrimary": "Comenzar a recopilar gratis",
+      "ctaDemo": "Ver una demo",
+      "trusted": "Confiado por más de 500 empresas innovadoras"
     },
-    "howItWorks": {
-      "title": "Cómo funciona",
-      "subtitle": "Tres pasos simples para recopilar testimonios en video auténticos",
-      "steps": {
-        "invite": {
-          "title": "Invita a tus clientes felices",
-          "description": "Envía un enlace único a alguien que has encantado"
+    "logos": {
+      "title": "CONFIADO POR EMPRESAS INNOVADORAS EN TODO EL MUNDO"
+    },
+    "problem": {
+      "title": "Por Qué las Reseñas Escritas Ya No Son Suficientes",
+      "subtitle": "En un mundo donde los consumidores son cada vez más escépticos, la autenticidad lo es todo. Las reseñas escritas están perdiendo credibilidad — y su negocio está perdiendo conversiones.",
+      "items": {
+        "0": {
+          "title": "Las Reseñas Escritas Carecen de Autenticidad",
+          "description": "El 72% de los consumidores sospecha que la mayoría de las reseñas escritas son falsas o incentivadas. Los testimonios basados en texto ya no tienen el peso que tenían antes."
         },
-        "record": {
-          "title": "Ellos graban su historia 🎥",
-          "description": "En 1 minuto. Nosotros los guiamos."
+        "1": {
+          "title": "Recopilar Testimonios de Video Es Demasiado Difícil",
+          "description": "La producción de video profesional es costosa y consume mucho tiempo. Pedirle a los clientes que graben, editen y envíen videos crea demasiada fricción."
         },
-        "share": {
-          "title": "Comparte en todos lados ✨",
-          "description": "Publica en Trustpilot, Google y LinkedIn automáticamente"
+        "2": {
+          "title": "Su Prueba Social Está Dispersa por Todas Partes",
+          "description": "Las excelentes reseñas están enterradas en Trustpilot, Google, LinkedIn y correos electrónicos. No hay un lugar centralizado para recopilarlas, gestionarlas y mostrarlas."
         }
       }
     },
-    "socialProof": {
-      "title": "Simple, rápido, genuino",
-      "stats": {
-        "time": {
-          "value": "3 minutos",
-          "label": "para crear tu primera campaña"
+    "features": {
+      "title": "Todo Lo Que Necesita para Recopilar y Compartir Testimonios de Video",
+      "subtitle": "Desde la recopilación hasta la visualización, MuchLove maneja todo el flujo de trabajo de testimonios de video para que usted pueda enfocarse en deleitar a sus clientes.",
+      "items": {
+        "0": {
+          "title": "Recopilación de Video con Un Clic",
+          "description": "Envíe un enlace simple a sus clientes. Ellos graban un testimonio de video directamente desde su navegador — sin descargar aplicaciones, sin inicio de sesión requerido."
         },
-        "duration": {
-          "value": "30s - 2min",
-          "label": "la duración ideal de un testimonio"
+        "1": {
+          "title": "Compartir Social Inteligente",
+          "description": "La gamificación integrada anima a los clientes a compartir su testimonio en LinkedIn, Trustpilot y Google Reviews — amplificando su alcance orgánicamente."
         },
-        "authentic": {
-          "value": "100% genuino",
-          "label": "testimonios en video reales"
+        "2": {
+          "title": "Widget Integrable",
+          "description": "Muestre un hermoso carrusel de testimonios responsive en cualquier sitio web. Solo copie una línea de código. Colores, diseño y marca personalizables."
+        },
+        "3": {
+          "title": "Análisis Avanzados",
+          "description": "Rastree vistas, compartidos e impacto de conversión de cada testimonio. Comprenda qué historias resuenan más con su audiencia."
+        },
+        "4": {
+          "title": "Soporte Multi-Idioma",
+          "description": "Sirva a sus clientes internacionales en inglés, francés y español. La experiencia completa — desde la invitación hasta la grabación — está completamente localizada."
+        },
+        "5": {
+          "title": "Motor de Gamificación",
+          "description": "Convierta a los clientes satisfechos en embajadores de marca. Barras de progreso, insignias de estado y celebraciones los motivan a grabar y compartir."
         }
+      }
+    },
+    "howItWorks": {
+      "title": "Cómo Funciona MuchLove",
+      "subtitle": "Comience en minutos, no en días. Cuatro pasos simples hacia testimonios de video poderosos.",
+      "steps": {
+        "0": {
+          "title": "Invitar",
+          "description": "Importe sus contactos o agréguelos manualmente. Envíe invitaciones por correo personalizadas con un clic."
+        },
+        "1": {
+          "title": "Grabar",
+          "description": "Sus clientes hacen clic en el enlace y graban un testimonio de video de 30 segundos a 2 minutos directamente en su navegador."
+        },
+        "2": {
+          "title": "Compartir",
+          "description": "La gamificación anima a los clientes a compartir su testimonio en LinkedIn, Trustpilot y Google — convirtiéndose en embajadores de marca."
+        },
+        "3": {
+          "title": "Mostrar",
+          "description": "Integre el widget MuchLove en su sitio web. Un hermoso carrusel que muestra testimonios de video auténticos que aumentan las conversiones."
+        }
+      }
+    },
+    "stats": {
+      "title": "Los Números Hablan por Sí Mismos",
+      "items": {
+        "0": { "value": "92%", "label": "de los consumidores confía más en los testimonios de video que en las reseñas de texto" },
+        "1": { "value": "3x", "label": "más conversiones con prueba social de video auténtica" },
+        "2": { "value": "2 min", "label": "tiempo promedio para que un cliente grabe un testimonio" },
+        "3": { "value": "20", "label": "testimonios de video gratuitos para comenzar" }
+      }
+    },
+    "testimonials": {
+      "title": "Lo Que Dicen Nuestros Clientes",
+      "subtitle": "Empresas de todos los tamaños usan MuchLove para recopilar y aprovechar testimonios de video auténticos.",
+      "items": {
+        "0": {
+          "name": "Sophie Martin",
+          "role": "Jefa de Marketing",
+          "company": "TechFlow",
+          "quote": "MuchLove transformó completamente cómo recopilamos testimonios de clientes. Pasamos de 2 reseñas escritas por mes a 15 testimonios de video. El impacto en nuestra tasa de conversión ha sido increíble."
+        },
+        "1": {
+          "name": "James Chen",
+          "role": "CEO",
+          "company": "GrowthMetrics",
+          "quote": "El aspecto de gamificación es genial. Nuestros clientes realmente disfrutan grabar testimonios y compartirlos en LinkedIn. Ha convertido a nuestros usuarios más felices en embajadores de marca."
+        },
+        "2": {
+          "name": "Maria Santos",
+          "role": "Directora de E-commerce",
+          "company": "StyleHub",
+          "quote": "Integramos el widget MuchLove en nuestras páginas de productos y vimos un aumento del 34% en la tasa de agregar al carrito. Las reseñas de video auténticas generan confianza como nada más."
+        }
+      }
+    },
+    "useCases": {
+      "title": "Diseñado para Cada Industria",
+      "subtitle": "Ya sea que esté en SaaS, e-commerce o servicios profesionales, MuchLove se adapta a su flujo de trabajo.",
+      "items": {
+        "0": {
+          "title": "SaaS y Tecnología",
+          "description": "Aumente las tasas de conversión de gratuito a pago con testimonios auténticos de desarrolladores y usuarios. Muestre experiencias reales de producto que resuenen con compradores técnicos."
+        },
+        "1": {
+          "title": "E-commerce y Retail",
+          "description": "Convierta a compradores satisfechos en defensores de video. Los videos de reseñas de productos generan mayor compromiso y reducen las tasas de devolución al generar confianza."
+        },
+        "2": {
+          "title": "Servicios Profesionales",
+          "description": "Construya credibilidad con historias auténticas de éxito de clientes. Bufetes de abogados, consultorías y agencias usan testimonios de video para ganar nuevos negocios."
+        },
+        "3": {
+          "title": "Educación y Capacitación",
+          "description": "Muestre historias de éxito de estudiantes y participantes. Los testimonios de video de graduados y capacitados son los impulsores de inscripción más poderosos."
+        }
+      }
+    },
+    "showcase": {
+      "title": "Integre Testimonios de Video en Cualquier Lugar",
+      "subtitle": "Una línea de código. Resultados hermosos. El widget MuchLove se integra perfectamente con cualquier sitio web.",
+      "featureTitle": "Características del Widget",
+      "feature0": "Totalmente responsive — se ve genial en móvil, tableta y escritorio",
+      "feature1": "Colores, diseño y marca personalizables para coincidir con su sitio",
+      "feature2": "Ligero (< 10KB) con carga diferida para cero impacto en el rendimiento",
+      "cta": "Configure su widget →",
+      "codeLabel": "Agregue a su sitio web:"
+    },
+    "comparison": {
+      "title": "Por Qué los Testimonios de Video Superan las Reseñas Escritas",
+      "subtitle": "Vea cómo MuchLove se compara con los enfoques tradicionales para generar confianza del cliente y prueba social.",
+      "feature": "Característica",
+      "writtenReviews": "Reseñas Escritas",
+      "noTestimonials": "Sin Testimonios",
+      "muchLove": "MuchLove",
+      "rows": {
+        "0": { "feature": "Autenticidad Percibida", "written": "Media", "none": "Baja", "muchLove": "Muy Alta" },
+        "1": { "feature": "Tasa de Compromiso", "written": "Baja", "none": "Ninguna", "muchLove": "3x Mayor" },
+        "2": { "feature": "Impacto en Conversión", "written": "+10-15%", "none": "0%", "muchLove": "+30-50%" },
+        "3": { "feature": "Facilidad de Recopilación", "written": "Fácil", "none": "N/A", "muchLove": "Muy Fácil" },
+        "4": { "feature": "Compartir Social", "written": "Difícil", "none": "Ninguno", "muchLove": "Automatizado" },
+        "5": { "feature": "Impacto SEO", "written": "Bajo", "none": "Ninguno", "muchLove": "Alto (UGC Video)" }
       }
     },
     "pricing": {
-      "title": "Precios simples y transparentes",
-      "subtitle": "Elige el plan que se ajuste a tus necesidades",
-      "popular": "Popular",
+      "title": "Precios Simples y Transparentes",
+      "subtitle": "Comience gratis, actualice a medida que crece. Sin tarifas ocultas, sin sorpresas.",
+      "monthly": "Mensual",
+      "yearly": "Anual",
+      "yearlyDiscount": "Ahorre 20%",
       "perMonth": "/mes",
+      "popular": "Popular",
       "plans": {
         "free": {
           "name": "Gratis",
-          "description": "Para empezar",
-          "cta": "Empezar",
+          "price": "0",
+          "description": "Perfecto para comenzar con testimonios de video.",
+          "cta": "Comenzar gratis",
           "features": {
-            "videos": "20 videos al mes",
-            "link": "Enlace único para compartir",
-            "storage": "Almacenamiento de 30 días",
-            "support": "Soporte por email"
+            "0": "Hasta 20 testimonios de video",
+            "1": "Widget integrable básico",
+            "2": "Invitaciones por correo",
+            "3": "Soporte de 3 idiomas (EN/FR/ES)",
+            "4": "Integración de compartir social",
+            "5": "Análisis básicos"
           }
         },
         "pro": {
           "name": "Pro",
-          "description": "Para negocios en crecimiento",
-          "cta": "Empezar prueba gratis",
+          "priceMonthly": "29",
+          "priceYearly": "23",
+          "description": "Para empresas en crecimiento que necesitan más potencia y personalización.",
+          "cta": "Prueba Pro",
           "features": {
-            "videos": "100 videos al mes",
-            "linkedin": "Publicación automática en LinkedIn",
-            "storage": "Almacenamiento ilimitado",
-            "branding": "Marca personalizada",
-            "integrations": "Integraciones con Google y Trustpilot",
-            "support": "Soporte prioritario"
+            "0": "Testimonios de video ilimitados",
+            "1": "Marca de widget personalizada",
+            "2": "Eliminar marca de agua MuchLove",
+            "3": "Análisis e informes avanzados",
+            "4": "Soporte de correo prioritario",
+            "5": "Importación de contactos CSV",
+            "6": "Secuencias de correo y automatización",
+            "7": "Acceso a API"
           }
         },
         "enterprise": {
           "name": "Enterprise",
-          "description": "Para grandes equipos",
-          "cta": "Contáctanos",
+          "price": "Personalizado",
+          "description": "Para organizaciones grandes con necesidades avanzadas y soporte dedicado.",
+          "cta": "Contactar ventas",
           "features": {
-            "videos": "500 videos al mes",
-            "linkedin": "Publicación automática en LinkedIn",
-            "storage": "Almacenamiento ilimitado",
-            "branding": "Marca personalizada",
-            "integrations": "Todas las integraciones incluidas",
-            "api": "Acceso API",
-            "dedicated": "Gestor de cuenta dedicado",
-            "support": "Soporte prioritario 24/7"
+            "0": "Todo en Pro",
+            "1": "Gestor de cuenta dedicado",
+            "2": "Integraciones personalizadas",
+            "3": "SSO y seguridad avanzada",
+            "4": "SLA y soporte prioritario",
+            "5": "Contrato y facturación personalizada"
           }
         }
       }
     },
+    "faq": {
+      "title": "Preguntas Frecuentes",
+      "subtitle": "Todo lo que necesita saber sobre MuchLove y los testimonios de video.",
+      "items": {
+        "0": {
+          "question": "¿Cómo funciona MuchLove?",
+          "answer": "MuchLove simplifica la recopilación de testimonios de video. Usted invita a sus clientes felices por correo, ellos hacen clic en un enlace y graban un video corto directamente en su navegador — sin aplicación ni cuenta requerida. El testimonio está entonces disponible en su panel para compartir e integrar."
+        },
+        "1": {
+          "question": "¿Qué formatos de video son compatibles?",
+          "answer": "MuchLove admite todos los principales formatos de video, incluidos MP4 y WebM. Los videos se graban directamente en el navegador utilizando tecnologías web estándar, por lo que funcionan en cualquier dispositivo moderno — escritorio, tableta o móvil."
+        },
+        "2": {
+          "question": "¿MuchLove es realmente gratis?",
+          "answer": "¡Sí! Nuestro plan Gratis incluye hasta 20 testimonios de video, un widget integrable básico, invitaciones por correo y compartir social. No se requiere tarjeta de crédito. Actualice a Pro cuando necesite testimonios ilimitados y características avanzadas."
+        },
+        "3": {
+          "question": "¿Cómo integro el widget en mi sitio web?",
+          "answer": "Simplemente copie una línea de código JavaScript desde su panel y péguela en el HTML de su sitio web. El widget carga automáticamente y muestra sus testimonios de video en un hermoso carrusel responsive."
+        },
+        "4": {
+          "question": "¿Mis datos están seguros? ¿Son conformes con el RGPD?",
+          "answer": "Absolutamente. MuchLove cumple completamente con el RGPD. Todos los datos están cifrados, almacenados en servidores europeos (Supabase), y nunca compartimos sus datos con terceros. Los usuarios pueden solicitar la eliminación de datos en cualquier momento."
+        },
+        "5": {
+          "question": "¿En cuántos idiomas está disponible MuchLove?",
+          "answer": "MuchLove actualmente admite inglés, francés y español. La experiencia completa — desde las invitaciones por correo hasta la interfaz de grabación hasta el widget integrado — está completamente traducida en los tres idiomas."
+        },
+        "6": {
+          "question": "¿Puedo personalizar el widget?",
+          "answer": "¡Sí! Los usuarios Pro pueden personalizar los colores del widget, el diseño, el número de testimonios mostrados e incluso eliminar la marca MuchLove. El widget está diseñado para integrarse perfectamente con el diseño de su sitio web."
+        },
+        "7": {
+          "question": "¿Cómo graban mis clientes su testimonio?",
+          "answer": "Sus clientes reciben un correo con un enlace único. Hacen clic en él, llegan a una página con marca y graban un video de 30 segundos a 2 minutos directamente en su navegador. Sin descargar aplicaciones, sin crear cuenta — solo un clic y están grabando."
+        }
+      }
+    },
+    "cta": {
+      "title": "¿Listo para Transformar Sus Testimonios de Clientes?",
+      "subtitle": "Únase a cientos de empresas que aumentan su credibilidad y conversiones con testimonios de video auténticos.",
+      "button": "Comenzar Gratis",
+      "noCard": "Sin tarjeta de crédito requerida · 20 testimonios de video gratuitos"
+    },
     "footer": {
-      "logo": "MuchLove",
+      "productTitle": "Producto",
+      "features": "Características",
+      "pricing": "Precios",
+      "demo": "Demo",
+      "widget": "Widget",
+      "companyTitle": "Empresa",
+      "about": "Acerca de",
+      "blog": "Blog",
+      "blogSoon": "Próximamente",
+      "careers": "Carreras",
+      "resourcesTitle": "Recursos",
+      "documentation": "Documentación",
+      "helpCenter": "Centro de Ayuda",
+      "api": "API",
+      "legalTitle": "Legal",
+      "terms": "Términos de Servicio",
+      "privacy": "Política de Privacidad",
+      "gdpr": "RGPD",
       "copyright": "© 2026 MuchLove. Todos los derechos reservados.",
-      "terms": "Términos",
-      "privacy": "Privacidad"
+      "tagline": "Transforme clientes satisfechos en testimonios de video poderosos."
     }
   },
   "auth": {
@@ -156,7 +350,7 @@
     "sidebar": {
       "dashboard": "Panel",
       "contacts": "Contactos",
-      "testimonials": "Testimonios",
+      "widget": "Widget",
       "settings": "Configuración",
       "signOut": "Cerrar sesión",
       "myCompany": "Mi empresa"
@@ -213,6 +407,7 @@
       "searchPlaceholder": "Buscar por nombre, email o empresa...",
       "allStatuses": "Todos los estados",
       "addContact": "Agregar contacto",
+      "importCSV": "Importar CSV",
       "noContacts": "Aún no hay contactos",
       "noMatch": "Ningún contacto coincide con los filtros",
       "table": {
@@ -281,6 +476,48 @@
       "deleteSuccess": "{name} ha sido eliminado 💛",
       "deleteError": "No se pudo eliminar: {error}"
     },
+    "import": {
+      "button": "Importar CSV",
+      "title": "Importar contactos",
+      "description": "Columnas requeridas: first_name, email, company_name",
+      "selectFile": "Elegir un archivo CSV",
+      "dragDrop": "o arrastra y suelta aqui",
+      "preview": "Vista previa ({count} contactos)",
+      "import": "Importar",
+      "importing": "Importando...",
+      "success": "{count} contacto(s) importado(s)!",
+      "errors": "{count} error(es) encontrado(s)",
+      "maxRows": "Maximo 200 contactos por importacion",
+      "invalidFormat": "Formato CSV invalido",
+      "missingColumn": "Columna faltante: {column}",
+      "emptyFile": "El archivo esta vacio",
+      "cancel": "Cancelar",
+      "done": "Terminar",
+      "resultTitle": "{count} contacto(s) importado(s)!",
+      "rowsSkipped": "{count} fila(s) omitida(s)",
+      "row": "Fila {row}",
+      "andMore": "... y {count} mas",
+      "headerFirstName": "Nombre",
+      "headerEmail": "Email",
+      "headerCompany": "Empresa"
+    },
+    "email": {
+      "send": "Enviar invitacion",
+      "sending": "Enviando...",
+      "sent": "Invitacion enviada!",
+      "alreadyInvited": "Ya invitado",
+      "error": "Error de envio: {error}"
+    },
+    "bulk": {
+      "selected": "{count} seleccionado(s)",
+      "selectAll": "Seleccionar todo",
+      "sendEmails": "Enviar invitaciones",
+      "delete": "Eliminar",
+      "sendSuccess": "{sent} invitacion(es) enviada(s)",
+      "sendPartial": "{sent} enviada(s), {failed} fallida(s)",
+      "deleteConfirm": "Eliminar {count} contacto(s)? Irreversible.",
+      "deleteSuccess": "{count} contacto(s) eliminado(s)"
+    },
     "card": {
       "createdOn": "Creado el {date}",
       "viewDetail": "Ver detalles →"
@@ -327,12 +564,12 @@
       "encouragement": "¡Vamos! Hable con naturalidad, siempre puede repetir."
     },
     "scripts": {
-      "title1": "Testimonio simple",
-      "script1": "Me llamo ___. Trabajo con {companyName} desde ___. Lo que más aprecio es ___.",
-      "title2": "Antes / Después",
-      "script2": "Antes de {companyName}, tenía un problema: ___. Desde que trabajamos juntos, ___.",
-      "title3": "La recomendación",
-      "script3": "Si tuviera que recomendar {companyName} en una palabra, sería ___ porque ___."
+      "title1": "Cuenta tu historia",
+      "script1": "Hola! Me llamo ___ y trabajo con {companyName} desde ___. Lo que mas me gusta de ellos es ___. Si tuviera que resumir mi experiencia en una frase, diria que ___. Gracias {companyName}!",
+      "title2": "El momento clave",
+      "script2": "Antes de trabajar con {companyName}, tenia un problema real: ___. Intente ___ pero nada funcionaba de verdad. Entonces descubri {companyName}, y ___. Hoy, lo que cambio para mi es ___. De verdad, lo recomiendo!",
+      "title3": "Consejo a un amigo",
+      "script3": "Si un amigo me preguntara por que trabajar con {companyName}, le diria: ___. Lo que mas me sorprendio fue ___. Lo que me encanta por encima de todo? ___. En serio, no lo duden!"
     },
     "preview": {
       "recordingBadge": "GRABANDO"
@@ -369,23 +606,6 @@
       "step1": "Vídeo",
       "step2": "Compartir",
       "step3": "Embajador"
-    }
-  },
-  "testimonials": {
-    "title": "Testimonios",
-    "description": "Ver y gestionar tus testimonios en video",
-    "card": {
-      "altThumbnail": "Testimonio de {name}",
-      "companyFallback": "Empresa",
-      "contactFallback": "Contacto"
-    },
-    "list": {
-      "filterAll": "Todos",
-      "filterPending": "Pendientes",
-      "filterProcessing": "Procesando",
-      "filterCompleted": "Completados",
-      "filterFailed": "Fallidos",
-      "emptyState": "Sin testimonios con este estado"
     }
   },
   "recording": {
@@ -599,6 +819,81 @@
       "rejected_requester": "Impulso respuestas",
       "collector_unused": "Recordatorio uso",
       "free_maximizer": "Recordatorio upgrade"
+    }
+  },
+  "onboarding": {
+    "progress": {
+      "step1": "Mi empresa",
+      "step2": "Enlaces de resenas",
+      "step3": "Primer contacto"
+    },
+    "step1": {
+      "title": "Cuentanos sobre tu empresa",
+      "subtitle": "Hemos completado algunos datos. Personalizalos!",
+      "nameLabel": "Nombre de la empresa",
+      "namePlaceholder": "El nombre de tu empresa",
+      "industryLabel": "Sector (opcional)",
+      "industryPlaceholder": "Selecciona tu sector",
+      "industries": {
+        "saas": "SaaS / Software",
+        "ecommerce": "E-commerce",
+        "consulting": "Consultoria",
+        "agency": "Agencia",
+        "healthcare": "Salud",
+        "education": "Educacion",
+        "restaurant": "Restauracion / Hosteleria",
+        "retail": "Comercio minorista",
+        "other": "Otro"
+      },
+      "logoLabel": "Logo de la empresa (opcional)",
+      "logoUpload": "Arrastra y suelta o haz clic para subir",
+      "logoChange": "Cambiar logo",
+      "logoMaxSize": "JPG, PNG o WebP. Max 2 MB.",
+      "continue": "Continuar",
+      "skip": "Saltar este paso"
+    },
+    "step2": {
+      "title": "Donde dejan resenas tus clientes?",
+      "subtitle": "Conecta tus plataformas de resenas. Despues de grabar el video, tus clientes seran invitados a dejar una resena alli tambien.",
+      "trustpilotLabel": "URL de Trustpilot",
+      "trustpilotPlaceholder": "https://www.trustpilot.com/review/tuempresa.com",
+      "trustpilotTooltipTitle": "Como encontrar tu URL de Trustpilot",
+      "trustpilotTooltipStep1": "Ve a trustpilot.com",
+      "trustpilotTooltipStep2": "Busca tu empresa",
+      "trustpilotTooltipStep3": "Copia la URL de la barra de direcciones",
+      "trustpilotTooltipLink": "Buscar en Trustpilot",
+      "googleLabel": "Google Place ID",
+      "googlePlaceholder": "ChIJN1t_tDeuEmsRUsoyG83frY4",
+      "googleTooltipTitle": "Como encontrar tu Google Place ID",
+      "googleTooltipStep1": "Abre el Place ID Finder de Google",
+      "googleTooltipStep2": "Busca el nombre de tu empresa",
+      "googleTooltipStep3": "Copia el Place ID que aparece en el mapa",
+      "googleTooltipLink": "Abrir Place ID Finder",
+      "whyItMatters": "Despues de su testimonio en video, tus clientes seran invitados a dejar una resena en estas plataformas — duplicando tu prueba social!",
+      "continue": "Continuar",
+      "back": "Atras",
+      "skip": "Lo hare mas tarde"
+    },
+    "step3": {
+      "title": "Invita a tu primer cliente satisfecho",
+      "subtitle": "Envia tu primera invitacion en menos de 30 segundos.",
+      "firstNameLabel": "Nombre",
+      "firstNamePlaceholder": "Alex",
+      "emailLabel": "Correo electronico",
+      "emailPlaceholder": "alex@clientefeliz.com",
+      "preview": "Enviaremos a {firstName} una calida invitacion para grabar un testimonio en video. Podras seguir su progreso desde tu panel de control.",
+      "previewDefault": "tu cliente",
+      "send": "Enviar invitacion",
+      "sending": "Enviando...",
+      "back": "Atras",
+      "skip": "Lo hare mas tarde",
+      "successToast": "Invitacion enviada a {email}!",
+      "errorToast": "No se pudo enviar la invitacion. Por favor, intentalo de nuevo."
+    },
+    "celebration": {
+      "title": "Todo listo!",
+      "subtitle": "Tu cuenta esta configurada. Comienza a recopilar testimonios en video que difundan el amor!",
+      "cta": "Ir a mi panel de control"
     }
   }
 }

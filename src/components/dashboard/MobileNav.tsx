@@ -1,7 +1,7 @@
 "use client"
 
 import Link from 'next/link'
-import { LayoutDashboard, Users, Video, Settings } from 'lucide-react'
+import { LayoutDashboard, Users, Settings } from 'lucide-react'
 import { LanguageSwitcher } from '@/components/ui/LanguageSwitcher'
 import { useTranslations } from 'next-intl'
 
@@ -12,7 +12,6 @@ interface MobileNavProps {
 const navItemKeys = [
   { key: 'dashboard' as const, href: '/dashboard', icon: LayoutDashboard },
   { key: 'contacts' as const, href: '/dashboard/contacts', icon: Users },
-  { key: 'testimonials' as const, href: '/dashboard/testimonials', icon: Video },
   { key: 'settings' as const, href: '/dashboard/settings', icon: Settings },
 ]
 

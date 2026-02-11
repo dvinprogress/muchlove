@@ -36,7 +36,7 @@ export async function generateMetadata({params}: {params: Promise<{locale: strin
   return {
     title: t('title'),
     description: t('description'),
-    keywords: ["video testimonials", "customer reviews", "social proof", "B2B", "trustpilot", "google reviews"],
+    keywords: t('keywords'),
     icons: {
       icon: '/icon.svg',
       apple: '/apple-icon',
@@ -48,11 +48,20 @@ export async function generateMetadata({params}: {params: Promise<{locale: strin
       siteName: 'MuchLove',
       type: 'website',
       locale: locale === 'fr' ? 'fr_FR' : locale === 'es' ? 'es_ES' : 'en_US',
+      images: [
+        {
+          url: 'https://muchlove.app/og-image.png',
+          width: 1200,
+          height: 630,
+          alt: 'MuchLove - Video Testimonial Platform',
+        },
+      ],
     },
     twitter: {
       card: 'summary_large_image' as const,
       title: t('title'),
       description: t('description'),
+      images: ['https://muchlove.app/og-image.png'],
     },
     robots: {index: true, follow: true},
     alternates: {

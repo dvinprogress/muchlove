@@ -86,8 +86,8 @@ export function WeeklyDigest({
             Add contacts →
           </Link>
           <br />
-          <Link href={`${dashboardUrl}/testimonials`} style={styles.quickActionLink}>
-            View testimonials →
+          <Link href={`${dashboardUrl}/contacts`} style={styles.quickActionLink}>
+            View contacts →
           </Link>
           <br />
           <Link href={`${dashboardUrl}/widget`} style={styles.quickActionLink}>

@@ -27,6 +27,8 @@ export interface Database {
           last_active_at: string
           created_at: string
           updated_at: string
+          onboarding_completed_at: string | null
+          industry: string | null
         }
         Insert: {
           id?: string
@@ -45,6 +47,8 @@ export interface Database {
           last_active_at?: string
           created_at?: string
           updated_at?: string
+          onboarding_completed_at?: string | null
+          industry?: string | null
         }
         Update: {
           id?: string
@@ -63,6 +67,8 @@ export interface Database {
           last_active_at?: string
           created_at?: string
           updated_at?: string
+          onboarding_completed_at?: string | null
+          industry?: string | null
         }
         Relationships: []
       }
