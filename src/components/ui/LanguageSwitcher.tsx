@@ -11,6 +11,7 @@ type Locale = "en" | "fr" | "es";
 type LanguageSwitcherProps = {
   variant?: "default" | "compact";
   className?: string;
+  direction?: "up" | "down";
 };
 
 // SVG Flag Components
@@ -67,6 +68,7 @@ const languages: Record<Locale, { code: string; label: string }> = {
 export function LanguageSwitcher({
   variant = "default",
   className = "",
+  direction = "down",
 }: LanguageSwitcherProps) {
   const currentLocale = useLocale() as Locale;
   const router = useRouter();
@@ -149,12 +151,12 @@ export function LanguageSwitcher({
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -10, scale: 0.95 }}
+            initial={{ opacity: 0, y: direction === "up" ? 10 : -10, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -10, scale: 0.95 }}
+            exit={{ opacity: 0, y: direction === "up" ? 10 : -10, scale: 0.95 }}
             transition={{ duration: 0.15, ease: "easeOut" }}
             className={`
-              absolute top-full mt-2 right-0 z-50
+              absolute ${direction === "up" ? "bottom-full mb-2" : "top-full mt-2"} right-0 z-50
               bg-white border border-slate-200 rounded-lg shadow-lg
               overflow-hidden
               ${isCompact ? "min-w-[120px]" : "min-w-[150px]"}

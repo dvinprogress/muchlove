@@ -98,7 +98,7 @@ export function Sidebar({ user, company, currentPath }: SidebarProps) {
           </p>
           <p className="text-xs text-slate-500 truncate">{user.email}</p>
         </div>
-        <LanguageSwitcher variant="compact" className="mx-auto" />
+        <LanguageSwitcher variant="compact" className="mx-auto" direction="up" />
         <form action={signOut}>
           <button
             type="submit"

@@ -38,7 +38,7 @@ export default async function DashboardPage() {
 
   // Définir les limites par plan
   const planLimits: Record<string, number> = {
-    free: 5,
+    free: 20,
     starter: 20,
     growth: 50,
     pro: 100,

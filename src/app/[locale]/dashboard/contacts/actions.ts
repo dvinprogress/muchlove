@@ -11,6 +11,8 @@ const createContactSchema = z.object({
   first_name: z.string().min(1, 'Le prénom est requis').max(100),
   email: z.string().email('Email invalide'),
   company_name: z.string().min(1, "Le nom de l'entreprise est requis").max(200),
+  phone: z.string().max(20).optional().nullable(),
+  reward: z.string().max(200).optional().nullable(),
 })
 
 // Type retour standard
@@ -54,6 +56,8 @@ export async function createContact(
       first_name: validatedData.first_name,
       email: validatedData.email,
       company_name: validatedData.company_name,
+      phone: validatedData.phone || null,
+      reward: validatedData.reward || null,
       unique_link: uniqueLink,
       status: 'created' as ContactStatus,
     })
@@ -106,6 +110,66 @@ export async function getContacts(options?: {
   }
 
   return { success: true, data: { contacts: contacts ?? [], total: count ?? 0 } }
+}
+
+/**
+ * Met à jour un contact existant
+ * 1. Vérifie l'authentification utilisateur
+ * 2. Valide les données avec Zod
+ * 3. Met à jour le contact dans la base (RLS applique company_id = auth.uid())
+ * 4. Revalide les pages concernées
+ */
+export async function updateContact(
+  contactId: string,
+  data: { first_name: string; email: string; company_name: string; phone?: string | null; reward?: string | null }
+): Promise<ActionResult> {
+  // 1. Get user from session
+  const supabase = await createClient()
+  const { data: { user }, error: authError } = await supabase.auth.getUser()
+
+  if (authError || !user) {
+    return { success: false, error: 'Non authentifié' }
+  }
+
+  // 2. Validate contactId est un UUID
+  const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+  if (!uuidRegex.test(contactId)) {
+    return { success: false, error: 'ID invalide' }
+  }
+
+  // 3. Validate data avec Zod
+  const updateSchema = z.object({
+    first_name: z.string().min(1, 'Le prénom est requis').max(100),
+    email: z.string().email('Email invalide').max(255),
+    company_name: z.string().min(1, "Le nom de l'entreprise est requis").max(200),
+    phone: z.string().max(20).optional().nullable(),
+    reward: z.string().max(200).optional().nullable(),
+  })
+
+  const validation = updateSchema.safeParse(data)
+  if (!validation.success) {
+    return { success: false, error: validation.error.issues[0]?.message ?? 'Données invalides' }
+  }
+
+  const validated = validation.data
+
+  // 4. Update contact where id = contactId (RLS protège)
+  const { error: updateError } = await supabase
+    .from('contacts')
+    .update(validated)
+    .eq('id', contactId)
+
+  if (updateError) {
+    return { success: false, error: updateError.message }
+  }
+
+  // 5. revalidatePath
+  revalidatePath('/dashboard')
+  revalidatePath('/dashboard/contacts')
+  revalidatePath(`/dashboard/contacts/${contactId}`)
+
+  // 6. Return success
+  return { success: true, data: undefined }
 }
 
 /**
@@ -208,6 +272,8 @@ const csvRowSchema = z.object({
   first_name: z.string().min(1, 'Le prénom est requis'),
   email: z.string().email('Email invalide'),
   company_name: z.string().min(1, "Le nom de l'entreprise est requis"),
+  phone: z.string().max(20).optional().nullable(),
+  reward: z.string().max(200).optional().nullable(),
 })
 
 /**
@@ -218,7 +284,7 @@ const csvRowSchema = z.object({
  * 4. Retourne le nombre de contacts créés et les erreurs éventuelles
  */
 export async function importContactsCSV(
-  rows: { first_name: string; email: string; company_name: string }[]
+  rows: { first_name: string; email: string; company_name: string; phone?: string | null; reward?: string | null }[]
 ): Promise<ActionResult<{ created: number; errors: { row: number; message: string }[] }>> {
   // 1. Get user from session
   const supabase = await createClient()
@@ -240,6 +306,8 @@ export async function importContactsCSV(
     first_name: string
     email: string
     company_name: string
+    phone: string | null
+    reward: string | null
     unique_link: string
     status: ContactStatus
   }> = []
@@ -257,6 +325,8 @@ export async function importContactsCSV(
         first_name: validation.data.first_name,
         email: validation.data.email,
         company_name: validation.data.company_name,
+        phone: validation.data.phone || null,
+        reward: validation.data.reward || null,
         unique_link: nanoid(12),
         status: 'created' as ContactStatus,
       })

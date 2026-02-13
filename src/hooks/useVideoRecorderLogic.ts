@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback } from 'react'
 import { useMediaRecorder } from './useMediaRecorder'
 import { useWhisperTranscription } from './useWhisperTranscription'
 import { createClient } from '@/lib/supabase/client'
+import { generateThumbnail } from '@/lib/video/thumbnail'
 
 export type UploadPhase = 'idle' | 'uploading' | 'complete' | 'error'
 
@@ -119,7 +120,36 @@ export function useVideoRecorderLogic(config: UploadConfig) {
           throw new Error(errorData.error || 'Upload failed')
         }
 
-        await response.json()
+        const responseData = await response.json()
+        const testimonialId = responseData.testimonialId
+
+        // Phase 4: Generate and upload thumbnail (non-blocking, best-effort)
+        if (testimonialId) {
+          try {
+            const thumbnailBlob = await generateThumbnail(videoBlob)
+            const thumbnailPath = `${config.companyId}/${testimonialId}/thumb.jpg`
+
+            await supabase.storage
+              .from('thumbnails')
+              .upload(thumbnailPath, thumbnailBlob, {
+                contentType: 'image/jpeg',
+                upsert: true
+              })
+
+            // Get public URL and update testimonial
+            const { data: { publicUrl } } = supabase.storage
+              .from('thumbnails')
+              .getPublicUrl(thumbnailPath)
+
+            await supabase
+              .from('testimonials')
+              .update({ thumbnail_url: publicUrl })
+              .eq('id', testimonialId)
+          } catch (thumbnailError) {
+            // Non-blocking: thumbnail is nice-to-have, not critical
+            console.warn('Thumbnail generation failed:', thumbnailError)
+          }
+        }
       }
 
       // Upload réussi - passer en phase complete

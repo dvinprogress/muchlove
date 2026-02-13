@@ -19,6 +19,7 @@ interface SharingFlowProps {
   companyTrustpilotUrl: string | null
   testimonialDuration?: number
   initialStatus: ContactStatus
+  reviewText?: string | null
 }
 
 type Platform = 'trustpilot' | 'google' | 'linkedin'
@@ -37,7 +38,8 @@ export function SharingFlow({
   companyGooglePlaceId,
   companyTrustpilotUrl,
   testimonialDuration,
-  initialStatus
+  initialStatus,
+  reviewText
 }: SharingFlowProps) {
   const t = useTranslations('sharing')
   const locale = useLocale()
@@ -54,8 +56,20 @@ export function SharingFlow({
     'share_1' | 'share_2' | 'ambassador' | null
   >(null)
   const [showCelebration, setShowCelebration] = useState(false)
+  const [showCopiedToast, setShowCopiedToast] = useState(false)
 
   const handlePlatformShare = async (platform: Platform) => {
+    // Copy review to clipboard for Trustpilot and Google
+    if (reviewText && (platform === 'trustpilot' || platform === 'google')) {
+      try {
+        await navigator.clipboard.writeText(reviewText)
+        setShowCopiedToast(true)
+        setTimeout(() => setShowCopiedToast(false), 4000)
+      } catch {
+        // Fallback silencieux
+      }
+    }
+
     // Open the external link
     let url: string | null = null
 
@@ -132,6 +146,18 @@ export function SharingFlow({
         animate="animate"
         className="space-y-6"
       >
+        {/* Copied toast */}
+        {showCopiedToast && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="bg-green-100 border border-green-300 text-green-800 px-4 py-3 rounded-lg text-center text-sm font-medium"
+          >
+            {t('reviewCopied')}
+          </motion.div>
+        )}
+
         {/* Header */}
         <div className="text-center space-y-2">
           <h2 className="text-2xl font-bold text-gray-900">{t('title')}</h2>

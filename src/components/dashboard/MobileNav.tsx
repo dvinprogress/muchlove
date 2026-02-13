@@ -40,7 +40,7 @@ export function MobileNav({ currentPath }: MobileNavProps) {
           )
         })}
         <div className="flex flex-col items-center gap-1 px-2 py-1">
-          <LanguageSwitcher variant="compact" />
+          <LanguageSwitcher variant="compact" direction="up" />
         </div>
       </div>
     </nav>

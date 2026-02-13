@@ -18,6 +18,7 @@ const SCRIPTS = [
 export function ScriptGuide({ companyName }: ScriptGuideProps) {
   const t = useTranslations('video.scripts')
   const [activeIndex, setActiveIndex] = useState(0)
+  const [expandedCard, setExpandedCard] = useState<number | null>(null)
   const scrollContainerRef = useRef<HTMLDivElement>(null)
 
   // Fonction pour formater le script avec les blancs soulignés
@@ -117,15 +118,25 @@ export function ScriptGuide({ companyName }: ScriptGuideProps) {
               key={script.key}
               data-index={index}
               initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: index * 0.1 }}
-              className="flex-shrink-0 w-[280px] snap-center"
+              animate={{
+                opacity: 1,
+                x: 0,
+                scale: expandedCard === index ? 1.05 : 1,
+                zIndex: expandedCard === index ? 10 : 1
+              }}
+              transition={{
+                delay: expandedCard !== null ? 0 : index * 0.1,
+                type: "spring",
+                stiffness: 300
+              }}
+              onClick={() => setExpandedCard(expandedCard === index ? null : index)}
+              className="flex-shrink-0 w-[320px] md:w-[360px] snap-center cursor-pointer"
             >
-              <div className="bg-white/80 backdrop-blur border border-gray-100 rounded-lg p-3 h-full shadow-sm">
-                <h4 className="text-xs font-semibold text-rose-500 mb-1">
+              <div className="bg-white/80 backdrop-blur border border-gray-100 rounded-lg p-4 h-full shadow-sm hover:shadow-md transition-shadow">
+                <h4 className="text-sm font-semibold text-rose-500 mb-1">
                   {t(script.titleKey)}
                 </h4>
-                <p className="text-sm text-gray-700 leading-relaxed">
+                <p className="text-sm md:text-base text-gray-700 leading-relaxed">
                   {formatScript(t(script.scriptKey, { companyName }))}
                 </p>
               </div>

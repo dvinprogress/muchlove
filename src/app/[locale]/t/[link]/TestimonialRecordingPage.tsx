@@ -22,6 +22,11 @@ const SharingFlow = dynamic(
   { ssr: false, loading: () => <div className="h-60 bg-slate-100 rounded-xl animate-pulse" /> }
 )
 
+const ReviewValidation = dynamic(
+  () => import('@/components/sharing/ReviewValidation').then(m => ({ default: m.ReviewValidation })),
+  { ssr: false, loading: () => <div className="h-60 bg-slate-100 rounded-xl animate-pulse" /> }
+)
+
 interface TestimonialRecordingPageProps {
   contactId: string
   companyId: string
@@ -50,36 +55,47 @@ export function TestimonialRecordingPage({
   const t = useTranslations('recording.page')
   const [currentStatus, setCurrentStatus] = useState<ContactStatus>(contactStatus)
   const [showCelebration, setShowCelebration] = useState(false)
+  const [showReviewValidation, setShowReviewValidation] = useState(false)
   const [showSharingFlow, setShowSharingFlow] = useState(false)
+  const [transcription, setTranscription] = useState<string | null>(null)
+  const [validatedReview, setValidatedReview] = useState<string | null>(null)
 
-  const isAlreadyCompleted =
+  // Si video_completed, shared_1 ou shared_2 → afficher le SharingFlow (pour continuer le partage)
+  // Si shared_3 → afficher le message "Ambassadeur, merci !"
+  const isAmbassador = currentStatus === 'shared_3'
+  const shouldShowSharingFlow =
     currentStatus === 'video_completed' ||
     currentStatus === 'shared_1' ||
-    currentStatus === 'shared_2' ||
-    currentStatus === 'shared_3'
+    currentStatus === 'shared_2'
 
-  const handleVideoComplete = (_blob: Blob, _duration: number) => {
+  const handleVideoComplete = (_blob: Blob, _duration: number, transcriptionText: string | null) => {
     setCurrentStatus('video_completed')
+    setTranscription(transcriptionText)
     setShowCelebration(true)
   }
 
   const handleCloseCelebration = () => {
     setShowCelebration(false)
-    // Show sharing flow after celebration closes (if video just completed)
     if (currentStatus === 'video_completed') {
-      setShowSharingFlow(true)
+      setShowReviewValidation(true)
     }
   }
 
+  const handleReviewValidate = (reviewText: string) => {
+    setValidatedReview(reviewText)
+    setShowReviewValidation(false)
+    setShowSharingFlow(true)
+  }
+
   return (
-    <div className="h-dvh bg-white flex flex-col items-center justify-center p-4 overflow-hidden">
-      <div className="w-full max-w-lg space-y-3">
+    <div className="h-dvh bg-white flex flex-col items-center justify-center p-4 md:p-8 overflow-hidden">
+      <div className="w-full max-w-lg space-y-4 md:space-y-6">
         {/* Header : logo ou nom + salutation */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-center space-y-1"
+          className="text-center space-y-2 mb-2"
         >
           {companyLogoUrl ? (
             <div className="flex justify-center">
@@ -95,7 +111,7 @@ export function TestimonialRecordingPage({
           <h2 className="text-xl font-semibold text-slate-900">
             {t('greeting', { firstName: contactFirstName })}
           </h2>
-          <p className="text-base text-slate-700">
+          <p className="text-base text-slate-600 max-w-sm mx-auto">
             {t('description', { companyName })}
           </p>
         </motion.div>
@@ -106,7 +122,7 @@ export function TestimonialRecordingPage({
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          {isAlreadyCompleted && !showSharingFlow ? (
+          {isAmbassador ? (
             <div className="bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-200 rounded-xl p-8 text-center space-y-4">
               <div className="w-16 h-16 mx-auto bg-green-100 rounded-full flex items-center justify-center">
                 <svg
@@ -130,7 +146,7 @@ export function TestimonialRecordingPage({
                 {t('alreadyCompletedDescription')}
               </p>
             </div>
-          ) : showSharingFlow ? (
+          ) : shouldShowSharingFlow || showSharingFlow ? (
             <div className="bg-white rounded-xl shadow-xl overflow-hidden p-8">
               <SharingFlow
                 contactId={contactId}
@@ -141,6 +157,16 @@ export function TestimonialRecordingPage({
                 companyTrustpilotUrl={companyTrustpilotUrl}
                 testimonialDuration={testimonialDuration}
                 initialStatus={currentStatus}
+                reviewText={validatedReview}
+              />
+            </div>
+          ) : showReviewValidation ? (
+            <div className="bg-white rounded-xl shadow-xl overflow-hidden p-8">
+              <ReviewValidation
+                transcription={transcription}
+                contactFirstName={contactFirstName}
+                companyName={companyName}
+                onValidate={handleReviewValidate}
               />
             </div>
           ) : (
@@ -169,11 +195,19 @@ export function TestimonialRecordingPage({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.6 }}
-          className="text-center pt-4 border-t border-slate-100"
+          className="text-center pt-6 border-t border-slate-100"
         >
-          <p className="text-xs text-slate-400">
+          <a
+            href="https://muchlove.io"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 text-xs text-slate-400 hover:text-rose-500 transition-colors"
+          >
             {t('poweredBy', { brandName: 'MuchLove' })}
-          </p>
+            <svg className="w-3 h-3 text-rose-400" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
+            </svg>
+          </a>
         </motion.div>
 
         {/* CelebrationModal */}

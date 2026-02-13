@@ -64,15 +64,7 @@ Principes cles :
 2. Add your Supabase URL and anon key
 3. Generate types: `npx supabase gen types typescript --project-id <id> > src/types/database.ts`
 
-## Setup Status
+## Status
 
-**Completed:**
-- Next.js 16 + React 19 + TypeScript strict
-- Tailwind CSS 4 + Framer Motion
-- Supabase SSR client setup
-- Vitest + Playwright configured
-- Zod installed
-- Project structure created
-- ESLint + Testing Library configured
-
-**Next step:** Configure `.env.local` with Supabase credentials, then define product features.
+Scaffolding complet. Prochaine etape : configurer `.env.local` Supabase puis definir les features produit.
+Voir `.claude/PROGRESS.md` pour le suivi detaille.

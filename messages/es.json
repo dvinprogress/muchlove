@@ -87,7 +87,7 @@
         },
         "1": {
           "title": "Grabar",
-          "description": "Sus clientes hacen clic en el enlace y graban un testimonio de video de 30 segundos a 2 minutos directamente en su navegador."
+          "description": "Sus clientes hacen clic en el enlace y graban un testimonio de video de 30 segundos a 1 minuto directamente en su navegador."
         },
         "2": {
           "title": "Compartir",
@@ -104,7 +104,7 @@
       "items": {
         "0": { "value": "92%", "label": "de los consumidores confía más en los testimonios de video que en las reseñas de texto" },
         "1": { "value": "3x", "label": "más conversiones con prueba social de video auténtica" },
-        "2": { "value": "2 min", "label": "tiempo promedio para que un cliente grabe un testimonio" },
+        "2": { "value": "1 min", "label": "tiempo promedio para que un cliente grabe un testimonio" },
         "3": { "value": "20", "label": "testimonios de video gratuitos para comenzar" }
       }
     },
@@ -270,7 +270,7 @@
         },
         "7": {
           "question": "¿Cómo graban mis clientes su testimonio?",
-          "answer": "Sus clientes reciben un correo con un enlace único. Hacen clic en él, llegan a una página con marca y graban un video de 30 segundos a 2 minutos directamente en su navegador. Sin descargar aplicaciones, sin crear cuenta — solo un clic y están grabando."
+          "answer": "Sus clientes reciben un correo con un enlace único. Hacen clic en él, llegan a una página con marca y graban un video de 30 segundos a 1 minuto directamente en su navegador. Sin descargar aplicaciones, sin crear cuenta — solo un clic y están grabando."
         }
       }
     },
@@ -444,11 +444,27 @@
         "placeholder": "Acme Inc.",
         "required": "El nombre de la empresa es obligatorio"
       },
+      "optional": "(opcional)",
+      "phone": {
+        "label": "Teléfono",
+        "placeholder": "+34 612 345 678"
+      },
+      "reward": {
+        "label": "Recompensa ofrecida",
+        "placeholder": "Ej: 10% de descuento",
+        "suggestions": "Ideas: código de descuento, mes gratis, acceso premium, regalos..."
+      },
       "submit": "Agregar",
       "submitting": "Creando...",
       "submitAlt": "Crear contacto",
       "cancel": "Cancelar",
       "success": "¡Contacto creado! Listo para compartir mucho amor 💛",
+      "successMessage": "¡Contacto creado con éxito!",
+      "sendEmail": "Enviar invitación por email",
+      "copyLink": "Copiar enlace de grabación",
+      "linkCopied": "¡Enlace copiado!",
+      "emailSent": "¡Email enviado con éxito!",
+      "close": "Cerrar",
       "error": "¡Ups! No se pudo crear el contacto: {error}",
       "errorGeneric": "¡Ups! Algo no funcionó 😊 ¿Intentar de nuevo?"
     },
@@ -522,6 +538,18 @@
       "createdOn": "Creado el {date}",
       "viewDetail": "Ver detalles →"
     },
+    "edit": {
+      "title": "Editar contacto",
+      "status": "Estado",
+      "save": "Guardar",
+      "saving": "Guardando...",
+      "success": "Contacto actualizado",
+      "error": "Error al actualizar",
+      "createdAt": "Creado el",
+      "link": "Enlace de grabación",
+      "deleteConfirm": "¿Está seguro de que desea eliminar este contacto? Esta acción no se puede deshacer.",
+      "confirmDelete": "Eliminar"
+    },
     "error": "Error: {error}"
   },
   "video": {
@@ -561,7 +589,9 @@
       "retake": "Repetir",
       "validate": "Validar",
       "startHint": "Pulse para empezar",
-      "encouragement": "¡Vamos! Hable con naturalidad, siempre puede repetir."
+      "encouragement": "¡Vamos! Hable con naturalidad, siempre puede repetir.",
+      "encouragementReady": "¡Vamos! Presiona y habla con naturalidad",
+      "encouragementRecorded": "¡Bravo, está grabado! 🎬"
     },
     "scripts": {
       "title1": "Cuenta tu historia",
@@ -795,6 +825,7 @@
   "sharing": {
     "title": "¡Comparte el amor! 💛",
     "subtitle": "Comparte en estas plataformas para ser Embajador",
+    "reviewCopied": "¡Tu reseña ha sido copiada! Pégala en el formulario 📋",
     "trustpilot": {
       "title": "Trustpilot",
       "action": "Dejar una reseña",
@@ -819,6 +850,19 @@
       "title": "¡Eres Embajador! 🎉",
       "subtitle": "Gracias por compartir el amor"
     }
+  },
+  "review": {
+    "title": "¡Tu reseña está lista! ✨",
+    "subtitle": "Esto es lo que dijiste, {firstName}. Puedes editarlo antes de compartir.",
+    "yourReview": "Tu reseña",
+    "copy": "Copiar",
+    "copied": "¡Copiado!",
+    "edit": "Editar",
+    "done": "OK",
+    "editHint": "Puedes modificar el texto para que se parezca más a ti.",
+    "validate": "Validar mi reseña y compartir",
+    "reassurance": "Esta reseña se copiará automáticamente cuando compartas en las plataformas.",
+    "fallbackReview": "Tuve una excelente experiencia con {companyName}. ¡Muy recomendable!"
   },
   "emailSequences": {
     "title": "Automatizaciones Email",

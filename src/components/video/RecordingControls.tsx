@@ -52,12 +52,15 @@ export function RecordingControls({
           >
             <button
               onClick={onStartRecording}
-              className="w-20 h-20 rounded-full bg-red-500 hover:bg-red-600 transition-colors flex items-center justify-center focus:outline-none focus:ring-4 focus:ring-red-500/50"
+              className="w-20 h-20 md:w-16 md:h-16 rounded-full bg-red-500 hover:bg-red-600 transition-colors flex items-center justify-center focus:outline-none focus:ring-4 focus:ring-red-500/50"
             >
-              <Circle className="w-10 h-10 text-white fill-white" />
+              <Circle className="w-10 h-10 md:w-8 md:h-8 text-white fill-white" />
             </button>
             <p className="text-sm text-gray-500 text-center">
               {t('startHint')}
+            </p>
+            <p className="text-sm text-slate-500 text-center mt-2">
+              {t('encouragementReady')}
             </p>
           </motion.div>
         )}
@@ -71,7 +74,7 @@ export function RecordingControls({
             exit={{ opacity: 0, scale: 1.5 }}
             className="flex justify-center"
           >
-            <div className="text-8xl font-bold text-rose-500 animate-pulse">
+            <div className="text-6xl md:text-8xl font-bold text-rose-500 animate-pulse">
               {countdown}
             </div>
           </motion.div>
@@ -119,9 +122,9 @@ export function RecordingControls({
             <div className="flex justify-center">
               <button
                 onClick={onStopRecording}
-                className="w-20 h-20 rounded-full bg-red-500 hover:bg-red-600 transition-colors flex items-center justify-center focus:outline-none focus:ring-4 focus:ring-red-500/50"
+                className="w-20 h-20 md:w-16 md:h-16 rounded-full bg-red-500 hover:bg-red-600 transition-colors flex items-center justify-center focus:outline-none focus:ring-4 focus:ring-red-500/50"
               >
-                <Square className="w-8 h-8 text-white fill-white" />
+                <Square className="w-8 h-8 md:w-6 md:w-6 text-white fill-white" />
               </button>
             </div>
           </motion.div>
@@ -136,6 +139,14 @@ export function RecordingControls({
             exit={{ opacity: 0, y: -20 }}
             className="space-y-4"
           >
+            <motion.p
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-sm text-emerald-600 font-medium text-center"
+            >
+              {t('encouragementRecorded')}
+            </motion.p>
+
             <div className="text-center space-y-1">
               <div className="text-2xl font-bold text-gray-900">
                 {formatDuration(duration)}

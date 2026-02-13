@@ -43,7 +43,7 @@ export function CompanyProfileSection({ company }: CompanyProfileSectionProps) {
     try {
       const result = await updateBusinessInfo({
         name: businessName,
-        industry: industry || '',
+        industry: industry || null,
       })
 
       if (result.success) {

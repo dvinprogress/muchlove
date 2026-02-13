@@ -10,6 +10,7 @@ export interface LinkedInPostParams {
   companyName: string
   testimonialDuration?: number // in seconds
   locale: string
+  reviewText?: string | null
 }
 
 /**
@@ -31,14 +32,40 @@ function formatDuration(seconds: number): string {
  * Generate LinkedIn post text based on locale and parameters
  */
 export function generateLinkedInPost(params: LinkedInPostParams): string {
-  const { contactFirstName, companyName, testimonialDuration, locale } = params
+  const { contactFirstName, companyName, testimonialDuration, locale, reviewText } = params
 
   // Format duration if provided
   const durationText = testimonialDuration
     ? formatDuration(testimonialDuration)
     : 'just a few minutes'
 
-  // Templates by locale
+  // If reviewText is provided, use it in the post
+  if (reviewText) {
+    const templatesWithReview: Record<string, string> = {
+      en: `${reviewText}
+
+— ${contactFirstName}, happy customer of ${companyName}
+
+💛 Shared via MuchLove`,
+
+      fr: `${reviewText}
+
+— ${contactFirstName}, client satisfait de ${companyName}
+
+💛 Partagé via MuchLove`,
+
+      es: `${reviewText}
+
+— ${contactFirstName}, cliente satisfecho de ${companyName}
+
+💛 Compartido via MuchLove`
+    }
+
+    const normalizedLocale = locale?.toLowerCase().split('-')[0] || 'en'
+    return (templatesWithReview[normalizedLocale] ?? templatesWithReview.en) as string
+  }
+
+  // Fallback templates without review text
   const templates: Record<string, string> = {
     en: `🎉 ${contactFirstName} from ${companyName} just became a MuchLove Ambassador!
 

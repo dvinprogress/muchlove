@@ -48,5 +48,5 @@ export const VIDEO_VALIDATION = {
   MAX_FILE_SIZE: 50 * 1024 * 1024, // 50MB
   ALLOWED_MIME_TYPES: ['video/webm', 'video/mp4'],
   MIN_DURATION: 15, // 15 secondes minimum (aligné sur RECORDING_LIMITS)
-  MAX_DURATION: 120, // 2 minutes maximum (aligné sur RECORDING_LIMITS)
+  MAX_DURATION: 60, // 1 minute maximum (aligné sur RECORDING_LIMITS)
 } as const

@@ -22,7 +22,7 @@ Table des entreprises clientes (B2B).
 | trustpilot_url | TEXT | - | URL Trustpilot |
 | plan | TEXT | DEFAULT 'free' | free/starter/growth/pro |
 | videos_used | INT | DEFAULT 0 | Compteur videos |
-| videos_limit | INT | DEFAULT 5 | Limite selon plan |
+| videos_limit | INT | DEFAULT 20 | Limite selon plan |
 | created_at | TIMESTAMPTZ | DEFAULT NOW() | - |
 | updated_at | TIMESTAMPTZ | DEFAULT NOW() | - |
 

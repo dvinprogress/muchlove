@@ -83,6 +83,8 @@ export interface Database {
           status: Database['public']['Enums']['contact_status']
           linkedin_consent: boolean
           linkedin_consent_at: string | null
+          phone: string | null
+          reward: string | null
           created_at: string
           updated_at: string
           link_opened_at: string | null
@@ -98,6 +100,8 @@ export interface Database {
           status?: Database['public']['Enums']['contact_status']
           linkedin_consent?: boolean
           linkedin_consent_at?: string | null
+          phone?: string | null
+          reward?: string | null
           created_at?: string
           updated_at?: string
           link_opened_at?: string | null
@@ -113,6 +117,8 @@ export interface Database {
           status?: Database['public']['Enums']['contact_status']
           linkedin_consent?: boolean
           linkedin_consent_at?: string | null
+          phone?: string | null
+          reward?: string | null
           created_at?: string
           updated_at?: string
           link_opened_at?: string | null

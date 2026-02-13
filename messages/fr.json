@@ -87,7 +87,7 @@
         },
         "1": {
           "title": "Enregistrer",
-          "description": "Vos clients cliquent sur le lien et enregistrent un témoignage vidéo de 30 secondes à 2 minutes directement dans leur navigateur."
+          "description": "Vos clients cliquent sur le lien et enregistrent un témoignage vidéo de 30 secondes à 1 minute directement dans leur navigateur."
         },
         "2": {
           "title": "Partager",
@@ -104,7 +104,7 @@
       "items": {
         "0": { "value": "92%", "label": "des consommateurs font plus confiance aux témoignages vidéo qu'aux avis textuels" },
         "1": { "value": "3x", "label": "plus de conversions avec une preuve sociale vidéo authentique" },
-        "2": { "value": "2 min", "label": "temps moyen pour qu'un client enregistre un témoignage" },
+        "2": { "value": "1 min", "label": "temps moyen pour qu'un client enregistre un témoignage" },
         "3": { "value": "20", "label": "témoignages vidéo gratuits pour démarrer" }
       }
     },
@@ -270,7 +270,7 @@
         },
         "7": {
           "question": "Comment mes clients enregistrent-ils leur témoignage ?",
-          "answer": "Vos clients reçoivent un email avec un lien unique. Ils cliquent dessus, arrivent sur une page brandée, et enregistrent une vidéo de 30 secondes à 2 minutes directement dans leur navigateur. Aucune application à télécharger, aucun compte à créer — juste un clic et ils enregistrent."
+          "answer": "Vos clients reçoivent un email avec un lien unique. Ils cliquent dessus, arrivent sur une page brandée, et enregistrent une vidéo de 30 secondes à 1 minute directement dans leur navigateur. Aucune application à télécharger, aucun compte à créer — juste un clic et ils enregistrent."
         }
       }
     },
@@ -444,11 +444,27 @@
         "placeholder": "Acme Inc.",
         "required": "Le nom de l'entreprise est obligatoire"
       },
+      "optional": "(optionnel)",
+      "phone": {
+        "label": "Téléphone",
+        "placeholder": "+33 6 12 34 56 78"
+      },
+      "reward": {
+        "label": "Récompense offerte",
+        "placeholder": "Ex: 10% de réduction",
+        "suggestions": "Idées : bon de réduction, mois gratuit, accès premium, goodies..."
+      },
       "submit": "Ajouter",
       "submitting": "Création...",
       "submitAlt": "Créer le contact",
       "cancel": "Annuler",
       "success": "Contact créé ! Prêt à partager l'amour 💛",
+      "successMessage": "Contact créé avec succès !",
+      "sendEmail": "Envoyer l'invitation par email",
+      "copyLink": "Copier le lien d'enregistrement",
+      "linkCopied": "Lien copié !",
+      "emailSent": "Email envoyé avec succès !",
+      "close": "Fermer",
       "error": "Oups ! Impossible de créer le contact : {error}",
       "errorGeneric": "Oups ! Quelque chose n'a pas marché 😊 Réessayez ?"
     },
@@ -522,6 +538,18 @@
       "createdOn": "Créé le {date}",
       "viewDetail": "Voir les détails →"
     },
+    "edit": {
+      "title": "Modifier le contact",
+      "status": "Statut",
+      "save": "Enregistrer",
+      "saving": "Enregistrement...",
+      "success": "Contact mis à jour",
+      "error": "Erreur lors de la mise à jour",
+      "createdAt": "Créé le",
+      "link": "Lien d'enregistrement",
+      "deleteConfirm": "Voulez-vous vraiment supprimer ce contact ? Cette action est irréversible.",
+      "confirmDelete": "Supprimer"
+    },
     "error": "Erreur : {error}"
   },
   "video": {
@@ -561,7 +589,9 @@
       "retake": "Refaire",
       "validate": "Valider",
       "startHint": "Appuyez pour commencer",
-      "encouragement": "C'est parti ! Parlez naturellement, vous pouvez recommencer."
+      "encouragement": "C'est parti ! Parlez naturellement, vous pouvez recommencer.",
+      "encouragementReady": "C'est parti ! Appuyez et parlez naturellement",
+      "encouragementRecorded": "Bravo, c'est dans la boîte ! 🎬"
     },
     "scripts": {
       "title1": "Racontez votre histoire",
@@ -795,6 +825,7 @@
   "sharing": {
     "title": "Partagez l'amour ! 💛",
     "subtitle": "Partagez sur ces plateformes pour devenir Ambassadeur",
+    "reviewCopied": "Votre avis a été copié ! Collez-le dans le formulaire 📋",
     "trustpilot": {
       "title": "Trustpilot",
       "action": "Laisser un avis",
@@ -819,6 +850,19 @@
       "title": "Vous êtes Ambassadeur ! 🎉",
       "subtitle": "Merci d'avoir partagé l'amour"
     }
+  },
+  "review": {
+    "title": "Votre avis est prêt ! ✨",
+    "subtitle": "Voici ce que vous avez dit, {firstName}. Vous pouvez le modifier avant de le partager.",
+    "yourReview": "Votre avis",
+    "copy": "Copier",
+    "copied": "Copié !",
+    "edit": "Modifier",
+    "done": "OK",
+    "editHint": "Vous pouvez modifier le texte pour qu'il vous ressemble davantage.",
+    "validate": "Valider mon avis et partager",
+    "reassurance": "Cet avis sera copié automatiquement quand vous partagerez sur les plateformes.",
+    "fallbackReview": "J'ai eu une excellente expérience avec {companyName}. Je recommande vivement !"
   },
   "emailSequences": {
     "title": "Automatisations Email",

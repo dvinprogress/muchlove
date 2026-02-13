@@ -273,7 +273,7 @@ export function CSVImportModal({ isOpen, onClose }: CSVImportModalProps) {
           >
             <div className="mb-4">
               <h3 className="text-lg font-semibold text-slate-900 mb-2">
-                {t('preview')} ({parsedData.rows.length} contacts)
+                {t('preview', { count: parsedData.rows.length })}
               </h3>
 
               {parsedData.errors.length > 0 && (

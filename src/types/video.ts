@@ -27,7 +27,7 @@ export const ERROR_MESSAGES: Record<RecordingErrorCode, string> = {
   MICROPHONE_PERMISSION_DENIED: "L'acces au microphone a ete refuse. Autorisez-le dans les parametres.",
   RECORDING_FAILED: "L'enregistrement a echoue. Veuillez reessayer.",
   RECORDING_TOO_SHORT: "La video doit durer au moins 15 secondes",
-  RECORDING_TOO_LONG: "La video ne peut pas depasser 2 minutes",
+  RECORDING_TOO_LONG: "La video ne peut pas depasser 1 minute",
   VIDEO_TOO_LARGE: "Le fichier video est trop volumineux (max 50 Mo)",
   UPLOAD_FAILED: "L'envoi de la video a echoue. Verifiez votre connexion.",
   UPLOAD_TIMEOUT: "L'envoi a pris trop de temps. Reessayez.",
@@ -54,7 +54,7 @@ export const VIDEO_CONSTRAINTS: MediaStreamConstraints = {
 // === Recording Limits ===
 export const RECORDING_LIMITS = {
   minDuration: 15,
-  maxDuration: 120,
+  maxDuration: 60,
   maxAttempts: 3,
   maxFileSize: 50 * 1024 * 1024, // 50MB
   chunkInterval: 1000, // 1s chunks

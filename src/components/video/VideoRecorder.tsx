@@ -16,7 +16,7 @@ interface VideoRecorderProps {
   companyId: string
   companyName: string
   maxAttempts?: number
-  onComplete: (blob: Blob, duration: number) => void
+  onComplete: (blob: Blob, duration: number, transcription: string | null) => void
 }
 
 export function VideoRecorder({
@@ -32,8 +32,8 @@ export function VideoRecorder({
     endpoint: '/api/upload-video',
     contactId,
     companyId,
-    onSuccess: (blob: Blob, duration: number) => {
-      onComplete(blob, duration)
+    onSuccess: (blob: Blob, duration: number, transcription: string | null) => {
+      onComplete(blob, duration, transcription)
     }
   }), [contactId, companyId, onComplete])
 
@@ -172,7 +172,7 @@ export function VideoRecorder({
       case 'countdown':
       case 'recording':
         return (
-          <div className="w-full max-w-lg mx-auto">
+          <div className="w-full max-w-lg mx-auto space-y-4 md:space-y-6">
             <VideoPreview
               stream={stream}
               isRecording={phase === 'recording'}
@@ -197,7 +197,7 @@ export function VideoRecorder({
 
       case 'recorded':
         return (
-          <div className="w-full max-w-lg mx-auto">
+          <div className="w-full max-w-lg mx-auto space-y-4 md:space-y-6">
             <VideoPreview videoUrl={videoUrl} />
             <RecordingControls
               phase={phase}

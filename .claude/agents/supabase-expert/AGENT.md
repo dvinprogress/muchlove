@@ -113,7 +113,7 @@ CREATE TABLE companies (
   -- Subscription
   plan TEXT DEFAULT 'free' CHECK (plan IN ('free', 'starter', 'growth', 'pro')),
   videos_used INT DEFAULT 0,
-  videos_limit INT DEFAULT 5,
+  videos_limit INT DEFAULT 20,
 
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()

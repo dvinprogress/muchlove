@@ -3,17 +3,17 @@
 import { useState, useMemo, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Plus, ChevronLeft, ChevronRight, Upload } from 'lucide-react'
+import { Plus, ChevronLeft, ChevronRight, Upload, Pencil } from 'lucide-react'
 import type { Contact, ContactStatus } from '@/types/database'
 import { SearchInput } from '@/components/ui/SearchInput'
 import { Button } from '@/components/ui/Button'
 import { ContactStatusBadge } from './ContactStatusBadge'
 import { AddContactForm } from './AddContactForm'
 import { CopyLinkButton } from './CopyLinkButton'
-import { DeleteContactButton } from './DeleteContactButton'
 import { SendEmailButton } from './SendEmailButton'
 import { CSVImportModal } from './CSVImportModal'
 import { BulkActionsBar } from './BulkActionsBar'
+import { EditContactSheet } from './EditContactSheet'
 import { formatDate } from '@/lib/utils/format'
 import { CONTACT_STATUS_ORDER } from '@/lib/utils/contact-status'
 import { useTranslations } from 'next-intl'
@@ -49,6 +49,7 @@ export function ContactsList({ contacts, currentPage, totalContacts, pageSize }:
   const [search, setSearch] = useState('')
   const [statusFilter, setStatusFilter] = useState<ContactStatus | 'all'>('all')
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
+  const [editingContact, setEditingContact] = useState<Contact | null>(null)
 
   // Calcul pagination
   const totalPages = Math.ceil(totalContacts / pageSize)
@@ -225,11 +226,13 @@ export function ContactsList({ contacts, currentPage, totalContacts, pageSize }:
                     <div className="flex items-center justify-end gap-1">
                       <SendEmailButton contactId={contact.id} contactStatus={contact.status} variant="icon" />
                       <CopyLinkButton uniqueLink={contact.unique_link} variant="icon" />
-                      <DeleteContactButton
-                        contactId={contact.id}
-                        contactName={contact.first_name}
-                        variant="icon"
-                      />
+                      <button
+                        onClick={() => setEditingContact(contact)}
+                        className="p-2 hover:bg-slate-100 rounded-full transition-colors"
+                        title={t('edit.title')}
+                      >
+                        <Pencil className="w-4 h-4 text-slate-500" />
+                      </button>
                     </div>
                   </td>
                 </motion.tr>
@@ -287,7 +290,12 @@ export function ContactsList({ contacts, currentPage, totalContacts, pageSize }:
             <div className="flex gap-2 pt-2 border-t border-slate-100">
               <SendEmailButton contactId={contact.id} contactStatus={contact.status} variant="button" className="flex-1" />
               <CopyLinkButton uniqueLink={contact.unique_link} variant="button" className="flex-1" />
-              <DeleteContactButton contactId={contact.id} contactName={contact.first_name} variant="button" />
+              <button
+                onClick={() => setEditingContact(contact)}
+                className="px-3 py-2 text-slate-600 hover:bg-slate-100 rounded-lg text-sm font-medium transition-colors flex items-center gap-1"
+              >
+                <Pencil className="w-4 h-4" />
+              </button>
             </div>
           </motion.div>
         ))}
@@ -326,6 +334,15 @@ export function ContactsList({ contacts, currentPage, totalContacts, pageSize }:
       {/* Modals */}
       <AddContactForm isOpen={showAddModal} onClose={() => setShowAddModal(false)} />
       <CSVImportModal isOpen={showImportModal} onClose={() => setShowImportModal(false)} />
+
+      {/* Edit Contact Sheet */}
+      {editingContact && (
+        <EditContactSheet
+          contact={editingContact}
+          isOpen={!!editingContact}
+          onClose={() => setEditingContact(null)}
+        />
+      )}
 
       {/* Bulk Actions Bar */}
       <AnimatePresence>

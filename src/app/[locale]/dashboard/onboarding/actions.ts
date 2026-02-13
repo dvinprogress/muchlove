@@ -13,7 +13,7 @@ type ActionResult<T = void> = { success: true; data: T } | { success: false; err
 // Schemas Zod
 const businessInfoSchema = z.object({
   name: z.string().min(1, 'Company name is required').max(200),
-  industry: z.string().max(100).optional().or(z.literal('')),
+  industry: z.string().max(100).nullish(),
 })
 
 const sharingLinksSchema = z.object({

@@ -87,7 +87,7 @@
         },
         "1": {
           "title": "Record",
-          "description": "Your customers click the link and record a 30-second to 2-minute video testimonial directly in their browser."
+          "description": "Your customers click the link and record a 30-second to 1-minute video testimonial directly in their browser."
         },
         "2": {
           "title": "Share",
@@ -104,7 +104,7 @@
       "items": {
         "0": { "value": "92%", "label": "of consumers trust video testimonials more than text reviews" },
         "1": { "value": "3x", "label": "more conversions with authentic video social proof" },
-        "2": { "value": "2 min", "label": "average time for a customer to record a testimonial" },
+        "2": { "value": "1 min", "label": "average time for a customer to record a testimonial" },
         "3": { "value": "20", "label": "free video testimonials to get you started" }
       }
     },
@@ -270,7 +270,7 @@
         },
         "7": {
           "question": "How do my customers record their testimonial?",
-          "answer": "Your customers receive an email with a unique link. They click it, land on a branded page, and record a 30-second to 2-minute video directly in their browser. No app download, no account creation — just one click and they're recording."
+          "answer": "Your customers receive an email with a unique link. They click it, land on a branded page, and record a 30-second to 1-minute video directly in their browser. No app download, no account creation — just one click and they're recording."
         }
       }
     },
@@ -444,11 +444,27 @@
         "placeholder": "Acme Inc.",
         "required": "Company name is required"
       },
+      "optional": "(optional)",
+      "phone": {
+        "label": "Phone",
+        "placeholder": "+1 555 123 4567"
+      },
+      "reward": {
+        "label": "Reward offered",
+        "placeholder": "E.g: 10% discount",
+        "suggestions": "Ideas: discount code, free month, premium access, swag..."
+      },
       "submit": "Add",
       "submitting": "Creating...",
       "submitAlt": "Create contact",
       "cancel": "Cancel",
       "success": "Contact created! Ready to share much love 💛",
+      "successMessage": "Contact created successfully!",
+      "sendEmail": "Send email invitation",
+      "copyLink": "Copy recording link",
+      "linkCopied": "Link copied!",
+      "emailSent": "Email sent successfully!",
+      "close": "Close",
       "error": "Oops! Couldn't create contact: {error}",
       "errorGeneric": "Oops! Something didn't work 😊 Try again?"
     },
@@ -522,6 +538,18 @@
       "createdOn": "Created on {date}",
       "viewDetail": "View details →"
     },
+    "edit": {
+      "title": "Edit contact",
+      "status": "Status",
+      "save": "Save",
+      "saving": "Saving...",
+      "success": "Contact updated",
+      "error": "Failed to update",
+      "createdAt": "Created on",
+      "link": "Recording link",
+      "deleteConfirm": "Are you sure you want to delete this contact? This action cannot be undone.",
+      "confirmDelete": "Delete"
+    },
     "error": "Error: {error}"
   },
   "video": {
@@ -561,7 +589,9 @@
       "retake": "Retake",
       "validate": "Validate",
       "startHint": "Tap to start",
-      "encouragement": "Here we go! Speak naturally, you can always redo it."
+      "encouragement": "Here we go! Speak naturally, you can always redo it.",
+      "encouragementReady": "Let's go! Press and speak naturally",
+      "encouragementRecorded": "Great job, that's a wrap! 🎬"
     },
     "scripts": {
       "title1": "Tell your story",
@@ -795,6 +825,7 @@
   "sharing": {
     "title": "Spread the love! 💛",
     "subtitle": "Share on these platforms to become an Ambassador",
+    "reviewCopied": "Your review has been copied! Paste it in the form 📋",
     "trustpilot": {
       "title": "Trustpilot",
       "action": "Leave a review",
@@ -819,6 +850,19 @@
       "title": "You're an Ambassador! 🎉",
       "subtitle": "Thank you for spreading the love"
     }
+  },
+  "review": {
+    "title": "Your review is ready! ✨",
+    "subtitle": "Here's what you said, {firstName}. Feel free to edit before sharing.",
+    "yourReview": "Your review",
+    "copy": "Copy",
+    "copied": "Copied!",
+    "edit": "Edit",
+    "done": "OK",
+    "editHint": "Feel free to tweak the text to make it truly yours.",
+    "validate": "Validate my review and share",
+    "reassurance": "This review will be automatically copied when you share on platforms.",
+    "fallbackReview": "I had an excellent experience with {companyName}. Highly recommended!"
   },
   "emailSequences": {
     "title": "Email Automations",

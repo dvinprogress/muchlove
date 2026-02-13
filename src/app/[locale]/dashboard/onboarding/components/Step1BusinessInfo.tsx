@@ -75,7 +75,7 @@ export function Step1BusinessInfo({
       const { updateBusinessInfo } = await import('../actions')
       const result = await updateBusinessInfo({
         name: name.trim(),
-        industry: industry || '',
+        industry: industry || null,
       })
 
       if (result.success) {

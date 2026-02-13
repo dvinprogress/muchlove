@@ -122,7 +122,7 @@ NEXT_PUBLIC_APP_URL=https://muchlove.app
   - "You have {X} video testimonials waiting 🎁"
 
 ### Segment D: Free Plan Maximizer
-- **Trigger**: videos_used >= videos_limit (5/5 en free)
+- **Trigger**: videos_used >= videos_limit (20/20 en free)
 - **Arrêt**: upgrade ou reset mensuel
 - **Emails**: 1 (immédiat)
   - "🎉 You hit your free plan limit!"
@@ -207,7 +207,7 @@ NEXT_PUBLIC_APP_URL=https://muchlove.app
    - Vérifier que email_events est updaté
 
 4. **Test Free Maximizer trigger**
-   - Uploader 5 vidéos avec un compte free
+   - Uploader 20 vidéos avec un compte free
    - Vérifier qu'une sequence FREE_MAXIMIZER est créée immédiatement
    - Vérifier que l'email est envoyé dans l'heure
 

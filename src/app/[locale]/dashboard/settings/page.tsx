@@ -16,7 +16,7 @@ export default async function SettingsPage() {
         subscription: null,
         recentTransactions: [],
         creditsRemaining: 0,
-        creditsTotal: 5,
+        creditsTotal: 20,
         usagePercentage: 0,
       }
 

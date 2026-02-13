@@ -15,6 +15,7 @@ interface LinkedInShareButtonProps {
   testimonialDuration?: number
   currentStatus: ContactStatus
   locale: string
+  reviewText?: string | null
   onStatusUpdate: (newStatus: ContactStatus) => void
   onCelebration: () => void
 }
@@ -28,6 +29,7 @@ export function LinkedInShareButton({
   testimonialDuration,
   currentStatus,
   locale,
+  reviewText,
   onStatusUpdate: _onStatusUpdate,
   onCelebration
 }: LinkedInShareButtonProps) {
@@ -45,7 +47,8 @@ export function LinkedInShareButton({
         contactFirstName,
         companyName,
         testimonialDuration,
-        locale
+        locale,
+        reviewText
       })
 
       // Copy to clipboard

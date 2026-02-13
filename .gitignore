@@ -40,3 +40,5 @@ nul
 
 # checkpoints (may contain secrets)
 .claude/checkpoints/
+
+.env*.local
