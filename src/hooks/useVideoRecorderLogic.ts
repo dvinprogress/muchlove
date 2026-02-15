@@ -52,20 +52,18 @@ export function useVideoRecorderLogic(config: UploadConfig) {
       setUploadPhase('uploading')
       setUploadError(null)
 
-      // Phase 1: Transcription client-side (non-bloquante)
-      let transcription: string | null = null
-      try {
-        transcription = await transcribe(videoBlob)
-      } catch (transcriptionError) {
-        console.warn('Transcription failed (non-blocking):', transcriptionError)
-        // Continue sans transcription
-      }
-
       // Détecter le mode (legacy FormData pour demo vs nouveau JSON metadata)
       const isLegacyMode = !!config.buildFormData
+      let transcription: string | null = null
 
       if (isLegacyMode) {
-        // Mode legacy (demo) : FormData upload
+        // Mode legacy (demo) : transcription séquentielle + FormData upload
+        try {
+          transcription = await transcribe(videoBlob)
+        } catch (transcriptionError) {
+          console.warn('Transcription failed (non-blocking):', transcriptionError)
+        }
+
         const formData = config.buildFormData!(videoBlob, duration, transcription)
 
         const response = await fetch(config.endpoint, {
@@ -80,28 +78,37 @@ export function useVideoRecorderLogic(config: UploadConfig) {
 
         await response.json()
       } else {
-        // Nouveau mode (production) : Upload Storage client-side + JSON metadata
+        // Mode production : transcription Groq + upload Storage EN PARALLÈLE
         if (!config.contactId || !config.companyId) {
           throw new Error('contactId and companyId are required for direct upload mode')
         }
 
-        // Phase 2: Upload direct du blob vers Supabase Storage
         const supabase = createClient()
         const timestamp = Date.now()
         const filePath = `${config.companyId}/${config.contactId}/raw_${timestamp}.webm`
 
-        const { error: uploadError } = await supabase.storage
-          .from('videos')
-          .upload(filePath, videoBlob, {
-            contentType: videoBlob.type || 'video/webm',
-            upsert: false
-          })
+        // Lancer transcription et upload en parallèle
+        let storageResult
+        ;[transcription, storageResult] = await Promise.all([
+          // Transcription via API Groq (non-bloquante)
+          transcribe(videoBlob).catch((err) => {
+            console.warn('Transcription failed (non-blocking):', err)
+            return null
+          }),
+          // Upload vidéo vers Supabase Storage
+          supabase.storage
+            .from('videos')
+            .upload(filePath, videoBlob, {
+              contentType: videoBlob.type || 'video/webm',
+              upsert: false
+            })
+        ])
 
-        if (uploadError) {
-          throw new Error(`Storage upload failed: ${uploadError.message}`)
+        if (storageResult.error) {
+          throw new Error(`Storage upload failed: ${storageResult.error.message}`)
         }
 
-        // Phase 3: POST vers API avec metadata JSON (pas de FormData)
+        // POST metadata vers API (avec transcription si disponible)
         const response = await fetch(config.endpoint, {
           method: 'POST',
           headers: {
