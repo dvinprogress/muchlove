@@ -104,7 +104,7 @@ export default async function DashboardPage() {
       </div>
 
       {/* Quick Actions */}
-      <QuickActions />
+      <QuickActions publicSlug={company?.public_slug} />
 
       {/* Recent Activity & Conversion Funnel */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">

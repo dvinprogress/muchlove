@@ -6,13 +6,18 @@ import { motion } from 'framer-motion'
 import { UserPlus, Link as LinkIcon, Check } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
-export function QuickActions() {
+interface QuickActionsProps {
+  publicSlug?: string | null
+}
+
+export function QuickActions({ publicSlug }: QuickActionsProps) {
   const [copied, setCopied] = useState(false)
   const t = useTranslations('dashboard.quickActions')
 
   const handleCopyLink = async () => {
-    // TODO: Récupérer le vrai lien de la page publique depuis les settings
-    const publicLink = `${window.location.origin}/demo`
+    const publicLink = publicSlug
+      ? `${window.location.origin}/r/${publicSlug}`
+      : `${window.location.origin}/demo`
 
     await navigator.clipboard.writeText(publicLink)
     setCopied(true)

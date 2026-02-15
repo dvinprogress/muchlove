@@ -3,11 +3,14 @@ import { getBillingData } from './actions'
 import { BillingSection, UsageCard } from '@/components/billing'
 import { CreditTransactionsList } from './CreditTransactionsList'
 import { CompanyProfileSection } from '@/components/settings/CompanyProfileSection'
+import { PublicLinkSection } from '@/components/settings/PublicLinkSection'
+import { getPublicLinkData } from './public-link-actions'
 import { getTranslations } from 'next-intl/server'
 
 export default async function SettingsPage() {
   const t = await getTranslations('settings')
   const result = await getBillingData()
+  const publicLinkResult = await getPublicLinkData()
 
   const billing = result.success
     ? result.data
@@ -37,6 +40,12 @@ export default async function SettingsPage() {
             }}
           />
         )}
+
+        {/* Public Link */}
+        <PublicLinkSection
+          publicSlug={publicLinkResult.success ? publicLinkResult.data.publicSlug : null}
+          publicLinkEnabled={publicLinkResult.success ? publicLinkResult.data.publicLinkEnabled : false}
+        />
 
         {/* Usage Card */}
         <UsageCard
