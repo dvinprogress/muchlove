@@ -29,6 +29,8 @@ export interface Database {
           updated_at: string
           onboarding_completed_at: string | null
           industry: string | null
+          public_slug: string | null
+          public_link_enabled: boolean
         }
         Insert: {
           id?: string
@@ -49,6 +51,8 @@ export interface Database {
           updated_at?: string
           onboarding_completed_at?: string | null
           industry?: string | null
+          public_slug?: string | null
+          public_link_enabled?: boolean
         }
         Update: {
           id?: string
@@ -69,6 +73,8 @@ export interface Database {
           updated_at?: string
           onboarding_completed_at?: string | null
           industry?: string | null
+          public_slug?: string | null
+          public_link_enabled?: boolean
         }
         Relationships: []
       }
@@ -89,6 +95,7 @@ export interface Database {
           updated_at: string
           link_opened_at: string | null
           video_started_at: string | null
+          source: 'invited' | 'organic'
         }
         Insert: {
           id?: string
@@ -106,6 +113,7 @@ export interface Database {
           updated_at?: string
           link_opened_at?: string | null
           video_started_at?: string | null
+          source?: 'invited' | 'organic'
         }
         Update: {
           id?: string
@@ -123,6 +131,7 @@ export interface Database {
           updated_at?: string
           link_opened_at?: string | null
           video_started_at?: string | null
+          source?: 'invited' | 'organic'
         }
         Relationships: [
           {
