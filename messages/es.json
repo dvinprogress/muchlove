@@ -950,5 +950,23 @@
       "subtitle": "Tu cuenta esta configurada. Comienza a recopilar testimonios en video que difundan el amor!",
       "cta": "Ir a mi panel de control"
     }
+  },
+  "publicLink": {
+    "title": "Comparte tu experiencia con {companyName}",
+    "description": "Graba un video testimonial rapido — solo toma un minuto!",
+    "form": {
+      "firstName": "Tu nombre",
+      "email": "Tu email",
+      "companyName": "Tu empresa",
+      "submit": "Vamos!",
+      "submitting": "Preparando...",
+      "alreadyRecorded": "Ya has compartido tu experiencia. Gracias!",
+      "reRecord": "Grabar de nuevo",
+      "quotaReached": "Esta empresa ha alcanzado su limite de videos. Intentalo mas tarde."
+    },
+    "notFound": {
+      "title": "Pagina no encontrada",
+      "description": "Este enlace de grabacion no parece funcionar. Verifica la URL."
+    }
   }
 }

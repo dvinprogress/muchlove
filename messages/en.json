@@ -950,5 +950,23 @@
       "subtitle": "Your account is ready. Let's start collecting video testimonials that spread the love!",
       "cta": "Go to my dashboard"
     }
+  },
+  "publicLink": {
+    "title": "Share your experience with {companyName}",
+    "description": "Record a quick video testimonial — it only takes a minute!",
+    "form": {
+      "firstName": "Your first name",
+      "email": "Your email",
+      "companyName": "Your company",
+      "submit": "Let's go!",
+      "submitting": "Setting up...",
+      "alreadyRecorded": "You've already shared your story. Thank you!",
+      "reRecord": "Record again",
+      "quotaReached": "This company has reached its video limit. Please try again later."
+    },
+    "notFound": {
+      "title": "Page not found",
+      "description": "This recording link doesn't seem to work. Please check the URL."
+    }
   }
 }

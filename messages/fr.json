@@ -950,5 +950,23 @@
       "subtitle": "Votre compte est configure. Commencez a collecter des temoignages video qui repandent l'amour !",
       "cta": "Aller a mon tableau de bord"
     }
+  },
+  "publicLink": {
+    "title": "Partagez votre experience avec {companyName}",
+    "description": "Enregistrez un temoignage video rapide — ca ne prend qu'une minute !",
+    "form": {
+      "firstName": "Votre prenom",
+      "email": "Votre email",
+      "companyName": "Votre entreprise",
+      "submit": "C'est parti !",
+      "submitting": "Preparation...",
+      "alreadyRecorded": "Vous avez deja partage votre experience. Merci !",
+      "reRecord": "Enregistrer a nouveau",
+      "quotaReached": "Cette entreprise a atteint sa limite de videos. Reessayez plus tard."
+    },
+    "notFound": {
+      "title": "Page introuvable",
+      "description": "Ce lien d'enregistrement ne semble pas fonctionner. Verifiez l'URL."
+    }
   }
 }
