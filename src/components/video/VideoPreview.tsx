@@ -37,10 +37,10 @@ export function VideoPreview({ stream, videoUrl, isRecording = false }: VideoPre
   const showPlaceholder = !stream && !videoUrl
 
   return (
-    <div className="relative w-full max-w-md mx-auto p-1">
+    <div className="relative w-full">
       <div
         className={`
-          relative aspect-square rounded-2xl overflow-hidden bg-gray-900
+          relative aspect-[4/3] lg:aspect-square rounded-2xl overflow-hidden bg-gray-900
           ${isRecording ? 'ring-4 ring-red-500 animate-pulse' : ''}
         `}
       >

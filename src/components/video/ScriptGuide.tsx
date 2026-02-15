@@ -18,17 +18,16 @@ const SCRIPTS = [
 export function ScriptGuide({ companyName }: ScriptGuideProps) {
   const t = useTranslations('video.scripts')
   const [activeIndex, setActiveIndex] = useState(0)
-  const [expandedCard, setExpandedCard] = useState<number | null>(null)
+  const [selectedCard, setSelectedCard] = useState<number | null>(null)
   const scrollContainerRef = useRef<HTMLDivElement>(null)
 
-  // Fonction pour formater le script avec les blancs soulignés
   const formatScript = (script: string) => {
     const parts = script.split('___')
     return parts.map((part, index) => (
       <span key={index}>
         {part}
         {index < parts.length - 1 && (
-          <span className="font-semibold text-rose-400 border-b-2 border-dashed border-rose-300 px-1">
+          <span className="font-bold text-rose-400 border-b-2 border-dashed border-rose-300 px-1">
             ___
           </span>
         )}
@@ -52,7 +51,6 @@ export function ScriptGuide({ companyName }: ScriptGuideProps) {
     scrollToIndex(newIndex)
   }, [activeIndex, scrollToIndex])
 
-  // Observer pour détecter quelle carte est visible
   useEffect(() => {
     const container = scrollContainerRef.current
     if (!container) return
@@ -66,10 +64,7 @@ export function ScriptGuide({ companyName }: ScriptGuideProps) {
           }
         })
       },
-      {
-        root: container,
-        threshold: 0.5,
-      }
+      { root: container, threshold: 0.5 }
     )
 
     const cards = container.querySelectorAll('[data-index]')
@@ -78,87 +73,119 @@ export function ScriptGuide({ companyName }: ScriptGuideProps) {
     return () => observer.disconnect()
   }, [])
 
+  const handleSelect = (index: number) => {
+    setSelectedCard(selectedCard === index ? null : index)
+  }
+
   return (
-    <div className="mt-4 space-y-2">
-      {/* Container avec flèches */}
-      <div className="relative">
-        {/* Flèche gauche */}
-        {activeIndex > 0 && (
-          <button
-            onClick={goToPrev}
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1 z-10 w-8 h-8 rounded-full bg-white shadow-md border border-slate-200 flex items-center justify-center text-slate-500 hover:text-rose-500 hover:border-rose-300 transition-colors"
-            aria-label="Script précédent"
-          >
-            <ChevronLeft className="w-4 h-4" />
-          </button>
-        )}
+    <div className="space-y-3">
+      {/* Header */}
+      <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wide px-1">
+        {t('guideTitle') || 'Choisissez votre script'}
+      </h3>
 
-        {/* Flèche droite */}
-        {activeIndex < SCRIPTS.length - 1 && (
-          <button
-            onClick={goToNext}
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1 z-10 w-8 h-8 rounded-full bg-white shadow-md border border-slate-200 flex items-center justify-center text-slate-500 hover:text-rose-500 hover:border-rose-300 transition-colors"
-            aria-label="Script suivant"
-          >
-            <ChevronRight className="w-4 h-4" />
-          </button>
-        )}
-
-        {/* Container scrollable horizontal */}
-        <div
-          ref={scrollContainerRef}
-          className="flex gap-2 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-2 px-2"
-          style={{
-            scrollbarWidth: 'none',
-            msOverflowStyle: 'none',
-          }}
-        >
-          {SCRIPTS.map((script, index) => (
+      {/* Desktop: Vertical stack */}
+      <div className="hidden lg:flex flex-col gap-3">
+        {SCRIPTS.map((script, index) => {
+          const isSelected = selectedCard === index
+          return (
             <motion.div
               key={script.key}
-              data-index={index}
-              initial={{ opacity: 0, x: 20 }}
+              onClick={() => handleSelect(index)}
               animate={{
-                opacity: 1,
-                x: 0,
-                scale: expandedCard === index ? 1.05 : 1,
-                zIndex: expandedCard === index ? 10 : 1
+                scale: isSelected ? 1.03 : 1,
+                opacity: selectedCard !== null && !isSelected ? 0.6 : 1,
               }}
-              transition={{
-                delay: expandedCard !== null ? 0 : index * 0.1,
-                type: "spring",
-                stiffness: 300
-              }}
-              onClick={() => setExpandedCard(expandedCard === index ? null : index)}
-              className="flex-shrink-0 w-[320px] md:w-[360px] snap-center cursor-pointer"
+              transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+              className={`
+                cursor-pointer rounded-xl p-5 transition-colors duration-200
+                ${isSelected
+                  ? 'bg-rose-50 border-2 border-rose-400 shadow-md'
+                  : 'bg-white border-2 border-slate-100 hover:border-slate-200 shadow-sm hover:shadow'
+                }
+              `}
             >
-              <div className="bg-white/80 backdrop-blur border border-gray-100 rounded-lg p-4 h-full shadow-sm hover:shadow-md transition-shadow">
-                <h4 className="text-sm font-semibold text-rose-500 mb-1">
-                  {t(script.titleKey)}
-                </h4>
-                <p className="text-sm md:text-base text-gray-700 leading-relaxed">
-                  {formatScript(t(script.scriptKey, { companyName }))}
-                </p>
-              </div>
+              <h4 className={`text-sm mb-2 ${isSelected ? 'font-bold text-rose-600' : 'font-semibold text-rose-500'}`}>
+                {t(script.titleKey)}
+              </h4>
+              <p className={`leading-relaxed ${isSelected ? 'text-base font-semibold text-slate-900' : 'text-sm text-slate-600'}`}>
+                {formatScript(t(script.scriptKey, { companyName }))}
+              </p>
             </motion.div>
-          ))}
-        </div>
+          )
+        })}
       </div>
 
-      {/* Dots indicators */}
-      <div className="flex justify-center gap-1.5">
-        {SCRIPTS.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => scrollToIndex(index)}
-            className={`h-1.5 rounded-full transition-all duration-200 ${
-              activeIndex === index
-                ? 'bg-rose-500 w-4'
-                : 'bg-gray-300 hover:bg-gray-400 w-1.5'
-            }`}
-            aria-label={`Script ${index + 1}`}
-          />
-        ))}
+      {/* Mobile: Horizontal scroll */}
+      <div className="lg:hidden">
+        <div className="relative">
+          {activeIndex > 0 && (
+            <button
+              onClick={goToPrev}
+              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1 z-10 w-8 h-8 rounded-full bg-white shadow-md border border-slate-200 flex items-center justify-center text-slate-500 hover:text-rose-500 transition-colors"
+              aria-label="Script précédent"
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+          )}
+          {activeIndex < SCRIPTS.length - 1 && (
+            <button
+              onClick={goToNext}
+              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1 z-10 w-8 h-8 rounded-full bg-white shadow-md border border-slate-200 flex items-center justify-center text-slate-500 hover:text-rose-500 transition-colors"
+              aria-label="Script suivant"
+            >
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          )}
+          <div
+            ref={scrollContainerRef}
+            className="flex gap-2 overflow-x-auto snap-x snap-mandatory pb-2 px-2"
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+          >
+            {SCRIPTS.map((script, index) => {
+              const isSelected = selectedCard === index
+              return (
+                <motion.div
+                  key={script.key}
+                  data-index={index}
+                  onClick={() => handleSelect(index)}
+                  animate={{
+                    scale: isSelected ? 1.03 : 1,
+                    opacity: selectedCard !== null && !isSelected ? 0.6 : 1,
+                  }}
+                  transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                  className={`
+                    flex-shrink-0 w-[300px] snap-center cursor-pointer rounded-xl p-4
+                    ${isSelected
+                      ? 'bg-rose-50 border-2 border-rose-400 shadow-md'
+                      : 'bg-white border-2 border-slate-100 shadow-sm'
+                    }
+                  `}
+                >
+                  <h4 className={`text-sm mb-1 ${isSelected ? 'font-bold text-rose-600' : 'font-semibold text-rose-500'}`}>
+                    {t(script.titleKey)}
+                  </h4>
+                  <p className={`leading-relaxed ${isSelected ? 'text-base font-semibold text-slate-900' : 'text-sm text-slate-600'}`}>
+                    {formatScript(t(script.scriptKey, { companyName }))}
+                  </p>
+                </motion.div>
+              )
+            })}
+          </div>
+
+          <div className="flex justify-center gap-1.5 mt-2">
+            {SCRIPTS.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => scrollToIndex(index)}
+                className={`h-1.5 rounded-full transition-all duration-200 ${
+                  activeIndex === index ? 'bg-rose-500 w-4' : 'bg-gray-300 hover:bg-gray-400 w-1.5'
+                }`}
+                aria-label={`Script ${index + 1}`}
+              />
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   )

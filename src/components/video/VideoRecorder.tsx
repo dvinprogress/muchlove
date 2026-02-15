@@ -172,45 +172,56 @@ export function VideoRecorder({
       case 'countdown':
       case 'recording':
         return (
-          <div className="w-full max-w-lg mx-auto space-y-4 md:space-y-6">
-            <VideoPreview
-              stream={stream}
-              isRecording={phase === 'recording'}
-            />
-            <RecordingControls
-              phase={phase}
-              duration={duration}
-              maxDuration={RECORDING_LIMITS.maxDuration}
-              attempts={attempts}
-              maxAttempts={hookMaxAttempts}
-              countdown={countdown}
-              onStartRecording={startRecording}
-              onStopRecording={stopRecording}
-              onRetry={retryRecording}
-              onValidate={handleValidate}
-            />
-            {(phase === 'previewing' || phase === 'countdown' || phase === 'recording') && (
+          <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8 items-start p-6">
+            {/* Left: Video + Controls */}
+            <div className="space-y-4">
+              <VideoPreview
+                stream={stream}
+                isRecording={phase === 'recording'}
+              />
+              <RecordingControls
+                phase={phase}
+                duration={duration}
+                maxDuration={RECORDING_LIMITS.maxDuration}
+                attempts={attempts}
+                maxAttempts={hookMaxAttempts}
+                countdown={countdown}
+                onStartRecording={startRecording}
+                onStopRecording={stopRecording}
+                onRetry={retryRecording}
+                onValidate={handleValidate}
+              />
+            </div>
+            {/* Right: Script Guide */}
+            <div className="lg:pt-0">
               <ScriptGuide companyName={companyName} />
-            )}
+            </div>
           </div>
         )
 
       case 'recorded':
         return (
-          <div className="w-full max-w-lg mx-auto space-y-4 md:space-y-6">
-            <VideoPreview videoUrl={videoUrl} />
-            <RecordingControls
-              phase={phase}
-              duration={duration}
-              maxDuration={RECORDING_LIMITS.maxDuration}
-              attempts={attempts}
-              maxAttempts={hookMaxAttempts}
-              countdown={countdown}
-              onStartRecording={startRecording}
-              onStopRecording={stopRecording}
-              onRetry={retryRecording}
-              onValidate={handleValidate}
-            />
+          <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8 items-start p-6">
+            {/* Left: Video + Controls */}
+            <div className="space-y-4">
+              <VideoPreview videoUrl={videoUrl} />
+              <RecordingControls
+                phase={phase}
+                duration={duration}
+                maxDuration={RECORDING_LIMITS.maxDuration}
+                attempts={attempts}
+                maxAttempts={hookMaxAttempts}
+                countdown={countdown}
+                onStartRecording={startRecording}
+                onStopRecording={stopRecording}
+                onRetry={retryRecording}
+                onValidate={handleValidate}
+              />
+            </div>
+            {/* Right: Script Guide (optional, for reference) */}
+            <div className="lg:pt-0">
+              <ScriptGuide companyName={companyName} />
+            </div>
           </div>
         )
 

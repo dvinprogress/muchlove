@@ -88,8 +88,18 @@ export function TestimonialRecordingPage({
   }
 
   return (
-    <div className="h-dvh bg-white flex flex-col items-center justify-center p-4 md:p-8 overflow-hidden">
-      <div className="w-full max-w-lg space-y-4 md:space-y-6">
+    <div className="min-h-dvh bg-white flex flex-col items-center justify-center p-4 md:p-8">
+      <div className={`w-full space-y-4 md:space-y-6 ${
+        currentStatus !== 'video_completed' &&
+        currentStatus !== 'shared_1' &&
+        currentStatus !== 'shared_2' &&
+        currentStatus !== 'shared_3' &&
+        !showReviewValidation &&
+        !showSharingFlow &&
+        !isAmbassador
+          ? 'max-w-5xl'
+          : 'max-w-lg'
+      }`}>
         {/* Header : logo ou nom + salutation */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
